@@ -12,7 +12,7 @@ ADC_PATH = '/proc/'
 
 DIGITAL_PIN_MODES = {IN: '0', OUT: '1'}
 DIGITAL_PIN_STATES = {HIGH:'1', LOW:'0'}
-LEN_DIGITAL_PINS = 12
+LEN_DIGITAL_PINS = 14   
 ANALOG_PIN_RESOLUTIONS = [6, 6, 12, 12, 12, 12]
 
 
@@ -32,6 +32,11 @@ class PcDuino(Board):
     def _set_pin_state(self, pin, state):
         with open(DIGITAL_PINS_PATH+'pin/gpio%s' % pin.location, 'w') as fp:
             fp.write(DIGITAL_PIN_STATES[state])
+
+    def _get_pin_state(self, pin):
+        with open(DIGITAL_PINS_PATH+'pin/gpio%s' % pin.location, 'r') as fp:
+            state = fp.read().strip()
+            return HIGH if state == '1' else LOW
 
     def _get_pin_value(self, pin):
         adc_id = pin.location[-1]
