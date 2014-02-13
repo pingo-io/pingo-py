@@ -34,8 +34,5 @@ To do the same on a Arduino Yún, just change the line were the board is instant
 	>>> led_pin = board.pins[13]
 	>>> led_pin.mode = pingo.OUTPUT
 	>>> led_pin.state = 1
-	>>> led_pin.state
-	1
-	>>> sleep(1)  # 1 second
+	>>> sleep(1)
 	>>> led_pin.state = 0
-	>>> led_pin.state
