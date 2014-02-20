@@ -6,7 +6,8 @@ Generic API for controlling boards with programmable IO pins
 Basic usage
 -----------
 
-Blink.py on an Raspberry Pi::
+Blink.py on an Raspberry Pi
+.. code :: python
 
   import pingo
   from time import sleep
@@ -20,7 +21,8 @@ Blink.py on an Raspberry Pi::
       pino_led.low()
       sleep(1)
 
-To do the same on a Arduino Yún, just change the line were the board is instantiated, and the pin numbers as needed::
+To do the same on a Arduino Yún, just change the line were the board is instantiated, and the pin numbers as needed
+.. code :: python
 
   import pingo
   from time import sleep
