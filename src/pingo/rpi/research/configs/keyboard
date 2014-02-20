@@ -1,0 +1,10 @@
+# KEYBOARD CONFIGURATION FILE
+
+# Consult the keyboard(5) manual page.
+
+XKBMODEL="pc105"
+XKBLAYOUT="br"
+XKBVARIANT=""
+XKBOPTIONS="lv3:ralt_switch,terminate:ctrl_alt_bksp"
+
+BACKSPACE="guess"
