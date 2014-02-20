@@ -1,4 +1,4 @@
-from board import Board, DigitalPin
+from pingo.board import Board, DigitalPin
 
 class RaspberryPi(Board):
 
