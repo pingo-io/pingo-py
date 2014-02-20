@@ -7,6 +7,7 @@ Basic usage
 -----------
 
 Blink.py on an Raspberry Pi
+
 .. code-block:: python
 
   import pingo
@@ -22,6 +23,7 @@ Blink.py on an Raspberry Pi
       sleep(1)
 
 To do the same on a Arduino Yún, just change the line were the board is instantiated, and the pin numbers as needed
+
 .. code-block:: python
 
   import pingo
