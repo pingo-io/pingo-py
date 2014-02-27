@@ -9,8 +9,12 @@ class Board(object):
 
 class Pin(object):
 
-    def __init__(self, physical_pin):
+    def __init__(self, physical_pin, logical_pin=None):
         self.physical_pin = physical_pin
+        if logical_pin is None:
+            self.logical_pin = physical_pin
+        else:
+            self.logical_pin = logical_pin        
 
     def __repr__(self):
         return '<%s #%d>' % (
@@ -25,8 +29,8 @@ class VddPin(Pin):
 
 class DigitalPin(Pin):
 
-    def __init__(self, physical_pin, mode=OUTPUT, state=LOW):
-        Pin.__init__(self, physical_pin)
+    def __init__(self, physical_pin, logical_pin=None, mode=OUTPUT, state=LOW):
+        Pin.__init__(self, physical_pin, logical_pin)
         self.set_mode(mode)
         self.state = state
 

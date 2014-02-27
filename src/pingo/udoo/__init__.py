@@ -14,4 +14,4 @@ pin_list = [
 class Udoo(Board):
 
     def __init__(self):
-        self.pins = {index: gpio for index, gpio in enumerate(pin_list)}
+        self.pins = {index: DigitalPin(index, gpio) for index, gpio in enumerate(pin_list)}
