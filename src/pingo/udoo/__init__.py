@@ -14,4 +14,6 @@ pin_list = [
 class Udoo(Board):
 
     def __init__(self):
-        self.pins = {index: DigitalPin(index, gpio) for index, gpio in enumerate(pin_list)}
+        self.add_pins((physical, DigitalPin(logical)) for physical, logical in enumerate(pin_list))
+        self.pin_path_mask = '/sys/class/gpio/gpio%d/'
+        

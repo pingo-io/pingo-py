@@ -8,11 +8,11 @@ Turn on a led for 1s
 ::
 
 	>>> import pingo
-	>>> sleep = lambda x: None
+	>>> from time import sleep
 	>>>
-	>>> board = pingo.ghost.GhostBoard()
+	>>> board = pingo.udoo.Udoo()
 	>>> board.pins[13]
-	<DigitalPin 13>
+	<DigitalPin 40>
 	>>>
 	>>> led_pin = board.pins[13]
 	>>> led_pin.set_mode(pingo.OUTPUT)
