@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="433.5"
+   height="678.25"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48+devel r12693"
+   viewBox="0 0 122.34333 191.41722"
+   sodipodi:docname="pingo-logo.svg"
+   inkscape:export-filename="/home/felipe/devel/github_GaroaHC/pingo/resources/pingo-logo-433x678px.png"
+   inkscape:export-xdpi="89.966827"
+   inkscape:export-ydpi="89.966827">
+  <defs
+     id="defs4">
+    <clipPath
+       id="clipPath3330"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         style="clip-rule:evenodd"
+         inkscape:connector-curvature="0"
+         id="path3332"
+         d="M 0,0 612,0 612,792 0,792 0,0 Z" />
+    </clipPath>
+    <clipPath
+       id="clipPath3364"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3366"
+         d="m 17,395 577,0 0,0.1 -577,0 0,-0.1 z" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.33964246"
+     inkscape:cx="400.67101"
+     inkscape:cy="271.85269"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="3"
+     fit-margin-left="3"
+     fit-margin-right="3"
+     fit-margin-bottom="3"
+     inkscape:window-width="1358"
+     inkscape:window-height="698"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-43.31119,-38.373404)">
+    <g
+       id="g3967"
+       transform="translate(-198.35904,10.439893)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3524"
+         d="M 302.84208,28.780112 250.74011,131.85847 c -0.49704,0.8077 -0.97159,1.63029 -1.42765,2.46448 -0.90821,1.67858 -1.73112,3.41011 -2.48818,5.18032 -0.0642,0.15407 -0.1295,0.30768 -0.19238,0.46247 -0.0745,0.18281 -0.15437,0.38107 -0.253,0.63556 -0.0144,0.0371 -0.0234,0.0585 -0.038,0.0965 -0.12985,0.33665 -0.26452,0.69481 -0.3864,1.02305 -0.0139,0.0417 -0.0304,0.0826 -0.0436,0.12458 -2.06392,5.66819 -3.24095,11.78551 -3.38005,18.21766 0,1.9e-4 1e-5,2.9e-4 0,5.7e-4 -0.009,0.4287 -0.0138,0.85898 -0.0138,1.29038 0,1.5197 0.0575,3.02259 0.17033,4.50674 2.18491,28.69355 25.14265,50.41462 55.40264,52.48175 0.52055,0.0355 1.04339,0.066 1.56821,0.0899 10e-4,5e-5 0.002,-5e-5 0.003,0 0.5254,0.0238 1.053,0.0415 1.58254,0.0535 0.53068,0.012 1.06329,0.0182 1.59798,0.0182 1.60238,0 3.18685,-0.0546 4.75202,-0.16151 30.25999,-2.06713 53.21774,-23.78821 55.40265,-52.48176 0.11301,-1.48415 0.17033,-2.98703 0.17033,-4.50673 0,-0.43177 -0.004,-0.86195 -0.0138,-1.29095 -0.1391,-6.43216 -1.31613,-12.54947 -3.38005,-18.21767 -0.0127,-0.0404 -0.028,-0.0799 -0.0413,-0.12016 -0.12228,-0.32939 -0.25817,-0.68931 -0.38861,-1.02747 -0.013,-0.032 -0.0251,-0.0644 -0.038,-0.0965 -0.0986,-0.25449 -0.17847,-0.45274 -0.25301,-0.63555 -0.0629,-0.1548 -0.12813,-0.3084 -0.19237,-0.46247 -0.75707,-1.77022 -1.57998,-3.50174 -2.48819,-5.18032 -0.45605,-0.83419 -0.9306,-1.65679 -1.42765,-2.46448 L 302.84208,28.780112 Z"
+         style="fill:#0047ff;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+      <g
+         transform="translate(198.35923,-10.439959)"
+         id="g3515">
+        <path
+           inkscape:connector-curvature="0"
+           id="path3483"
+           style="font-size:59.97222519px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#e6ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Garoa Hacker Clube;-inkscape-font-specification:GaroaHackerClubeKnuthEditionBold"
+           d="m 73.607592,167.80772 c 3.058583,0 5.577417,-2.51883 5.577417,-5.63739 l 0,-9.41563 3.058583,0 c 8.516056,0 15.412862,-6.89681 15.412862,-15.35289 0,-8.45609 -6.896806,-15.35289 -15.412862,-15.35289 l -8.636,0 c -3.118556,0 -5.637389,2.51883 -5.637389,5.63739 l 0,34.48402 c 0,3.11856 2.518833,5.63739 5.637389,5.63739 z m 5.577417,-34.544 3.058583,0 c 2.278945,0 4.198056,1.85914 4.198056,4.13809 0,2.27894 -1.919111,4.13808 -4.198056,4.13808 l -3.058583,0 0,-8.27617 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3485"
+           style="font-size:59.97222519px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#e6ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Garoa Hacker Clube;-inkscape-font-specification:GaroaHackerClubeKnuthEditionBold"
+           d="m 105.51281,122.04892 c -3.11855,0 -5.577413,2.51883 -5.577413,5.63739 0,3.05858 2.458863,5.57741 5.577413,5.57741 3.11856,0 5.63739,-2.51883 5.63739,-5.57741 0,-3.11856 -2.51883,-5.63739 -5.63739,-5.63739 z m 0,11.45469 c -3.11855,0 -5.577413,2.51883 -5.577413,5.63739 l 0,23.08931 c 0,3.05858 2.458863,5.57741 5.577413,5.57741 3.11856,0 5.63739,-2.51883 5.63739,-5.57741 l 0,-23.08931 c 0,-3.11856 -2.51883,-5.63739 -5.63739,-5.63739 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3487"
+           style="font-size:59.97222519px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#e6ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Garoa Hacker Clube;-inkscape-font-specification:GaroaHackerClubeKnuthEditionBold"
+           d="m 114.62859,162.29028 c 0,3.11855 2.51884,5.57742 5.57742,5.57742 3.11856,0 5.63739,-2.45887 5.63739,-5.57742 l 0,0 0,-25.54817 c 0,-2.45886 2.03906,-4.49792 4.49792,-4.49792 2.45886,0 4.49791,2.03906 4.49791,4.49792 l 0,25.54817 0,0 c 0,3.11855 2.51884,5.57742 5.63739,5.57742 3.05859,0 5.57742,-2.45887 5.57742,-5.57742 l 0,0 0,-25.54817 c 0,-8.636 -7.07672,-15.71272 -15.71272,-15.71272 -8.69598,0 -15.71273,7.07672 -15.71273,15.71272 l 0,25.54817 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3490"
+           style="font-size:59.97222519px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#e6ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Garoa Hacker Clube;-inkscape-font-specification:GaroaHackerClubeKnuthEditionBold"
+           d="m 97.942202,192.93609 c 0,-3.11856 -2.518833,-5.63739 -5.577416,-5.63739 l -8.815918,0 c -3.058583,0 -5.577416,2.51883 -5.577416,5.63739 0,3.11856 2.518833,5.63739 5.577416,5.63739 l 3.178528,0 0,2.5788 c 0,2.45887 -2.039055,4.49792 -4.497917,4.49792 -2.458861,0 -4.497916,-2.03905 -4.497916,-4.49792 l 0,-16.43239 c 0,-2.45886 2.039055,-4.49791 4.497916,-4.49791 1.919112,0 3.658306,1.19944 4.258028,3.05858 1.019528,2.93864 4.198056,4.49792 7.136695,3.47839 2.938639,-1.01953 4.497917,-4.19806 3.478389,-7.13669 -2.159,-6.35706 -8.156222,-10.61509 -14.873112,-10.61509 -8.636,0 -15.712722,7.01675 -15.712722,15.71272 l 0,16.43239 c 0,8.636 7.076722,15.71273 15.712722,15.71273 8.695973,0 15.712723,-7.07673 15.712723,-15.71273 0,0 0,-8.21619 0,-8.21619 z" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3492"
+           style="font-size:59.97222519px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#e6ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:Garoa Hacker Clube;-inkscape-font-specification:GaroaHackerClubeKnuthEditionBold"
+           d="m 136.68426,192.93609 c 0,7.01675 -5.69736,12.71411 -12.71411,12.71411 -7.01675,0 -12.71411,-5.69736 -12.71411,-12.71411 0,-7.01675 5.69736,-12.71411 12.71411,-12.71411 7.01675,0 12.71411,5.69736 12.71411,12.71411 z m -12.71411,-23.92892 c -13.19389,0 -23.92892,10.73503 -23.92892,23.92892 0,13.19389 10.73503,23.92892 23.92892,23.92892 13.19389,0 23.92892,-10.73503 23.92892,-23.92892 0,-13.19389 -10.73503,-23.92892 -23.92892,-23.92892 z" />
+      </g>
+    </g>
+  </g>
+</svg>
