@@ -22,7 +22,7 @@ class Board(object):
         
 class Pin(object):
 
-    def __init__(self, board, logical_pin):
+    def __init__(self, board, logical_pin=None):
         self.board = board
         self.logical_pin = logical_pin
 
@@ -35,7 +35,9 @@ class GroundPin(Pin):
     pass
 
 class VddPin(Pin):
-    pass
+    def __init__(self, board, voltage):
+        Pin.__init__(self, board)
+        self.voltage = voltage
 
 class DigitalPin(Pin):
 
