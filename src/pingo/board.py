@@ -5,39 +5,47 @@ INPUT = 0
 OUTPUT = 1
 
 class Board(object):
-	
+
     def add_pins(self, pin_map):
         """ pin_map is a list of pairs: [(pin_location, pin_instance), ...]
             where pin_location is a physical pin id and pin_instance is
             an instance of Pin
         """
         self.pins = {}
-        for pin_location, pin in pin_map:
+        for pin_location, pin in pin_map.items():
             if pin is not None:
                 pin.board = self
                 self.pins[pin_location] = pin
-		
-    def set_pin_mode(self, pin, mode):        
+
+    def set_pin_mode(self, pin, mode):
         raise NotImplementedError
-        
+
 class Pin(object):
 
-    def __init__(self, board, logical_pin=None):
+    def __init__(self, board, logical_id=None):
         self.board = board
-        self.logical_pin = logical_pin
+        self.logical_id = logical_id
 
     def __repr__(self):
         return '<%s %r>' % (
-            self.__class__.__name__,
-            self.logical_pin)
-            
+                self.__class__.__name__,
+                self.logical_id)
+
 class GroundPin(Pin):
-    pass
+
+    def __repr__(self):
+        return '<%s>' % self.__class__.__name__
 
 class VddPin(Pin):
     def __init__(self, board, voltage):
         Pin.__init__(self, board)
         self.voltage = voltage
+
+    def __repr__(self):
+        return '<%s %s>' % (
+                self.__class__.__name__,
+                self.voltage)
+
 
 class DigitalPin(Pin):
 
