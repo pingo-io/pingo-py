@@ -12,7 +12,7 @@ class Board(object):
             an instance of Pin
         """
         self.pins = {}
-        for pin_location, pin in pin_map.items():
+        for pin_location, pin in pin_map:
             if pin is not None:
                 pin.board = self
                 self.pins[pin_location] = pin

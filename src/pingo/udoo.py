@@ -46,26 +46,26 @@ class Udoo(Board):
             pairs.append((physical, pin))
         return pairs
         
-    def _base_pin_path(self, logical_pin):
-        path = os.path.join(DIGITAL_PINS_PATH, DIGITAL_PIN_MASK % logical_pin)
+    def _base_pin_path(self, logical_id):
+        path = os.path.join(DIGITAL_PINS_PATH, DIGITAL_PIN_MASK % logical_id)
         if not os.path.exists(path):
             raise IOError('no such path: %r' % path)
         return path 
 		
-    def _pin_mode_filename(self, logical_pin):
-        path = self._base_pin_path(logical_pin)
+    def _pin_mode_filename(self, logical_id):
+        path = self._base_pin_path(logical_id)
         return os.path.join(path, DIGITAL_PIN_MODE_FILENAME)
 
-    def _pin_state_filename(self, logical_pin):
-        return os.path.join(self._base_pin_path(logical_pin), DIGITAL_PIN_STATE_FILENAME)
+    def _pin_state_filename(self, logical_id):
+        return os.path.join(self._base_pin_path(logical_id), DIGITAL_PIN_STATE_FILENAME)
 
     def set_pin_mode(self, pin, mode):
         assert mode in DIGITAL_PIN_MODES, '%r not in %r' % (mode, DIGITAL_PIN_MODES)
-        with open(self._pin_mode_filename(pin.logical_pin), "wb") as fp:
+        with open(self._pin_mode_filename(pin.logical_id), "wb") as fp:
             fp.write(DIGITAL_PIN_MODES[mode])
 
     def set_pin_state(self, pin, state):
-        with open(self._pin_state_filename(pin.logical_pin), "wb") as fp:
+        with open(self._pin_state_filename(pin.logical_id), "wb") as fp:
             fp.write(str(state))
 		
 		
