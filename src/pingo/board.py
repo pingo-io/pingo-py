@@ -35,8 +35,8 @@ class Pin(object):
 
 class DigitalPin(Pin):
 
-    def __init__(self, board, logical_id, mode=OUTPUT, state=LOW):
-        Pin.__init__(self, board, logical_id)
+    def __init__(self, board, location, logical_id=None, mode=INPUT, state=LOW):
+        Pin.__init__(self, board, location, logical_id)
         self.set_mode(mode)
         self.state = state
 

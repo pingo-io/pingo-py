@@ -12,7 +12,7 @@ Turn on a led for 1s
 	>>>
 	>>> board = pingo.udoo.Udoo()
 	>>> board.pins[13]
-	<DigitalPin 40>
+	<DigitalPin 40@13>
 	>>>
 	>>> led_pin = board.pins[13]
 	>>> led_pin.set_mode(pingo.OUTPUT)
