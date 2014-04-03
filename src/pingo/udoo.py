@@ -42,7 +42,7 @@ class Udoo(Board):
             except IOError:
                 pin = None
             else:
-                pin = DigitalPin(self, logical)
+                pin = DigitalPin(self, physical, logical)
             pairs.append((physical, pin))
         return pairs
         
