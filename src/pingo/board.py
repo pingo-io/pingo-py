@@ -22,30 +22,16 @@ class Board(object):
 
 class Pin(object):
 
-    def __init__(self, board, logical_id=None):
+    def __init__(self, board, location, logical_id=None):
         self.board = board
+        self.location = location
         self.logical_id = logical_id
 
     def __repr__(self):
-        return '<%s %r>' % (
+        return '<%s %s@%r>' % (
                 self.__class__.__name__,
-                self.logical_id)
-
-class GroundPin(Pin):
-
-    def __repr__(self):
-        return '<%s>' % self.__class__.__name__
-
-class VddPin(Pin):
-    def __init__(self, board, voltage):
-        Pin.__init__(self, board)
-        self.voltage = voltage
-
-    def __repr__(self):
-        return '<%s %s>' % (
-                self.__class__.__name__,
-                self.voltage)
-
+                '' if self.logical_id is None else repr(self.logical_id),
+                self.location)
 
 class DigitalPin(Pin):
 
@@ -65,6 +51,22 @@ class DigitalPin(Pin):
     def high(self):
         self.board.set_pin_state(self, HIGH)
         self.state = HIGH
+
+
+class GroundPin(Pin):
+
+    def __repr__(self):
+        return '<%s>' % self.__class__.__name__
+
+class VddPin(Pin):
+    def __init__(self, board, voltage):
+        Pin.__init__(self, board)
+        self.voltage = voltage
+
+    def __repr__(self):
+        return '<%s %s>' % (
+                self.__class__.__name__,
+                self.voltage)
 
 
 
