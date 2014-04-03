@@ -31,26 +31,19 @@ DIGITAL_PIN_MODES = {INPUT: 'in', OUTPUT: 'out'}
 class Udoo(Board):
 
     def __init__(self):
-        self.add_pins(self._build_pin_map())
+        self.add_pins(self._list_pins())
         self.pin_path_mask = '/sys/class/gpio/gpio%d/'
 
-    def _build_pin_map(self):
-        pairs = []
-        for physical, logical in enumerate(pin_list):
-            try:
-                self._base_pin_path(logical)
-            except IOError:
-                continue  # no pin at path
-            else:
-                pin = DigitalPin(self, physical, logical)
-            pairs.append((physical, pin))
-        return pairs
+    def _list_pins(self):
+        pins = []
+        for location, gpio_id in enumerate(pin_list):
+            path = self._base_pin_path(gpio_id)
+            if os.path.exists(path):
+                pins.append(DigitalPin(self, location, gpio_id))
+        return pins
 
     def _base_pin_path(self, gpio_id):
-        path = os.path.join(DIGITAL_PINS_PATH, DIGITAL_PIN_MASK % gpio_id)
-        if not os.path.exists(path):
-            raise IOError('no such path: %r' % path)
-        return path
+        return os.path.join(DIGITAL_PINS_PATH, DIGITAL_PIN_MASK % gpio_id)
 
     def _pin_mode_filename(self, gpio_id):
         path = self._base_pin_path(gpio_id)
