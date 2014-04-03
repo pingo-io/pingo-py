@@ -24,3 +24,17 @@ Turn on a led for 1s
 	>>> led_pin.low()
 	>>> led_pin.state
 	0
+
+Builds the correct GPIO Device
+--------------------
+
+::
+
+    >>> import pingo
+    >>> board = pingo.rpi.RaspberryPi()
+    >>> pin = board.pins[11]
+    >>> board._render_path(pin, direction)
+    /sys/class/gpio/gpio11/direction
+    >>> board._render_path(pin, value)
+    /sys/class/gpio/gpio11/value
+	
