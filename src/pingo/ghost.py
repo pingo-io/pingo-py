@@ -4,7 +4,7 @@ class GhostBoard(Board):
 
     def __init__(self):
 
-		self.add_pins([(13, DigitalPin(self, 13))])
+        self.add_pins([DigitalPin(self, 13)])
 
     def set_pin_mode(self, pin, mode):
         pass

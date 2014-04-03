@@ -6,37 +6,33 @@ OUTPUT = 1
 
 class Board(object):
 
-    def add_pins(self, pin_map):
-        """ pin_map is a list of pairs: [(pin_location, pin_instance), ...]
-            where pin_location is a physical pin id and pin_instance is
-            an instance of Pin
+    def add_pins(self, pins):
+        """ pins is an iterable of Pin instances
         """
         self.pins = {}
-        for pin_location, pin in pin_map:
-            if pin is not None:
-                pin.board = self
-                self.pins[pin_location] = pin
+        for pin in pins:
+            self.pins[pin.location] = pin
 
     def set_pin_mode(self, pin, mode):
         raise NotImplementedError
 
 class Pin(object):
 
-    def __init__(self, board, location, logical_id=None):
+    def __init__(self, board, location, gpio_id=None):
         self.board = board
         self.location = location
-        self.logical_id = logical_id
+        self.gpio_id = gpio_id
 
     def __repr__(self):
         return '<%s %s@%r>' % (
                 self.__class__.__name__,
-                '' if self.logical_id is None else repr(self.logical_id),
+                '' if self.gpio_id is None else repr(self.gpio_id),
                 self.location)
 
 class DigitalPin(Pin):
 
-    def __init__(self, board, location, logical_id=None, mode=INPUT, state=LOW):
-        Pin.__init__(self, board, location, logical_id)
+    def __init__(self, board, location, gpio_id=None, mode=INPUT, state=LOW):
+        Pin.__init__(self, board, location, gpio_id)
         self.set_mode(mode)
         self.state = state
 
