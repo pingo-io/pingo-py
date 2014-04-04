@@ -37,4 +37,6 @@ nosetests.xml
 
 # editors
 *~
+*___jb_old___
+.idea/
 
