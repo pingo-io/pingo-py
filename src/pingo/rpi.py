@@ -24,6 +24,13 @@ class RaspberryPi(Board):
     """
 
     def __init__(self):
+
+        for n in DIGITAL_PIN_MAP.values():
+            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
+            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
+                fp.write(str(n))
+            time.sleep(0.21) # Magic Sleep. Less then 0.13 it doesn't works.
+
         digital_pins = [(n, DigitalPin(self, n))
                             for n in DIGITAL_PIN_MAP.values()]
         gnd_pins = [(n, GroundPin(self)) for n in GROUND_PINS]
@@ -37,11 +44,6 @@ class RaspberryPi(Board):
         pins = digital_pins + gnd_pins + vcc_pins
         self.add_pins(pins)
 
-        for n in DIGITAL_PIN_MAP.values():
-            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
-            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
-                fp.write(str(n))
-            time.sleep(0.21) # Magic Sleep. Less then 0.13 it doesn't works.
 
     def __del__(self):
         for n in DIGITAL_PIN_MAP.values():
