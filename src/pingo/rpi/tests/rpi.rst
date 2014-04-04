@@ -13,7 +13,7 @@ Turn on a led for 1s
 	>>>
 	>>> board = pingo.rpi.RaspberryPi()
 	>>> board.pins[11]
-	<DigitalPin #11>
+	<DigitalPin 11>
 	>>>
 	>>> led_pin = board.pins[11]
 	>>> led_pin.set_mode(pingo.OUTPUT)
@@ -31,10 +31,12 @@ Builds the correct GPIO Device
 ::
 
     >>> import pingo
-    >>> board = pingo.rpi.RaspberryPi()
-    >>> pin = board.pins[11]
-    >>> board._render_path(pin, direction)
-    /sys/class/gpio/gpio11/direction
-    >>> board._render_path(pin, value)
-    /sys/class/gpio/gpio11/value
+    >>> board2 = pingo.rpi.RaspberryPi()
+    >>> board2 = pingo.rpi.RaspberryPi()
+    >>> board2 = pingo.rpi.RaspberryPi() # on 3rd all goes
+    >>> pin = board2.pins[11]
+    >>> board2._render_path(pin, 'direction')
+    '/sys/class/gpio/gpio11/direction'
+    >>> board2._render_path(pin, 'value')
+    '/sys/class/gpio/gpio11/value'
 	

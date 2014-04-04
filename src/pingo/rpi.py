@@ -1,3 +1,5 @@
+import time
+
 from pingo.board import Board, DigitalPin, GroundPin, VddPin
 from pingo.board import INPUT, OUTPUT
 
@@ -7,7 +9,7 @@ DIGITAL_PIN_MAP = {
     16: 23, 18: 24, 19: 10, 21: 9, 22: 25, 23: 11, 24: 8, 26: 7,
 }
 GROUND_PINS = (6, 9, 14, 20, 25)
-VCC_PINS = (1, 2, 4, 17)
+#VCC_PINS = (1, 2, 4, 17)
 
 DIGITAL_PINS_PATH = '/sys/class/gpio/'
 DIGITAL_PIN_TEMPLATE = DIGITAL_PINS_PATH + 'gpio{pin}/{operation}'
@@ -23,7 +25,7 @@ class RaspberryPi(Board):
 
     def __init__(self):
         digital_pins = [(n, DigitalPin(self, n))
-                            for n in DIGITAL_PIN_MAP.keys()]
+                            for n in DIGITAL_PIN_MAP.values()]
         gnd_pins = [(n, GroundPin(self)) for n in GROUND_PINS]
         vcc_pins = [
            (1, VddPin(self, "3.3V")),
@@ -35,18 +37,17 @@ class RaspberryPi(Board):
         pins = digital_pins + gnd_pins + vcc_pins
         self.add_pins(pins)
 
-        for n, pin in pins:
-            fp = open(DIGITAL_PINS_PATH+'export', "wb")
-            fp.write(n)
-            fp.close()
+        for n in DIGITAL_PIN_MAP.values():
+            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
+            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
+                fp.write(str(n))
+            time.sleep(0.21) # Magic Sleep. Less then 0.13 it doesn't works.
 
     def __del__(self):
-        pins = DIGITAL_PIN_MAP.keys() + list(GROUND_PINS) + list(VCC_PINS)
-
-        for n in pins:
-            fp = open(DIGITAL_PINS_PATH+'unexport', "wb")
-            fp.write(n)
-            fp.close()
+        for n in DIGITAL_PIN_MAP.values():
+            with open(DIGITAL_PINS_PATH+'unexport', "wb", 0) as fp:
+                fp.write(str(n))
+            time.sleep(0.21)
 
     def _render_path(self, pin, operation):
         error_mesg = 'Operation %r not in %r' % (operation, DIGITAL_PIN_OPERATIONS)
@@ -59,10 +60,10 @@ class RaspberryPi(Board):
     def set_pin_mode(self, pin, mode):
         pin_device = self._render_path(pin, 'direction')
         with open(pin_device, "wb") as fp:
-            fp.write(DIGITAL_PIN_MODES[mode])
+            fp.write(str(DIGITAL_PIN_MODES[mode]))
 
     def set_pin_state(self, pin, state):
         pin_device = self._render_path(pin, 'value')
         with open(pin_device, "wb") as fp:
-            fp.write(state)
+            fp.write(str(state))
 
