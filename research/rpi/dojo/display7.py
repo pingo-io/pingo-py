@@ -1,19 +1,52 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Pi Cobbler Numbering
+
+                         3v3
+bread | 25 23 21 ... 5 3 1 |
+board | 26 24 22 ... 6 4 2 |
+                     G 5 5v
+                     N v 
+                     D    
+"""
+
 import atexit
 import time
 import RPi.GPIO as GPIO
 
-# assegurar que a função cleanup será chamada na saída do script
+# make sure GPIO.cleanup is called when script exits
 atexit.register(GPIO.cleanup)
 
-# usar numeração lógica dos pinos
-GPIO.setmode(GPIO.BCM)
+# use physical pin numbering
+GPIO.setmode(GPIO.BOARD)
 
-PORTAS = [17, 4, 9, 11, 7, 27, 22, 10]
+#       A  B  C  D  E  F  G  dp
+PINS = [11,7,16,18,22,13,15,12]
+SEGMENTS = dict(zip('ABCDEFG', PINS))
+DIGITS = [
+    'ABCDEF',
+    'BC',
+    'ABGED',
+    'ABCDG',
+    'BCGF',
+    'AFGCD',
+    'AFGCDE',
+    'ABC',
+    'ABCDEFG',
+    'ABCGF',
+]
 
-for porta in PORTAS:
-    GPIO.setup(porta, GPIO.OUT)
-    GPIO.output(porta, 1)
-    time.sleep(.5)
+for pin in PINS:
+    GPIO.setup(pin, GPIO.OUT)
+
+while True:
+    for digit in range(10):
+        for segments in DIGITS[digit]:
+            for segment in segments:
+                GPIO.output(SEGMENTS[segment], 1)
+        time.sleep(.2)
+        for segments in DIGITS[digit]:
+            for segment in segments:
+                GPIO.output(SEGMENTS[segment], 0)
