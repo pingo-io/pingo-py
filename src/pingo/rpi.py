@@ -5,9 +5,26 @@ from pingo.board import INPUT, OUTPUT
 
 
 DIGITAL_PIN_MAP = {
-    3: 2, 5: 3, 7: 4, 8: 14, 10: 15, 11: 17, 12: 18, 13: 27, 15: 22,
-    16: 23, 18: 24, 19: 10, 21: 9, 22: 25, 23: 11, 24: 8, 26: 7,
+    # pin_number: gpio_id
+    3: 2,
+    5: 3,
+    7: 4,
+    8: 14,
+    10: 15,
+    11: 17,
+    12: 18,
+    13: 27,
+    15: 22,
+    16: 23,
+    18: 24,
+    19: 10,
+    21: 9,
+    22: 25,
+    23: 11,
+    24: 8,
+    26: 7,
 }
+
 GROUND_PINS = (6, 9, 14, 20, 25)
 #VCC_PINS = (1, 2, 4, 17)
 
@@ -25,20 +42,28 @@ class RaspberryPi(Board):
 
     def __init__(self):
 
+        # Exports all pins
         for n in DIGITAL_PIN_MAP.values():
             # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
             with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
                 fp.write(str(n))
-            time.sleep(0.21) # Magic Sleep. Less then 0.13 it doesn't works.
+            # Magic Sleep. Less then 0.13 it doesn't works.
+            time.sleep(0.21)
 
-        digital_pins = [(n, DigitalPin(self, n))
-                            for n in DIGITAL_PIN_MAP.values()]
-        gnd_pins = [(n, GroundPin(self)) for n in GROUND_PINS]
+        digital_pins = [
+            DigitalPin(self, number, gpio_id)
+                for number, gpio_id in DIGITAL_PIN_MAP.items()
+        ]
+
+        gnd_pins = [
+            GroundPin(self, n) for n in GROUND_PINS
+        ]
+
         vcc_pins = [
-           (1, VddPin(self, "3.3V")),
-           (2, VddPin(self, "5V")),
-           (4, VddPin(self, "5V")),
-           (17, VddPin(self, "3.3V")),
+           VddPin(self, 1, "3.3V"),
+           VddPin(self, 2, "5V"),
+           VddPin(self, 3, "5V"),
+           VddPin(self, 17, "3.3V"),
         ]
 
         pins = digital_pins + gnd_pins + vcc_pins
@@ -55,7 +80,7 @@ class RaspberryPi(Board):
         error_mesg = 'Operation %r not in %r' % (operation, DIGITAL_PIN_OPERATIONS)
         assert operation in DIGITAL_PIN_OPERATIONS, error_mesg
 
-        pin_context = {'pin': str(pin.logical_id), 'operation': operation}
+        pin_context = {'pin': str(pin.gpio_id), 'operation': operation}
         pin_device = DIGITAL_PIN_TEMPLATE.format(**pin_context)
         return pin_device
 

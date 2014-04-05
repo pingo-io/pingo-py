@@ -24,9 +24,9 @@ class Pin(object):
         self.gpio_id = gpio_id
 
     def __repr__(self):
-        return '<%s %s@%r>' % (
+        return '<%s GPIO:%s @ Local:%r>' % (
                 self.__class__.__name__,
-                '' if self.gpio_id is None else repr(self.gpio_id),
+                '-' if self.gpio_id is None else repr(self.gpio_id),
                 self.location)
 
 class DigitalPin(Pin):
@@ -55,16 +55,15 @@ class GroundPin(Pin):
         return '<%s>' % self.__class__.__name__
 
 class VddPin(Pin):
-    def __init__(self, board, voltage):
-        Pin.__init__(self, board)
+
+    def __init__(self, board, location, voltage):
+        Pin.__init__(self, board, location)
         self.voltage = voltage
 
     def __repr__(self):
         return '<%s %s>' % (
                 self.__class__.__name__,
                 self.voltage)
-
-
 
 
 INPUT = 0
