@@ -56,7 +56,7 @@ class RaspberryPi(Board):
         ]
 
         gnd_pins = [
-            GroundPin(self) for n in GROUND_PINS
+            GroundPin(self, n) for n in GROUND_PINS
         ]
 
         vcc_pins = [
