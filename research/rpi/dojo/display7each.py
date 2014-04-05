@@ -8,8 +8,8 @@ Pi Cobbler Numbering
 bread | 25 23 21 ... 5 3 1 |
 board | 26 24 22 ... 6 4 2 |
                      G 5 5v
-                     N v 
-                     D    
+                     N v
+                     D
 """
 
 import atexit
@@ -23,7 +23,7 @@ atexit.register(GPIO.cleanup)
 GPIO.setmode(GPIO.BOARD)
 
 #       A   B   C   D   E   F   G  dp
-PINS = [11, 7, 16, 18, 22, 13, 15, 12]
+PINS = [11, 7, 16, 22, 18, 13, 15, 12]
 
 for pin in PINS:
     GPIO.setup(pin, GPIO.OUT)

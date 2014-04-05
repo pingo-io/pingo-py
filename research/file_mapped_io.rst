@@ -2,6 +2,10 @@
 Raspberry Pi
 ============
 
+http://lwn.net/Articles/31185/
+
+http://elinux.org/Rpi_Low-level_peripherals#Bash_shell_script.2C_using_sysfs.2C_part_of_the_raspbian_operating_system
+
 www.cs.unca.edu/~bruce/Fall13/360/GPIO_Wk7.ppt
 
 #!/bin/sh
