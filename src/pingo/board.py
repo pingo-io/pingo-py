@@ -24,9 +24,9 @@ class Pin(object):
         self.gpio_id = gpio_id
 
     def __repr__(self):
-        return '<%s %s@%r>' % (
+        return '<%s GPIO:%s @ Local:%r>' % (
                 self.__class__.__name__,
-                '' if self.gpio_id is None else repr(self.gpio_id),
+                '-' if self.gpio_id is None else repr(self.gpio_id),
                 self.location)
 
 class DigitalPin(Pin):

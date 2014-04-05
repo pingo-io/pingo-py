@@ -12,7 +12,7 @@ Turn on a led for 1s
     >>>
     >>> board = pingo.ghost.GhostBoard()
     >>> board.pins[13]
-    <DigitalPin @13>
+    <DigitalPin GPIO:- @ Local:13>
     >>>
     >>> led_pin = board.pins[13]
     >>> led_pin.set_mode(pingo.OUTPUT)
