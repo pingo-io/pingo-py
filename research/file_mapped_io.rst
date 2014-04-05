@@ -1,4 +1,26 @@
+============
+Raspberry Pi
+============
 
+www.cs.unca.edu/~bruce/Fall13/360/GPIO_Wk7.ppt
+
+#!/bin/sh
+echo 17 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio17/direction
+while true
+do
+        echo 1 > /sys/class/gpio/gpio17/value
+        sleep 1
+        echo 0 > /sys/class/gpio/gpio17/value
+        sleep 1
+done
+
+Make the pin available for other applications using with the command:   echo 17 > /sys/class/gpio/unexport
+
+http://www.raspberrypi.org/forums/viewtopic.php?f=26&t=27830
+http://luketopia.net/2013/07/28/raspberry-pi-gpio-via-the-shell/
+https://sites.google.com/site/semilleroadt/raspberry-pi-tutorials/gpio
+http://falsinsoft.blogspot.com.br/2012/11/access-gpio-from-linux-user-space.html
 
 =======
 pcDuino
