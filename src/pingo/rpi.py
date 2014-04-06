@@ -76,10 +76,6 @@ class RaspberryPi(Board):
                 fp.write(str(pin.gpio_id))
             time.sleep(0.21)
 
-
-    def __del__(self):
-        self.cleanup()
-
     def _render_path(self, pin, operation):
         error_mesg = 'Operation %r not in %r' % (operation, DIGITAL_PIN_OPERATIONS)
         assert operation in DIGITAL_PIN_OPERATIONS, error_mesg
