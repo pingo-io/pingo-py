@@ -71,7 +71,7 @@ class RaspberryPi(Board):
             time.sleep(0.21)
 
     def cleanup(self):
-        for gpio_id in (pin.gpio_id for pin in self.pins()):
+        for gpio_id in (pin.gpio_id for pin in self.pins.values()):
             with open(DIGITAL_PINS_PATH+'unexport', "wb", 0) as fp:
                 fp.write(str(n))
             time.sleep(0.21)
