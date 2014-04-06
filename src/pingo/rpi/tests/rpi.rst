@@ -32,8 +32,6 @@ Builds the correct GPIO Device
 
   >>> import pingo
   >>> board2 = pingo.rpi.RaspberryPi()
-  >>> board2 = pingo.rpi.RaspberryPi()
-  >>> board2 = pingo.rpi.RaspberryPi() # on 3rd all goes
   >>> pin = board2.pins[11]
   >>> board2._render_path(pin, 'direction')
   '/sys/class/gpio/gpio17/direction'
