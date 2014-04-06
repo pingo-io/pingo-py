@@ -41,6 +41,7 @@ class RaspberryPi(Board):
     """
 
     def __init__(self):
+        Board.__init__(self)
 
         # Exports all pins
         for n in DIGITAL_PIN_MAP.values():
@@ -70,11 +71,15 @@ class RaspberryPi(Board):
         self.add_pins(pins)
 
 
-    def __del__(self):
+    def cleanup(self):
         for n in DIGITAL_PIN_MAP.values():
             with open(DIGITAL_PINS_PATH+'unexport', "wb", 0) as fp:
                 fp.write(str(n))
             time.sleep(0.21)
+
+
+    def __del__(self):
+        self.cleanup()
 
     def _render_path(self, pin, operation):
         error_mesg = 'Operation %r not in %r' % (operation, DIGITAL_PIN_OPERATIONS)

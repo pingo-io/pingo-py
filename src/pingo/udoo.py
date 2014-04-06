@@ -31,6 +31,8 @@ DIGITAL_PIN_MODES = {INPUT: 'in', OUTPUT: 'out'}
 class Udoo(Board):
 
     def __init__(self):
+
+        Board.__init__(self)
         self.add_pins(self._list_pins())
         self.pin_path_mask = '/sys/class/gpio/gpio%d/'
 

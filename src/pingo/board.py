@@ -6,6 +6,12 @@ OUTPUT = 1
 
 class Board(object):
 
+    def __init__(self):
+        """ register self.cleanup for calling at script exit
+        """
+        if hasattr(self, 'cleanup'):
+            atexit.register(self.cleanup)
+
     def add_pins(self, pins):
         """ pins is an iterable of Pin instances
         """
@@ -15,6 +21,7 @@ class Board(object):
 
     def set_pin_mode(self, pin, mode):
         raise NotImplementedError
+
 
 class Pin(object):
 
