@@ -73,10 +73,14 @@ class RaspberryPi(Board):
     def cleanup(self):
         for n in DIGITAL_PIN_MAP.values():
             # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
-            with open(DIGITAL_PINS_PATH+'unexport', "wb", 0) as fp:
-                fp.write(str(n))
-            # Magic Sleep. Less then 0.13 it doesn't works.
-            time.sleep(0.21)
+            try:
+                with open(DIGITAL_PINS_PATH+'unexport', "wb", 0) as fp:
+                    fp.write(str(n))
+                # Magic Sleep. Less then 0.13 it doesn't works.
+                time.sleep(0.21)
+            except IOError as e:
+                print(repr(e))
+                print(repr(n))
 
     def _render_path(self, pin, operation):
         error_mesg = 'Operation %r not in %r' % (operation, DIGITAL_PIN_OPERATIONS)
