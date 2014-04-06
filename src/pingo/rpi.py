@@ -43,14 +43,6 @@ class RaspberryPi(Board):
     def __init__(self):
         Board.__init__(self)
 
-        # Exports all pins
-        for n in DIGITAL_PIN_MAP.values():
-            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
-            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
-                fp.write(str(n))
-            # Magic Sleep. Less then 0.13 it doesn't works.
-            time.sleep(0.21)
-
         digital_pins = [
             DigitalPin(self, number, gpio_id)
                 for number, gpio_id in DIGITAL_PIN_MAP.items()
@@ -70,9 +62,16 @@ class RaspberryPi(Board):
         pins = digital_pins + gnd_pins + vcc_pins
         self.add_pins(pins)
 
+        # Exports all pins
+        for n in DIGITAL_PIN_MAP.values():
+            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
+            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
+                fp.write(str(n))
+            # Magic Sleep. Less then 0.13 it doesn't works.
+            time.sleep(0.21)
 
     def cleanup(self):
-        for n in DIGITAL_PIN_MAP.values():
+        for gpio_id in (pin.gpio_id for pin in self.pins()):
             with open(DIGITAL_PINS_PATH+'unexport', "wb", 0) as fp:
                 fp.write(str(n))
             time.sleep(0.21)
