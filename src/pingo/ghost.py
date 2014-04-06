@@ -18,3 +18,6 @@ class GhostBoard(Board):
 
     def set_pin_state(self, pin, state):
         pass
+
+    def cleanup(self):
+        print('GhostBoard: cleaning up.')
