@@ -71,9 +71,11 @@ class RaspberryPi(Board):
         self.add_pins(pins)
 
     def cleanup(self):
-        for pin in self.pins.values():
+        for n in DIGITAL_PIN_MAP.values():
+            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
             with open(DIGITAL_PINS_PATH+'unexport', "wb", 0) as fp:
-                fp.write(str(pin.gpio_id))
+                fp.write(str(n))
+            # Magic Sleep. Less then 0.13 it doesn't works.
             time.sleep(0.21)
 
     def _render_path(self, pin, operation):
