@@ -23,6 +23,7 @@ Turn on a led for 1s
   >>> led_pin.low()
   >>> led_pin.state
   0
+  >>> board.cleanup()
 
 Builds the correct GPIO Device
 ------------------------------
