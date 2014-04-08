@@ -4,8 +4,8 @@ from pingo.board import Board, DigitalPin, GroundPin, VddPin
 from pingo.board import INPUT, OUTPUT
 
 
+# connector_p1_location: gpio_id
 DIGITAL_PIN_MAP = {
-    # pin_number: gpio_id
     3: 2,
     5: 3,
     7: 4,
@@ -42,24 +42,27 @@ class RaspberryPi(object):
 
     def __init__(self):
 
-	pins = set([
-	    VddPin(self, 1, 3.3),
-	    VddPin(self, 2, 5.0),
-	    VddPin(self, 4, 5.0),
-	    VddPin(self, 17, 3.3),
-	])
+	pins = [ 
+	    VddPin(self, 1, 3.3),	
+	    VddPin(self, 2, 5.0),	
+	    VddPin(self, 4, 5.0),	
+	    VddPin(self, 17, 3.3),	
+	]
 
-	pins |= { GroundPin(self, n) for n in [6, 9, 14, 20, 25]}
+	pins += [GroundPin(self, n) for n in [6, 9, 14, 20, 25]]
 
-	pins |= { DigitalPin(self, location, gpio_id)
-		    for location, gpio_id in DIGITAL_PIN_MAP.items()}
+	pins += [DigitalPin(self, location, gpio_id) 
+		    for location, gpio_id in DIGITAL_PIN_MAP.items()]
 
 	self.add_pins(pins)
 
     def add_pins(self, pins):
-	self.pins = {}
-	for pin in pins:
-	    self.pins[pin.location] = pin
+        self.pins = {}
+        for pin in pins:
+            self.pins[pin.location] = pin
+
+    def enable_pin(self, pin):
+        pass
 
     def cleanup(self):
         for n in DIGITAL_PIN_MAP.values():

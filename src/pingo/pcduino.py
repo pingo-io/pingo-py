@@ -14,7 +14,7 @@ DIGITAL_PIN_MODES = {INPUT: '0', OUTPUT: '1'}
 class PcDuino(Board):
 
     def __init__(self):
-        self.add_pins(DigitalPin(self, location) 
+        self.add_pins(DigitalPin(self, location)
                 for location in range(14))
 
     def set_pin_mode(self, pin, mode):

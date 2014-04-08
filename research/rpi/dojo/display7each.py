@@ -28,7 +28,8 @@ PINS = [11, 7, 16, 22, 18, 13, 15, 12]
 for pin in PINS:
     GPIO.setup(pin, GPIO.OUT)
 
-for pin in PINS:
-    GPIO.output(pin, 1)
-    time.sleep(.5)
-    GPIO.output(pin, 0)
+while True:
+    for pin in PINS:
+        GPIO.output(pin, 1)
+        time.sleep(.1)
+        GPIO.output(pin, 0)
