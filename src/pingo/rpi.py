@@ -34,41 +34,32 @@ DIGITAL_PIN_MODES = {INPUT: 'in', OUTPUT: 'out'}
 DIGITAL_PIN_OPERATIONS = ('direction', 'value')
 
 
-class RaspberryPi(Board):
+class RaspberryPi(object):
     """
     Reference:
     http://falsinsoft.blogspot.com.br/2012/11/access-gpio-from-linux-user-space.html
     """
 
     def __init__(self):
-        Board.__init__(self)
 
-        # Exports all pins
-        for n in DIGITAL_PIN_MAP.values():
-            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
-            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
-                fp.write(str(n))
-            # Magic Sleep. Less then 0.13 it doesn't works.
-            time.sleep(0.21)
+	pins = set([
+	    VddPin(self, 1, 3.3),
+	    VddPin(self, 2, 5.0),
+	    VddPin(self, 4, 5.0),
+	    VddPin(self, 17, 3.3),
+	])
 
-        digital_pins = [
-            DigitalPin(self, number, gpio_id)
-                for number, gpio_id in DIGITAL_PIN_MAP.items()
-        ]
+	pins |= { GroundPin(self, n) for n in [6, 9, 14, 20, 25]}
 
-        gnd_pins = [
-            GroundPin(self, n) for n in GROUND_PINS
-        ]
+	pins |= { DigitalPin(self, location, gpio_id)
+		    for location, gpio_id in DIGITAL_PIN_MAP.items()}
 
-        vcc_pins = [
-           VddPin(self, 1, "3.3V"),
-           VddPin(self, 2, "5V"),
-           VddPin(self, 3, "5V"),
-           VddPin(self, 17, "3.3V"),
-        ]
+	self.add_pins(pins)
 
-        pins = digital_pins + gnd_pins + vcc_pins
-        self.add_pins(pins)
+    def add_pins(self, pins):
+	self.pins = {}
+	for pin in pins:
+	    self.pins[pin.location] = pin
 
     def cleanup(self):
         for n in DIGITAL_PIN_MAP.values():

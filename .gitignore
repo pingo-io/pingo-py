@@ -39,4 +39,4 @@ nosetests.xml
 *~
 *___jb_old___
 .idea/
-
+*.sw[po]
