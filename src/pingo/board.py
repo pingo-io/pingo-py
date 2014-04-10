@@ -30,6 +30,7 @@ class Pin(object):
         self.board = board
         self.location = location
         self.gpio_id = gpio_id
+        self.enable = False
 
     def __repr__(self):
         return '<%s GPIO:%s @ Local:%r>' % (

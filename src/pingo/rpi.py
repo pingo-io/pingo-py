@@ -42,16 +42,16 @@ class RaspberryPi(object):
 
     def __init__(self):
 
-	pins = [ 
-	    VddPin(self, 1, 3.3),	
-	    VddPin(self, 2, 5.0),	
-	    VddPin(self, 4, 5.0),	
-	    VddPin(self, 17, 3.3),	
+	pins = [
+	    VddPin(self, 1, 3.3),
+	    VddPin(self, 2, 5.0),
+	    VddPin(self, 4, 5.0),
+	    VddPin(self, 17, 3.3),
 	]
 
 	pins += [GroundPin(self, n) for n in [6, 9, 14, 20, 25]]
 
-	pins += [DigitalPin(self, location, gpio_id) 
+	pins += [DigitalPin(self, location, gpio_id)
 		    for location, gpio_id in DIGITAL_PIN_MAP.items()]
 
 	self.add_pins(pins)
@@ -62,19 +62,27 @@ class RaspberryPi(object):
             self.pins[pin.location] = pin
 
     def enable_pin(self, pin):
-        pass
+        if not pin.enable:
+            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
+            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
+                fp.write(pin.gpio_id)
+                # Magic Sleep. Less then 0.13 it doesn't works.
+                #time.sleep(0.21)
+            pin.enable = True
+
+    def disable_pin(self, pin):
+        if pin.enable:
+            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
+            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
+                fp.write(pin.gpio_id)
+                # Magic Sleep. Less then 0.13 it doesn't works.
+                #time.sleep(0.21)
+            pin.enable = False
 
     def cleanup(self):
-        for n in DIGITAL_PIN_MAP.values():
-            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
-            try:
-                with open(DIGITAL_PINS_PATH+'unexport', "wb", 0) as fp:
-                    fp.write(str(n))
-                # Magic Sleep. Less then 0.13 it doesn't works.
-                time.sleep(0.21)
-            except IOError as e:
-                print(repr(e))
-                print(repr(n))
+        for pin in self.pins:
+            if pin.enable:
+                pin.desable()
 
     def _render_path(self, pin, operation):
         error_mesg = 'Operation %r not in %r' % (operation, DIGITAL_PIN_OPERATIONS)
@@ -85,12 +93,12 @@ class RaspberryPi(object):
         return pin_device
 
     def set_pin_mode(self, pin, mode):
-        pin_device = self._render_path(pin, 'direction')
+        pin_device = self._render_path(pin.gpio_id, 'direction')
         with open(pin_device, "wb") as fp:
             fp.write(str(DIGITAL_PIN_MODES[mode]))
 
     def set_pin_state(self, pin, state):
-        pin_device = self._render_path(pin, 'value')
+        pin_device = self._render_path(pin.gpio_id, 'value')
         with open(pin_device, "wb") as fp:
             fp.write(str(state))
 
