@@ -93,12 +93,12 @@ class RaspberryPi(object):
         return pin_device
 
     def set_pin_mode(self, pin, mode):
-        pin_device = self._render_path(pin.gpio_id, 'direction')
+        pin_device = self._render_path(pin, 'direction')
         with open(pin_device, "wb") as fp:
             fp.write(str(DIGITAL_PIN_MODES[mode]))
 
     def set_pin_state(self, pin, state):
-        pin_device = self._render_path(pin.gpio_id, 'value')
+        pin_device = self._render_path(pin, 'value')
         with open(pin_device, "wb") as fp:
             fp.write(str(state))
 
