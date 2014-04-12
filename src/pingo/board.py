@@ -27,9 +27,12 @@ class Board(object):
         for pin in pins:
             self.pins[pin.location] = pin
 
-    def set_pin_mode(self, pin, mode):
+    def _set_pin_mode(self, pin, mode):
         raise NotImplementedError
 
+    def _set_pin_state(self, pin, state):
+        raise NotImplementedError
+        
 
 class Pin(object):
 
@@ -87,8 +90,4 @@ class VddPin(Pin):
         return '<%s %s>' % (
                 self.__class__.__name__,
                 self.voltage)
-
-
-INPUT = 0
-OUTPUT = 1
 
