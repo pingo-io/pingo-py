@@ -6,38 +6,44 @@ sys.path.append("../../..")
 
 import pingo
 
+class RaspberryTest(unittest.TestCase):
 
-class RaspberryiBasics(unittest.TestCase):
+    def setUp(self):
+        self.board = pingo.rpi.RaspberryPi()
+
+    def tearDown(self):
+        self.board.cleanup()
+
+
+class RaspberryBasics(RaspberryTest):
 
     def test_list_pins(self):
-        board = pingo.rpi.RaspberryPi()
-        vdd_pin = board.pins[1]
-        self.assertIsInstance(vdd_pin, pingo.board.VddPin)
+        vdd_pin = self.board.pins[1]
+        self.assertIsInstance(vdd_pin, pingo.VddPin)
 
-        pin = board.pins[7]
-        self.assertIsInstance(pin, pingo.board.DigitalPin)
+        pin = self.board.pins[7]
+        self.assertIsInstance(pin, pingo.DigitalPin)
 
-        self.assertEqual(len(board.pins), 26)
-
-    def test_enable_pin(self):
-        board = pingo.rpi.RaspberryPi()
-        pin = board.pins[7]
-        self.assertiFalse(os.path.isfile("/sys/class/gpio/gpio4"))
-
-        board.enable_pin(pin)
-        self.assertTrue(os.path.isfile("/sys/class/gpio/gpio4"))
-
-        board.desable_pin(pin)
-        self.assertFalse(os.path.isfile("/sys/class/gpio/gpio4"))
-
+        self.assertEqual(len(self.board.pins), 26)
 
     def test_led(self):
-        board = pingo.rpi.RaspberryPi()
-        pin = board.pins[7]
-        board.enable_pin(pin)
-        pin.set_mode(OUTPUT)
+        pin = self.board.pins[7]
+        pin.set_mode(pingo.OUTPUT)
         pin.high()
-        board.desable_pin(pin)
+
+
+class RaspberryExceptions(RaspberryTest):
+
+    def test_disabled_pin(self):
+        pin = self.board.pins[7]
+        with self.assertRaises(pingo.DisabledPin) as cm:
+            pin.high()
+
+    def test_wrong_pin_mode(self):
+        pin = self.board.pins[7]
+        pin.set_mode(pingo.INPUT)
+        with self.assertRaises(pingo.WrongPinMode) as cm:
+            pin.high()
 
 
 if __name__ == '__main__':

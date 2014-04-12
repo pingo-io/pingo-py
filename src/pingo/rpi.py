@@ -1,8 +1,8 @@
 import time
 
-from pingo.board import Board, DigitalPin, GroundPin, VddPin
-from pingo.board import INPUT, OUTPUT
+import RPi.GPIO as GPIO
 
+import pingo
 
 # connector_p1_location: gpio_id
 DIGITAL_PIN_MAP = {
@@ -25,16 +25,7 @@ DIGITAL_PIN_MAP = {
     26: 7,
 }
 
-GROUND_PINS = (6, 9, 14, 20, 25)
-#VCC_PINS = (1, 2, 4, 17)
-
-DIGITAL_PINS_PATH = '/sys/class/gpio/'
-DIGITAL_PIN_TEMPLATE = DIGITAL_PINS_PATH + 'gpio{pin}/{operation}'
-DIGITAL_PIN_MODES = {INPUT: 'in', OUTPUT: 'out'}
-DIGITAL_PIN_OPERATIONS = ('direction', 'value')
-
-
-class RaspberryPi(object):
+class RaspberryPi(pingo.Board):
     """
     Reference:
     http://falsinsoft.blogspot.com.br/2012/11/access-gpio-from-linux-user-space.html
@@ -42,63 +33,35 @@ class RaspberryPi(object):
 
     def __init__(self):
 
+        super(RaspberryPi, self).__init__()
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(True)
+
 	pins = [
-	    VddPin(self, 1, 3.3),
-	    VddPin(self, 2, 5.0),
-	    VddPin(self, 4, 5.0),
-	    VddPin(self, 17, 3.3),
+                pingo.VddPin(self, 1, 3.3),
+                pingo.VddPin(self, 2, 5.0),
+                pingo.VddPin(self, 4, 5.0),
+                pingo.VddPin(self, 17, 3.3),
 	]
 
-	pins += [GroundPin(self, n) for n in [6, 9, 14, 20, 25]]
+	pins += [pingo.GroundPin(self, n) for n in [6, 9, 14, 20, 25]]
 
-	pins += [DigitalPin(self, location, gpio_id)
-		    for location, gpio_id in DIGITAL_PIN_MAP.items()]
+	pins += [pingo.DigitalPin(self, location, gpio_id)
+                for location, gpio_id in DIGITAL_PIN_MAP.items()]
 
 	self.add_pins(pins)
 
-    def add_pins(self, pins):
-        self.pins = {}
-        for pin in pins:
-            self.pins[pin.location] = pin
-
-    def enable_pin(self, pin):
-        if not pin.enable:
-            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
-            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
-                fp.write(pin.gpio_id)
-                # Magic Sleep. Less then 0.13 it doesn't works.
-                #time.sleep(0.21)
-            pin.enable = True
-
-    def disable_pin(self, pin):
-        if pin.enable:
-            # 3rd arg: buffer_size=0 (a.k.a AutoFlush)
-            with open(DIGITAL_PINS_PATH+'export', "wb", 0) as fp:
-                fp.write(pin.gpio_id)
-                # Magic Sleep. Less then 0.13 it doesn't works.
-                #time.sleep(0.21)
-            pin.enable = False
-
     def cleanup(self):
-        for pin in self.pins:
-            if pin.enable:
-                pin.desable()
+        for pin in self.pins.values():
+            if pin.enabled:
+                GPIO.cleanup(int(pin.gpio_id))
+                pin.enabled = False
 
-    def _render_path(self, pin, operation):
-        error_mesg = 'Operation %r not in %r' % (operation, DIGITAL_PIN_OPERATIONS)
-        assert operation in DIGITAL_PIN_OPERATIONS, error_mesg
+    def _set_pin_mode(self, pin, mode):
+        rpi_mode = GPIO.IN if mode == pingo.INPUT else GPIO.OUT
+        GPIO.setup(int(pin.gpio_id), rpi_mode)
 
-        pin_context = {'pin': str(pin.gpio_id), 'operation': operation}
-        pin_device = DIGITAL_PIN_TEMPLATE.format(**pin_context)
-        return pin_device
-
-    def set_pin_mode(self, pin, mode):
-        pin_device = self._render_path(pin, 'direction')
-        with open(pin_device, "wb") as fp:
-            fp.write(str(DIGITAL_PIN_MODES[mode]))
-
-    def set_pin_state(self, pin, state):
-        pin_device = self._render_path(pin, 'value')
-        with open(pin_device, "wb") as fp:
-            fp.write(str(state))
+    def _set_pin_state(self, pin, state):
+        rpi_state = GPIO.HIGH if state == pingo.HIGH else GPIO.LOW
+        GPIO.output(int(pin.gpio_id), rpi_state)
 

@@ -1,9 +1,16 @@
 import atexit
 
-HIGH = 1
-LOW = 0
-INPUT = 0
-OUTPUT = 1
+HIGH = 'HIGH'
+LOW = 'LOW'
+INPUT = 'IN'
+OUTPUT = 'OUT'
+
+class DisabledPin(StandardError):
+    value = 'Use pin.set_mode(mode) before using a pin.'
+
+class WrongPinMode(StandardError):
+    value = 'Operation not supported in current mode.'
+
 
 class Board(object):
 
@@ -26,36 +33,43 @@ class Board(object):
 
 class Pin(object):
 
-    def __init__(self, board, location, gpio_id=None):
+    def __init__(self, board, location, gpio_id=''):
         self.board = board
         self.location = location
-        self.gpio_id = gpio_id
-        self.enable = False
+        self.gpio_id = str(gpio_id)
+        self.enabled = False
 
     def __repr__(self):
-        return '<%s GPIO:%s @ Local:%r>' % (
+        return '<%s %s@%r>' % (
                 self.__class__.__name__,
-                '-' if self.gpio_id is None else repr(self.gpio_id),
+                'gpio' + self.gpio_id if self.gpio_id else '',
                 self.location)
 
 class DigitalPin(Pin):
 
-    def __init__(self, board, location, gpio_id=None, mode=INPUT, state=LOW):
+    def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
-        self.mode = None
-        self.state = state
 
     def set_mode(self, mode):
-        self.board.set_pin_mode(self, mode)
+        self.board._set_pin_mode(self, mode)
+        self.enabled = True
         self.mode = mode
 
+    def _change_state(self, state):
+        if not self.enabled:
+            raise DisabledPin()
+
+        if self.mode != OUTPUT:
+            raise WrongPinMode()
+
+        self.board._set_pin_state(self, state)
+        self.state = state
+
     def low(self):
-        self.board.set_pin_state(self, LOW)
-        self.state = LOW
+        self._change_state(LOW)
 
     def high(self):
-        self.board.set_pin_state(self, HIGH)
-        self.state = HIGH
+        self._change_state(HIGH)
 
 
 class GroundPin(Pin):
