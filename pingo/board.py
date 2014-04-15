@@ -88,10 +88,9 @@ class VddPin(Pin):
 
     def __init__(self, board, location, voltage):
         Pin.__init__(self, board, location)
-        self.voltage = voltage
+        self.voltage = voltage  # e.g. 3.3, 5.0
 
     def __repr__(self):
-        return '<%s %s>' % (
+        return '<%s %0.1fV>' % (
                 self.__class__.__name__,
                 self.voltage)
-

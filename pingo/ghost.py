@@ -7,7 +7,7 @@ class GhostBoard(Board):
 
         pins = [
             GroundPin(self, 1),
-            VddPin(self, 2, "xV"),
+            VddPin(self, 2, 5.0),
             DigitalPin(self, 13),
         ]
 
