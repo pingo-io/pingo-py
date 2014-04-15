@@ -13,10 +13,10 @@ class GhostBoard(Board):
 
         self.add_pins(pins)
 
-    def set_pin_mode(self, pin, mode):
+    def _set_pin_mode(self, pin, mode):
         pass
 
-    def set_pin_state(self, pin, state):
+    def _set_pin_state(self, pin, state):
         pass
 
     def cleanup(self):

@@ -32,21 +32,25 @@ class Board(object):
 
     def _set_pin_state(self, pin, state):
         raise NotImplementedError
-        
+
 
 class Pin(object):
 
-    def __init__(self, board, location, gpio_id=''):
+    def __init__(self, board, location, gpio_id=None):
         self.board = board
         self.location = location
-        self.gpio_id = str(gpio_id)
+        if gpio_id is not None:
+            self.gpio_id = gpio_id
         self.enabled = False
 
     def __repr__(self):
-        return '<%s %s@%r>' % (
-                self.__class__.__name__,
-                'gpio' + self.gpio_id if self.gpio_id else '',
-                self.location)
+        cls_name = self.__class__.__name__
+        location = self.location
+        if hasattr(self, 'gpio_id'):
+            gpio_id = 'gpio' + self.gpio_id
+        else:
+            gpio_id = ''
+        return '<{cls_name} {gpio_id}@{location}>'.format(**locals())
 
 class DigitalPin(Pin):
 

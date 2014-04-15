@@ -12,16 +12,16 @@ Turn on a led for 1s
     >>>
     >>> board = pingo.ghost.GhostBoard()
     >>> board.pins[13]
-    <DigitalPin GPIO:- @ Local:13>
+    <DigitalPin @13>
     >>>
     >>> led_pin = board.pins[13]
     >>> led_pin.set_mode(pingo.OUTPUT)
     >>> led_pin.high()
     >>> led_pin.state
-    1
+    'HIGH'
     >>> sleep(1)  # 1 second
     >>> led_pin.low()
     >>> led_pin.state
-    0
+    'LOW'
     >>> board.cleanup()
     GhostBoard: cleaning up.
