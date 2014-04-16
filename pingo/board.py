@@ -41,7 +41,6 @@ class Pin(object):
         self.location = location
         if gpio_id is not None:
             self.gpio_id = gpio_id
-        self.enabled = False
 
     def __repr__(self):
         cls_name = self.__class__.__name__
@@ -56,11 +55,12 @@ class DigitalPin(Pin):
 
     def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
+        self.enabled = False
 
     def set_mode(self, mode):
         self.board._set_pin_mode(self, mode)
-        self.enabled = True
         self.mode = mode
+        self.enabled = True
 
     def _change_state(self, state):
         if not self.enabled:

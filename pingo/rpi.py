@@ -24,14 +24,14 @@ DIGITAL_PIN_MAP = {
 }
 
 class RaspberryPi(pingo.Board):
-    """
-    Reference:
-    http://falsinsoft.blogspot.com.br/2012/11/access-gpio-from-linux-user-space.html
-    """
 
     def __init__(self):
         global GPIO
-        import RPi.GPIO as GPIO
+        try:
+            import RPi.GPIO as GPIO
+        except ImportError:
+            print 'pingo.rpi requires RPi.GPIO installed'
+            raise SystemExit
 
         super(RaspberryPi, self).__init__()
         GPIO.setmode(GPIO.BCM)
@@ -53,7 +53,7 @@ class RaspberryPi(pingo.Board):
 
     def cleanup(self):
         for pin in self.pins.values():
-            if pin.enabled:
+            if hasattr(pin, 'enabled') and pin.enabled:
                 GPIO.cleanup(int(pin.gpio_id))
                 pin.enabled = False
 
