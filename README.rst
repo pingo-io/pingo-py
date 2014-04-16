@@ -1,7 +1,12 @@
 pingo
 =====
 
-Generic API for controlling boards with programmable IO pins
+Pingo provides a uniform API to program devices like the Raspberry Pi, BeagleBone Black, pcDuino etc. just like the Python DBAPI provides an uniform API for database programming in Python.
+
+The API is object-oriented but easy to use: a board is an instance of a `Board` subclass. Every board has a dictionary called `pins` which lists all GPIO pins on the board. Each pin is an instance of a `Pin` subclass with attributes that you can inspect to learn about its capabilities.
+
+The name Pingo is a tribute to Garoa Hacker Clube, where it started (Portuguese skills needed to understand the link). To our English-speaking friends we like to say that it means "pin, go!" -- the main purpose of this package.
+
 
 -----------
 Basic usage
