@@ -8,10 +8,11 @@ import io
 import os
 
 pkgname = "pingo"
+version = "0.1.6"
 
 metadata = {
     "name": pkgname,
-    "version": "0.1.5",
+    "version": version,
     "author": "Pingo Team @ Garoa Hacker Clube",
     "author_email": "luciano at sign ramalho within the dot org tld",
     "url": "http://github.com/garoa/pingo",
@@ -60,3 +61,6 @@ metadata["classifiers"] = [
 metadata["packages"] = [metadata["name"]]
 
 setup(**metadata)
+
+# Upload to PyPI:
+# python setup.py sdist upload -r PyPI
