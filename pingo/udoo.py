@@ -32,9 +32,12 @@ DIGITAL_PIN_STATES = {HIGH: '1', LOW: '0'}
 class Udoo(Board):
 
     def __init__(self):
-
         Board.__init__(self)
         self.add_pins(self._list_pins())
+        #FIXME: decide what to do with enabling/disabling pins on board like
+        #the Udoo where they are always enabled
+        for pin in (p for p in self.pins.values() if isinstance(p, DigitalPin)):
+            pin.enabled = True
         self.pin_path_mask = '/sys/class/gpio/gpio%d/'
 
     def _list_pins(self):
@@ -64,5 +67,11 @@ class Udoo(Board):
         assert state in DIGITAL_PIN_STATES, '%r not in %r' % (mode, DIGITAL_PIN_STATES)
         with open(self._pin_state_filename(pin.gpio_id), "wb") as fp:
             fp.write(DIGITAL_PIN_STATES[state])
+            
+    def cleanup(self):
+        for pin in (p for p in self.pins.values() if isinstance(p, DigitalPin)):
+            if pin.mode == OUTPUT:
+                pin.low()
+                pin.set_mode(INPUT)
 
 

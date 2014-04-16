@@ -56,6 +56,7 @@ class DigitalPin(Pin):
     def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
         self.enabled = False
+        self.mode = INPUT
 
     def set_mode(self, mode):
         self.board._set_pin_mode(self, mode)
