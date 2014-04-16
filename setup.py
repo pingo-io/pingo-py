@@ -8,7 +8,7 @@ import io
 
 metadata = {
     "name": "pingo",
-    "version": "0.1",
+    "version": "0.1.1",
     "author": "Pingo Team @ Garoa Hacker Clube",
     "author_email": "luciano at sign ramalho within the dot org tld",
     "url": "http://github.com/garoa/pingo",
