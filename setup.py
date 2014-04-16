@@ -5,10 +5,13 @@
 
 from setuptools import setup
 import io
+import os
+
+pkgname = "pingo"
 
 metadata = {
-    "name": "pingo",
-    "version": "0.1.1",
+    "name": pkgname,
+    "version": "0.1.5",
     "author": "Pingo Team @ Garoa Hacker Clube",
     "author_email": "luciano at sign ramalho within the dot org tld",
     "url": "http://github.com/garoa/pingo",
@@ -16,8 +19,13 @@ metadata = {
     "license": "MIT",
 }
 
-with io.open('README.rst', encoding='utf-8') as readme:
-    metadata["long_description"] = readme.read()
+readme_path = os.path.join(os.path.dirname(__file__), 'README.rst')
+
+try:
+    with io.open(readme_path, encoding='utf-8') as readme:
+        metadata["long_description"] = readme.read()
+except IOError: # FIXME: how to reliably read the README.rst file in root installs?
+    metadata["long_description"] = 'See README.rst'
 
 metadata["classifiers"] = [
     'Development Status :: 2 - Pre-Alpha',

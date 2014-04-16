@@ -47,7 +47,7 @@ class Pin(object):
         cls_name = self.__class__.__name__
         location = self.location
         if hasattr(self, 'gpio_id'):
-            gpio_id = 'gpio' + self.gpio_id
+            gpio_id = 'gpio%s' % self.gpio_id
         else:
             gpio_id = ''
         return '<{cls_name} {gpio_id}@{location}>'.format(**locals())
