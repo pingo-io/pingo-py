@@ -4,6 +4,7 @@ from pingo.board import DigitalPin, GroundPin, VddPin
 class GhostBoard(Board):
 
     def __init__(self):
+        super(GhostBoard, self).__init__()
 
         pins = [
             GroundPin(self, 1),
@@ -13,11 +14,12 @@ class GhostBoard(Board):
 
         self.add_pins(pins)
 
+    def cleanup(self):
+        print('GhostBoard: cleaning up.')
+
     def _set_pin_mode(self, pin, mode):
         pass
 
     def _set_pin_state(self, pin, state):
         pass
 
-    def cleanup(self):
-        print('GhostBoard: cleaning up.')
