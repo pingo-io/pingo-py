@@ -1,6 +1,7 @@
 import os
 import sys
 import unittest
+import time
 
 sys.path.append("../../..")
 
@@ -30,6 +31,23 @@ class RaspberryBasics(RaspberryTest):
         pin = self.board.pins[7]
         pin.set_mode(pingo.OUTPUT)
         pin.high()
+
+class RaspberryDigitalInput(RaspberryTest):
+
+    def test_button(self):
+        pin = self.board.pins[8]
+        pin.set_mode(pingo.INPUT)
+
+        t0 = time.time()
+        delay = 5
+        output = 0
+        while output == 0:
+            output = pin.get()
+            if time.time() - t0 > delay:
+                break
+
+        msg = 'The button must be pressed in %ss for this test to pass' % delay
+        self.assertEqual(output, 1, msg)
 
 
 class RaspberryExceptions(RaspberryTest):

@@ -79,6 +79,11 @@ class DigitalPin(Pin):
     def high(self):
         self._change_state(HIGH)
 
+    def get(self):
+        if self.mode != INPUT:
+            raise WrongPinMode()
+
+        return self.board._get_pin_state(self)
 
 class GroundPin(Pin):
 

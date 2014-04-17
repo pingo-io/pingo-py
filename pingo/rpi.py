@@ -58,9 +58,11 @@ class RaspberryPi(pingo.Board):
 
     def _set_pin_mode(self, pin, mode):
         rpi_mode = GPIO.IN if mode == pingo.INPUT else GPIO.OUT
-        GPIO.setup(int(pin.gpio_id), rpi_mode)
+        GPIO.setup(int(pin.gpio_id), rpi_mode, pull_up_down=GPIO.PUD_DOWN)
 
     def _set_pin_state(self, pin, state):
         rpi_state = GPIO.HIGH if state == pingo.HIGH else GPIO.LOW
         GPIO.output(int(pin.gpio_id), rpi_state)
 
+    def _get_pin_state(self, pin):
+        return GPIO.input(int(pin.gpio_id))
