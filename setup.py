@@ -8,7 +8,7 @@ import io
 import os
 
 pkgname = "pingo"
-version = "0.1.7"
+version = "0.1.8"
 
 metadata = {
     "name": pkgname,
