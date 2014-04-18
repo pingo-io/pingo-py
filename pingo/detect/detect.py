@@ -1,3 +1,4 @@
+import os
 import platform
 
 import pingo
@@ -19,9 +20,17 @@ def MyBoard():
         print 'Using RaspberryPi...'
         return pingo.rpi.RaspberryPi()
 
-    if machine == 'armv7a':
-        print 'Using Udoo...'
-        return pingo.udoo.Udoo()
+    if machine == 'armv7l':
+        lsproc = os.listdir('/proc/')
+        adcx = [p for p in lsproc if p.startswith('adc')]
+
+        if len(adcx) == 6:
+            print 'Using PcDuino...'
+            return pingo.pcduino.PcDuino()
+
+        if len(adcx) == 0:
+            print 'Using Udoo...'
+            return pingo.udoo.Udoo()
 
     raise DetectionFailed()
 
