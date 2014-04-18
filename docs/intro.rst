@@ -14,7 +14,7 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 Basic usage
 -----------
 
-Blink.py on an UDOO board:
+``blink.py`` on an UDOO board:
 
 .. code-block:: python
 
@@ -31,7 +31,7 @@ Blink.py on an UDOO board:
         led_pin.low()
         sleep(1)
 
-To do the same on a Arduino Yún, just change the line were the board is instantiated, and the pin numbers as needed:
+To do the same on a Arduino Yún, just change the line where the board is instantiated, and the pin numbers as needed:
 
 .. code-block:: python
 
