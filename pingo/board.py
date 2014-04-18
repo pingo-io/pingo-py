@@ -2,8 +2,8 @@ import atexit
 
 HIGH = 'HIGH'
 LOW = 'LOW'
-INPUT = 'IN'
-OUTPUT = 'OUT'
+IN = 'IN'
+OUT = 'OUT'
 
 class DisabledPin(StandardError):
     value = 'Use pin.set_mode(mode) before using a pin.'
@@ -56,7 +56,7 @@ class DigitalPin(Pin):
     def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
         self.enabled = False
-        self.mode = INPUT
+        self.mode = IN
 
     def set_mode(self, mode):
         self.board._set_pin_mode(self, mode)
@@ -67,7 +67,7 @@ class DigitalPin(Pin):
         if not self.enabled:
             raise DisabledPin()
 
-        if self.mode != OUTPUT:
+        if self.mode != OUT:
             raise WrongPinMode()
 
         self.board._set_pin_state(self, state)
@@ -80,7 +80,7 @@ class DigitalPin(Pin):
         self._change_state(HIGH)
 
     def get(self):
-        if self.mode != INPUT:
+        if self.mode != IN:
             raise WrongPinMode()
 
         return self.board._get_pin_state(self)

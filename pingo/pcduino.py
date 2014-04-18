@@ -5,11 +5,11 @@ pcDuino v1 board
 
 import os
 
-from pingo.board import Board, DigitalPin, INPUT, OUTPUT
+from pingo.board import Board, DigitalPin, IN, OUT
 
 # /sys/class/gpio/gpio40/ --> Arduino pin #13
 DIGITAL_PINS_PATH = '/sys/devices/virtual/misc/gpio/'
-DIGITAL_PIN_MODES = {INPUT: '0', OUTPUT: '1'}
+DIGITAL_PIN_MODES = {IN: '0', OUT: '1'}
 
 class PcDuino(Board):
 
