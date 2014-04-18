@@ -8,7 +8,7 @@ http://www.udoo.org/ProjectsAndTutorials/linux-gpio-manipulation/
 
 import os
 
-from pingo.board import Board, DigitalPin, INPUT, OUTPUT, HIGH, LOW
+from pingo.board import Board, DigitalPin, IN, OUT, HIGH, LOW
 
 # there are no gaps in the Arduino digital pin numbering
 # of the Arduino Due embedded in the Udoo
@@ -26,7 +26,7 @@ DIGITAL_PINS_PATH = '/sys/class/gpio'
 DIGITAL_PIN_MASK = 'gpio%d'
 DIGITAL_PIN_STATE_FILENAME = 'value'
 DIGITAL_PIN_MODE_FILENAME = 'direction'
-DIGITAL_PIN_MODES = {INPUT: 'in', OUTPUT: 'out'}
+DIGITAL_PIN_MODES = {IN: 'in', OUT: 'out'}
 DIGITAL_PIN_STATES = {HIGH: '1', LOW: '0'}
 
 class Udoo(Board):
@@ -67,11 +67,11 @@ class Udoo(Board):
         assert state in DIGITAL_PIN_STATES, '%r not in %r' % (mode, DIGITAL_PIN_STATES)
         with open(self._pin_state_filename(pin.gpio_id), "wb") as fp:
             fp.write(DIGITAL_PIN_STATES[state])
-            
+
     def cleanup(self):
         for pin in (p for p in self.pins.values() if isinstance(p, DigitalPin)):
-            if pin.mode == OUTPUT:
+            if pin.mode == OUT:
                 pin.low()
-                pin.set_mode(INPUT)
+                pin.set_mode(IN)
 
 

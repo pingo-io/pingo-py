@@ -23,7 +23,7 @@ class BoardBasics(BoardTest):
 
     def test_led(self):
         pin = self.board.pins[13]
-        pin.set_mode(pingo.OUTPUT)
+        pin.set_mode(pingo.OUT)
         pin.high()
 
 
@@ -31,7 +31,7 @@ class BoardExceptions(BoardTest):
 
     def test_wrong_pin_mode(self):
         pin = self.board.pins[7]
-        pin.set_mode(pingo.INPUT)
+        pin.set_mode(pingo.IN)
         with self.assertRaises(pingo.WrongPinMode) as cm:
             pin.high()
 

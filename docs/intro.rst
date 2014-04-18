@@ -1,5 +1,5 @@
-pingo
-=====
+Introduction
+============
 
 Pingo provides a uniform API to program devices like the Raspberry Pi, BeagleBone Black, pcDuino etc. just like the Python DBAPI provides an uniform API for database programming in Python.
 
@@ -14,7 +14,7 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 Basic usage
 -----------
 
-Blink.py on an UDOO board:
+``blink.py`` on an UDOO board:
 
 .. code-block:: python
 
@@ -31,7 +31,7 @@ Blink.py on an UDOO board:
         led_pin.low()
         sleep(1)
 
-To do the same on a Arduino Yún, just change the line were the board is instantiated, and the pin numbers as needed:
+To do the same on a Arduino Yún, just change the line where the board is instantiated, and the pin numbers as needed:
 
 .. code-block:: python
 
@@ -49,11 +49,13 @@ To do the same on a Arduino Yún, just change the line were the board is instant
         sleep(1)
 
 
+In the examples above, ``pingo.udoo`` ``pingo.arduino.yun`` are drivers, and the respective ``Udoo`` and ``YunBridge`` are classes implementing the ``pingo.board.Board`` interface.
+
+.. _drivers-table:
+
 -------
 Drivers
 -------
-
-In the examples above, ``pingo.udoo`` ``pingo.arduino.yun`` are drivers, and the respective ``Udoo`` and ``YunBridge`` are classes implementing the ``pingo.board.Board`` interface.
 
 The following table lists the drivers currently planned or under development.
 
@@ -84,6 +86,9 @@ remote
 
 fake
     Pingo and user code run on host computer emulating a dummy board in software. Useful for testing base classes from ``board.py`` and for teaching and demonstration.
+
+
+.. _status-of-drivers:
 
 Status of drivers
 -----------------

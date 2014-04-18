@@ -29,14 +29,14 @@ class RaspberryBasics(RaspberryTest):
 
     def test_led(self):
         pin = self.board.pins[7]
-        pin.set_mode(pingo.OUTPUT)
+        pin.set_mode(pingo.OUT)
         pin.high()
 
 class RaspberryDigitalInput(RaspberryTest):
 
     def test_button(self):
         pin = self.board.pins[8]
-        pin.set_mode(pingo.INPUT)
+        pin.set_mode(pingo.IN)
 
         t0 = time.time()
         delay = 5
@@ -59,7 +59,7 @@ class RaspberryExceptions(RaspberryTest):
 
     def test_wrong_pin_mode_in(self):
         pin = self.board.pins[7]
-        pin.set_mode(pingo.INPUT)
+        pin.set_mode(pingo.IN)
         with self.assertRaises(pingo.WrongPinMode) as cm:
             pin.high()
 

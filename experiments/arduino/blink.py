@@ -1,13 +1,11 @@
-#!/usr/bin/env python
-# coding: utf-8
+from pyfirmata import Arduino
+from time import sleep
+import sys
 
-from pyun import *
-
-yun = YunBridge('192.168.2.9')
-yun.pinMode(13, OUTPUT)
+board = Arduino(sys.argv[1])
 
 while True:
-    yun.digitalWrite(13, 1)
-    yun.delay(1000)
-    yun.digitalWrite(13, 0)
-    yun.delay(1000)
+    board.digital[13].write(1)
+    sleep(.5)
+    board.digital[13].write(0)
+    sleep(.5)
