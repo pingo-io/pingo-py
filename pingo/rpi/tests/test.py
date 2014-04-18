@@ -65,7 +65,7 @@ class RaspberryExceptions(RaspberryTest):
 
     def test_wrong_pin_mode_out(self):
         pin = self.board.pins[7]
-        pin.set_mode(pingo.OUTPUT)
+        pin.set_mode(pingo.OUT)
         with self.assertRaises(pingo.WrongPinMode) as cm:
             pin.get()
 
