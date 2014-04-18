@@ -43,10 +43,10 @@ The steps are:
 4. Commit and push your changes to your fork.
 5. Use the Github Web interface to submit a pull request.
 6. If approved, your changes will be merged.
-7. You are now a `contributor`_ to Pingo! Celebrate.
+7. You are now a `contributor`_ to Pingo! Celebrate!!
 
 
-Clone the repository, create your examples in a board subdirectory, for example ``pingo\pcduino\examples\blink.py``.
+Clone the repository, create your examples in a board subdirectory, for example ``pingo/pcduino/examples/blink.py``.
 
 .. _Github: https://github.com
 .. _garoa/pingo repository: https://github.com/garoa/pingo
@@ -58,10 +58,13 @@ Clone the repository, create your examples in a board subdirectory, for example 
 Contribute to an existing driver
 ----------------------------------
 
-If a driver is at *level 0*, implementing analog input will take it to *level 1*, an important step (*level 1* is the minimum functionality needed for the classic Coding Dojo with Arduino-or-MiniPC invented at Garoa). Then there is *level 2* and other levels yet undefined.
+If a driver is at :ref:`level 0<status-of-drivers>`, implementing analog input will take it to :ref:`level 1<status-of-drivers>`, an important step (*level 1* is the minimum functionality needed for the classic Coding Dojo with Arduino-or-MiniPC invented at Garoa). Then there is :ref:`level 2<status-of-drivers>` and other levels yet to be defined.
 
 Within a driver level, we can always fix bugs or improve the performance.
 
+Before contributing to an existing driver, please coordinate with the other contributors. Send a message to the `mailing list`_ explaining what you intend to do and wait for some feedback: somebody may be working on the same driver, or have other ideas to help you.
+
+.. _mailing list: https://groups.google.com/forum/#!forum/pingo-io
 
 ----------------------------------
 Create new drivers
@@ -69,10 +72,10 @@ Create new drivers
 
 A growing number of boards capable of running Python is coming to market. Our goal is to have Pingo support all of them. 
 
-To create a new driver the best way to start may be to copy the module and tests of a similar board. For example, UDOO and pcDuino both use ``sysfs`` as the main means of controlling the GPIO pins. At this writing, there is no pcDuino driver but there is a *level 0* UDOO driver, so a *level 0* pcDuino driver can be created and tested in a few hours (by the way, analog input is much easier on pcDuino than on UDOO, so a *level 1* driver for the pcDuino would not take much longer. See the `experiments/pcduino/dojo/`_ directory).
+To create a new driver the best way to start may be to copy the module and tests of a similar board. For example, UDOO and pcDuino both use ``sysfs`` as the main means of controlling the GPIO pins. At this writing, there is no pcDuino driver but there is a :ref:`level 0<status-of-drivers>` UDOO driver, so a :ref:`level 0<status-of-drivers>` pcDuino driver can be created and tested in a few hours (by the way, analog input is much easier on pcDuino than on UDOO, so a :ref:`level 1<status-of-drivers>` driver for the pcDuino would not take much longer. See the `experiments/pcduino/dojo/`_ directory).
 
 .. _experiments/pcduino/dojo/: https://github.com/garoa/pingo/tree/master/experiments/pcduino/dojo
 
-The `experiments/`_ directory in the main repository has scripts in Python and other languages that show basic programming of the boards. Look in that directory for experiments that may help you get started, or create your own experiments there to understand how to interact with the board using Python.
+The `experiments/`_ directory in the main repository has scripts in Python and other languages that show basic programming of the boards. Look in that directory for code that may help you get started, or create your own experiments there to understand how to interact with the board using Python.
 
 .. _experiments/: https://github.com/garoa/pingo/tree/master/experiments
