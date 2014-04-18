@@ -1,5 +1,5 @@
-pingo
-=====
+Introduction
+============
 
 Pingo provides a uniform API to program devices like the Raspberry Pi, BeagleBone Black, pcDuino etc. just like the Python DBAPI provides an uniform API for database programming in Python.
 
