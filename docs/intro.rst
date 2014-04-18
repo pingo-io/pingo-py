@@ -49,11 +49,13 @@ To do the same on a Arduino Yún, just change the line were the board is instant
         sleep(1)
 
 
+In the examples above, ``pingo.udoo`` ``pingo.arduino.yun`` are drivers, and the respective ``Udoo`` and ``YunBridge`` are classes implementing the ``pingo.board.Board`` interface.
+
+.. _drivers-table:
+
 -------
 Drivers
 -------
-
-In the examples above, ``pingo.udoo`` ``pingo.arduino.yun`` are drivers, and the respective ``Udoo`` and ``YunBridge`` are classes implementing the ``pingo.board.Board`` interface.
 
 The following table lists the drivers currently planned or under development.
 
@@ -84,6 +86,9 @@ remote
 
 fake
     Pingo and user code run on host computer emulating a dummy board in software. Useful for testing base classes from ``board.py`` and for teaching and demonstration.
+
+
+.. _status-of-drivers:
 
 Status of drivers
 -----------------
