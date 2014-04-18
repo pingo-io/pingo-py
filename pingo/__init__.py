@@ -3,3 +3,4 @@ import rpi
 import ghost
 import udoo
 import pcduino
+import detect
