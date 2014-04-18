@@ -1,0 +1,1 @@
+from ghost import GhostBoard
