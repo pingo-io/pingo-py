@@ -1,6 +1,7 @@
 from pingo.board import Board
 from pingo.board import DigitalPin, GroundPin, VddPin
 
+
 class GhostBoard(Board):
 
     def __init__(self):
@@ -22,4 +23,3 @@ class GhostBoard(Board):
 
     def _set_pin_state(self, pin, state):
         pass
-

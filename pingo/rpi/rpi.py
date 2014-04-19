@@ -1,5 +1,3 @@
-import time
-
 import pingo
 
 # connector_p1_location: gpio_id
@@ -23,6 +21,9 @@ DIGITAL_PIN_MAP = {
     26: 7,
 }
 
+GPIO = None
+
+
 class RaspberryPi(pingo.Board):
 
     def __init__(self):
@@ -36,17 +37,15 @@ class RaspberryPi(pingo.Board):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(True)
 
-        pins = [
-                    pingo.VddPin(self, 1, 3.3),
-                    pingo.VddPin(self, 2, 5.0),
-                    pingo.VddPin(self, 4, 5.0),
-                    pingo.VddPin(self, 17, 3.3),
-        ]
+        pins = [pingo.VddPin(self, 1, 3.3),
+                pingo.VddPin(self, 2, 5.0),
+                pingo.VddPin(self, 4, 5.0),
+                pingo.VddPin(self, 17, 3.3)]
 
         pins += [pingo.GroundPin(self, n) for n in [6, 9, 14, 20, 25]]
 
         pins += [pingo.DigitalPin(self, location, gpio_id)
-                    for location, gpio_id in DIGITAL_PIN_MAP.items()]
+                 for location, gpio_id in DIGITAL_PIN_MAP.items()]
 
         self.add_pins(pins)
 

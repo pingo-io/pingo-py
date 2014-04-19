@@ -1,12 +1,15 @@
 import atexit
 
+
 HIGH = 'HIGH'
 LOW = 'LOW'
 IN = 'IN'
 OUT = 'OUT'
 
+
 class DisabledPin(StandardError):
     value = 'Use pin.set_mode(mode) before using a pin.'
+
 
 class WrongPinMode(StandardError):
     value = 'Operation not supported in current mode.'
@@ -51,6 +54,7 @@ class Pin(object):
             gpio_id = ''
         return '<{cls_name} {gpio_id}@{location}>'.format(**locals())
 
+
 class DigitalPin(Pin):
 
     def __init__(self, board, location, gpio_id=None):
@@ -80,10 +84,12 @@ class DigitalPin(Pin):
 
         return self.board._get_pin_state(self)
 
+
 class GroundPin(Pin):
 
     def __repr__(self):
         return '<%s>' % self.__class__.__name__
+
 
 class VddPin(Pin):
 
@@ -92,6 +98,5 @@ class VddPin(Pin):
         self.voltage = voltage  # e.g. 3.3, 5.0
 
     def __repr__(self):
-        return '<%s %0.1fV>' % (
-                self.__class__.__name__,
-                self.voltage)
+        return '<%s %0.1fV>' % (self.__class__.__name__,
+                                self.voltage)
