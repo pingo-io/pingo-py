@@ -8,12 +8,22 @@ class DetectionFailed(Exception):
         super(DetectionFailed, self).__init__()
         self.message = 'Pingo is not able to detect your board.'
 
+def _read_cpu_info():
+    with open('/proc/cpuinfo', 'r') as fp:
+        for line in fp:
+            if line.startswith('Hardware'):
+                key, value = tuple(line.split(':'))
+                return value.strip()
+
+
 
 def MyBoard():
     machine = platform.machine()
+    system = platform.system()
 
     if machine == 'x86_64':
         print 'Using GhostBoard...'
+        # TODO decide which board return
         return pingo.ghost.GhostBoard()
 
     if machine == 'armv6l':
@@ -21,16 +31,20 @@ def MyBoard():
         return pingo.rpi.RaspberryPi()
 
     if machine == 'armv7l':
-        lsproc = os.listdir('/proc/')
-        adcx = [p for p in lsproc if p.startswith('adc')]
 
-        if len(adcx) == 6:
-            print 'Using PcDuino...'
-            return pingo.pcduino.PcDuino()
+        if system == 'Linux':
 
-        if len(adcx) == 0:
-            print 'Using Udoo...'
-            return pingo.udoo.Udoo()
+            hardware = _read_cpu_info()
+            lsproc = os.listdir('/proc/')
+            adcx = [p for p in lsproc if p.startswith('adc')]
 
-    raise DetectionFailed()
+            if len(adcx) == 6:
+                print 'Using PcDuino...'
+                return pingo.pcduino.PcDuino()
+
+            if 'Generic AM33XX' in hardware:
+                print 'Using Beaglebone...'
+                return pingo.bbb.BeagleBoneBlack()
+
+        raise DetectionFailed()
 
