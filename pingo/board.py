@@ -32,9 +32,14 @@ class Board(object):
         This should be called to release the pins for other applications on
         some boards. It is called automatically when the script finishes.
 
-    Implementers of board drivers should call ``__init__`` and ``add_pins``
-    in their ``__init__`` implementations, should implement ``_set_pin_mode``
-    and ``_set_pin_state`` and, if needed, override ``cleanup``.
+    Implementations of ``Board`` subclasses should:
+
+    * Call ``super(«BoardSubclass», self).__init__()`` and
+      ``self.add_pins(«pins»)`` in their ``__init__`` method.
+
+    * Implement ``_set_pin_mode()`` and ``_set_pin_state()``.
+
+    * Override ``cleanup()``, if the board needs it.
 
     """
     __metaclass__ = ABCMeta
@@ -117,7 +122,7 @@ class Pin(object):
 
 
 class DigitalPin(Pin):
-    """Defines commmon interface to all suported pins.
+    """Defines commmon interface for all digital pins.
 
     Instance attributes of interest to end-users:
 
@@ -127,6 +132,9 @@ class DigitalPin(Pin):
     ``«pin».state``
         The current state of the pin (when in output mode):
         ``pingo.HIGH`` or ``pingo.LOW``.
+
+    Implementers of board drivers do not need to subclass this class
+    because pins delegate all board-dependend behavior to the board.
 
     """
 
