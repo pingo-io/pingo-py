@@ -55,18 +55,13 @@ class DigitalPin(Pin):
 
     def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
-        self.enabled = False
         self.mode = IN
 
     def set_mode(self, mode):
         self.board._set_pin_mode(self, mode)
         self.mode = mode
-        self.enabled = True
 
     def _change_state(self, state):
-        if not self.enabled:
-            raise DisabledPin()
-
         if self.mode != OUT:
             raise WrongPinMode()
 
