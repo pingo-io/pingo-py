@@ -46,5 +46,9 @@ def MyBoard():
                 print 'Using Beaglebone...'
                 return pingo.bbb.BeagleBoneBlack()
 
+            if 'SECO i.Mx6 UDOO Board' in hardware:
+                print 'Using Udoo...'
+                return pingo.udoo.Udoo()
+
         raise DetectionFailed()
 
