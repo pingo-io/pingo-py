@@ -48,6 +48,7 @@ To do the same on a Arduino Yún, just change the line were the board is instant
         led_pin.low()
         sleep(1)
 
+.. _drivers-table:
 
 -------
 Drivers
@@ -60,18 +61,19 @@ The following table lists the drivers currently planned or under development.
 ================ ======== =============== ======== ==================================================
 Board            Type     Module/Package  Status   Notes
 ================ ======== =============== ======== ==================================================
-Arduino Firmata  remote   arduino.firmata none     requires `firmata library`_ on any Arduino board
+Arduino Firmata  remote   arduino.firmata level 1  requires `firmata library`_ on any Arduino board
 Arduino Yún      on-board arduino.yun     experim. requires `Bridge sketch`_ on the Arduino Yún
 BeagleBone Black on-board bbb             experim.
 Fantasma         fake     ghost           level 0  not a real board, just a software fake for testing
 Intel Galileo    on-board galileo         none
-Raspberry Pi     on-board rpi             level 0
+Raspberry Pi     on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
 pcDuino          on-board pcduino         experim.
 UDOO             on-board udoo            level 0
 ================ ======== =============== ======== ==================================================
 
 .. _Firmata library: http://arduino.cc/en/reference/firmata
 .. _Bridge sketch: http://arduino.cc/en/Reference/YunBridgeLibrary
+.. _RPi.GPIO: https://pypi.python.org/pypi/RPi.GPIO
 
 Types of drivers
 ----------------
@@ -84,6 +86,8 @@ remote
 
 fake
     Pingo and user code run on host computer emulating a dummy board in software. Useful for testing base classes from ``board.py`` and for teaching and demonstration.
+
+.. _status-of-drivers:
 
 Status of drivers
 -----------------
