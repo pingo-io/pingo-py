@@ -7,7 +7,7 @@ led_locations = [7, 11, 13, 15, 19, 21, 24, 26]
 pins = [rpi.pins[loc] for loc in led_locations]
 
 for pin in pins:
-    pin.set_mode(pingo.OUT)
+    pin.mode = pingo.OUT
     pin.low()
 
 for pin in pins:

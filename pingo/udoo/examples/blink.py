@@ -3,7 +3,7 @@ from time import sleep
 
 board = pingo.udoo.Udoo()
 led_pin = board.pins[13]
-led_pin.set_mode(pingo.OUT)
+led_pin.mode = pingo.OUT
 
 while True:
     led_pin.high()
