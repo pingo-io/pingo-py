@@ -1,29 +1,28 @@
-set nohlsearch
-set ai
-set bg=dark
-set showmatch
-highlight SpecialKey ctermfg=DarkGray
-set listchars=tab:>-,trail:~
-set list
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set autoindent
-set smartindent
+filetype plugin on
+filetype indent on
 syntax on
-set listchars=tab:>-
-set listchars+=trail:.
-" Use the below highlight group when displaying bad whitespace is desired.
-highlight BadWhitespace ctermbg=red guibg=red
 
-" Display tabs at the beginning of a line in Python mode as bad.
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-" Make trailing whitespace be flagged as bad.
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-set ignorecase
-set smartcase
-map <C-t><up> :tabr<cr>
-map <C-t><down> :tabl<cr>
-map <C-t><left> :tabp<cr>
-map <C-t><right> :tabn<cr>
+" General configuration
+set encoding=utf-8
+set grepprg=grep\ -nH\ $*
+set showmode number ruler   " Aesthetics (numbers around and mode we're in)
+set nocompatible nomodeline " Use Vim defaults
+set ts=4 sw=4 et ai         " Indents with 4 spaces
+set history=50              " CLI history
+set bs=indent,eol,start     " Backspace for lines and indentation
+set ww=b,s,<,>,[,]          " Arrows & [back]space wordwraps between lines
+set tw=79 nowrap            " PEP-8 line break without visual wordwrapping
+
+" Whitespaces
+set list lcs=tab:¤·,trail:· " Shows TABs and trailing chars
+hi TABs ctermbg=Red ctermfg=LightRed guibg=Red guifg=LightRed term=italic
+hi TrSp ctermbg=DarkGray ctermfg=Red guibg=DarkGray guifg=Red term=italic
+call matchadd("TABs", "\t")      " All TABs but the trailing ones
+call matchadd("TrSp", "\\s\\+$") " Trailing TABs and spaces
+
+" Paste mouse selected text with Shift+Insert
+if has('gui_running')
+  map <S-Insert> <MiddleMouse>
+  map! <S-Insert> <MiddleMouse>
+endif
+
