@@ -3,39 +3,41 @@ import sys
 import unittest
 import time
 
-sys.path.append("../../..")
+sys.path.append(".")
+sys.path.append("..")
+sys.path.append("../..")
 
 import pingo
 
-class RaspberryTest(unittest.TestCase):
+class AnyBoardTest(unittest.TestCase):
 
     def setUp(self):
-        self.board = pingo.rpi.RaspberryPi()
+        self.board = pingo.detect.MyBoard()
 
     def tearDown(self):
         self.board.cleanup()
 
 
-class RaspberryBasics(RaspberryTest):
+class AnyBoardBasics(AnyBoardTest):
 
     def test_list_pins(self):
-        vdd_pin = self.board.pins[1]
+        vdd_pin = self.board.pins[2]
         self.assertIsInstance(vdd_pin, pingo.VddPin)
 
-        pin = self.board.pins[7]
+        pin = self.board.pins[13]
         self.assertIsInstance(pin, pingo.DigitalPin)
 
-        self.assertEqual(len(self.board.pins), 26)
+        #self.assertEqual(len(self.board.pins), 26)
 
     def test_led(self):
-        pin = self.board.pins[7]
+        pin = self.board.pins[13]
         pin.mode = pingo.OUT
         pin.high()
 
-class RaspberryDigitalInput(RaspberryTest):
+class AnyBoardDigitalInput(AnyBoardTest):
 
     def test_button(self):
-        pin = self.board.pins[8]
+        pin = self.board.pins[13]
         pin.mode = pingo.IN
 
         t0 = time.time()
@@ -50,26 +52,26 @@ class RaspberryDigitalInput(RaspberryTest):
         self.assertEqual(output, 1, msg)
 
 
-class RaspberryExceptions(RaspberryTest):
+class AnyBoardExceptions(AnyBoardTest):
 
+    @unittest.skip("Not every board needs this test")
     def test_disabled_pin(self):
-        pin = self.board.pins[7]
+        pin = self.board.pins[13]
         with self.assertRaises(pingo.DisabledPin) as cm:
             pin.high()
 
     def test_wrong_pin_mode_in(self):
-        pin = self.board.pins[7]
+        pin = self.board.pins[13]
         pin.mode = pingo.IN
         with self.assertRaises(pingo.WrongPinMode) as cm:
             pin.high()
 
     @unittest.skip("Discuss about this case")
     def test_wrong_pin_mode_out(self):
-        pin = self.board.pins[7]
+        pin = self.board.pins[13]
         pin.mode = pingo.OUT
         with self.assertRaises(pingo.WrongPinMode) as cm:
             pin.state
-
 
 
 if __name__ == '__main__':

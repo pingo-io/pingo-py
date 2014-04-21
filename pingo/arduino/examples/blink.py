@@ -14,7 +14,7 @@ ard = pingo.arduino.ArduinoFirmata(serial_port)
 print('Found: %r' % ard)
 
 led_pin = ard.pins[13]
-led_pin.set_mode(pingo.OUT)
+led_pin.mode = pingo.OUT
 
 while True:
     led_pin.high()

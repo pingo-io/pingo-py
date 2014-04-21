@@ -9,7 +9,7 @@ pins = [pin for _, pin in sorted(rpi.pins.items())
             if pin.location in led_locations]
 
 for pin in pins:
-    pin.set_mode(pingo.OUT)
+    pin.mode = pingo.OUT
 
 for pin in pins:
     pin.high()
