@@ -37,25 +37,19 @@ class RaspberryDigitalInput(RaspberryTest):
     def test_button(self):
         pin = self.board.pins[8]
         pin.mode = pingo.IN
-
+        state = pingo.LOW
         t0 = time.time()
         delay = 5
-        output = 0
-        while output == 0:
-            output = pin.state
+        while state == pingo.LOW:
+            state = pin.state
             if time.time() - t0 > delay:
                 break
 
         msg = 'The button must be pressed in %ss for this test to pass' % delay
-        self.assertEqual(output, 1, msg)
+        self.assertEqual(state, pingo.HIGH, msg)
 
 
 class RaspberryExceptions(RaspberryTest):
-
-    def test_disabled_pin(self):
-        pin = self.board.pins[7]
-        with self.assertRaises(pingo.DisabledPin) as cm:
-            pin.high()
 
     def test_wrong_pin_mode_in(self):
         pin = self.board.pins[7]

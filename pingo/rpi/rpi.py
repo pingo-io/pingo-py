@@ -23,7 +23,6 @@ DIGITAL_PIN_MAP = {
 
 GPIO = None
 
-
 class RaspberryPi(pingo.Board):
 
     def __init__(self):
@@ -64,4 +63,4 @@ class RaspberryPi(pingo.Board):
         GPIO.output(int(pin.gpio_id), rpi_state)
 
     def _get_pin_state(self, pin):
-        return GPIO.input(int(pin.gpio_id))
+        return pingo.HIGH if GPIO.input(int(pin.gpio_id)) else pingo.LOW
