@@ -15,7 +15,7 @@ Turn on a led for 1s
     <DigitalPin @13>
     >>>
     >>> led_pin = board.pins[13]
-    >>> led_pin.set_mode(pingo.OUT)
+    >>> led_pin.mode = pingo.OUT
     >>> led_pin.high()
     >>> led_pin.state
     'HIGH'
