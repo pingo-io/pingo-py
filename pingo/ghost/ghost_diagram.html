@@ -1,0 +1,77 @@
+<html>
+    <head>
+         <meta charset="utf-8">
+         <title>GhostBoard Diagram</title>
+         <style>
+             td {
+                width: 50px;
+             }
+         </style>
+         <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+         <script type="text/javascript">
+             $(function (){
+                board = $.getJSON("pins_state.json", function(json){
+                    for(var key in json) {
+                        if(json.hasOwnProperty(key)){
+                            pin_id = "#pin" + key
+                            $(pin_id).html(json[key])
+                        }
+                    }
+                });
+             });
+         </script>
+    </head>
+    <body>
+        <table border="1">
+            <tr>
+                <td>1</td>
+                <td id="pin1">-</td>
+                <td id="pin2">-</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td id="pin3">-</td>
+                <td id="pin4">-</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td id="pin5">-</td>
+                <td id="pin6">-</td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td id="pin7">-</td>
+                <td id="pin8">-</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td id="pin9">-</td>
+                <td id="pin10">-</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td id="pin11">-</td>
+                <td id="pin12">-</td>
+                <td>12</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td id="pin13">-</td>
+                <td id="pin14">-</td>
+                <td>14</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td id="pin15">-</td>
+                <td id="pin16">-</td>
+                <td>16</td>
+            </tr>
+        </table>
+    </body>
+</html>
+
