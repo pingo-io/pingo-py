@@ -37,7 +37,7 @@ class AnyBoardBasics(AnyBoardTest):
 class AnyBoardDigitalInput(AnyBoardTest):
 
     def test_button(self):
-        pin = self.board.pins[13]
+        pin = self.board.pins[7]
         pin.mode = pingo.IN
 
         t0 = time.time()
@@ -61,7 +61,7 @@ class AnyBoardExceptions(AnyBoardTest):
             pin.high()
 
     def test_wrong_pin_mode_in(self):
-        pin = self.board.pins[13]
+        pin = self.board.pins[7]
         pin.mode = pingo.IN
         with self.assertRaises(pingo.WrongPinMode) as cm:
             pin.high()
