@@ -6,21 +6,21 @@ import time
 import RPi.GPIO as GPIO
 import pingo
 
-# assegurar que a função cleanup será chamada na saída do script
+# call cleanup at program exit
 atexit.register(GPIO.cleanup)
 
-# usar numeração lógica dos pinos
+# use BCM logic numbering
 GPIO.setmode(GPIO.BCM)
 
 DISPLAY = [17, 4, 9, 11, 7, 27, 22, 10]
 
-SPI_CLK = 18
-SPI_MISO = 23
-SPI_MOSI = 24
-SPI_CS = 25
-conversor_ad = pingo.spi.Mcp3008(SPI_CLK, SPI_MISO, SPI_MOSI, SPI_CS)
+SPI_CLK = 18  # @12 (physical pin)
+SPI_MISO = 23 # @16
+SPI_MOSI = 24 # @18
+SPI_CS = 25   # @22 
+ad_converter = pingo.spi.Mcp3008(SPI_CLK, SPI_MISO, SPI_MOSI, SPI_CS)
 
-CANAL_POTENCIOMETRO = 1
+POT_CHANNEL = 1
 
 for led in DISPLAY[:6]:
     GPIO.setup(led, GPIO.OUT)
@@ -29,6 +29,6 @@ for led in DISPLAY[:6]:
 while True:
     for led in DISPLAY[:6]:
         GPIO.output(led, 1)
-        atraso = conversor_ad.read(CANAL_POTENCIOMETRO)/1000.0
-        time.sleep(atraso)
+        delay = ad_converter.read(POT_CHANNEL)/1000.0
+        time.sleep(delay)
         GPIO.output(led, 0)

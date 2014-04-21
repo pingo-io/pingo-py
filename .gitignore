@@ -1,3 +1,4 @@
+
 *.py[cod]
 
 # C extensions
@@ -40,6 +41,7 @@ nosetests.xml
 *___jb_old___
 .idea/
 *.sw[po]
+*.geany
 
 # Sphinx
 _build/
