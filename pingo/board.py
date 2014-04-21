@@ -141,19 +141,39 @@ class DigitalPin(Pin):
     def __init__(self, board, location, gpio_id=None):
 
         Pin.__init__(self, board, location, gpio_id)
-        self.mode = IN
+        self._mode = None
+        self._state = None
 
-    def set_mode(self, mode):
+    @property
+    def mode(self):
+        return self._mode
+
+    @mode.setter
+    def mode(self, value):
         """Set pin mode to one of: ``pingo.IN`` or ``pingo.OUT``"""
-        self.board._set_pin_mode(self, mode)
-        self.mode = mode
+        self.board._set_pin_mode(self, value)
+        self._mode = value
+
+    @property
+    def state(self):
+        if self.mode == IN:
+            self._state = self.board._get_pin_state(self)
+
+        return self._state
+
+    @state.setter
+    def state(self, value):
+        if self.mode != OUT:
+            raise WrongPinMode()
+
+        self.board._set_pin_state(self, value)
+        self._state = value
 
     def __change_state(self, state):
         """Private method used to delegate to ``board._set_pin_state``."""
         if self.mode != OUT:
             raise WrongPinMode()
 
-        self.board._set_pin_state(self, state)
         self.state = state
 
     def low(self):

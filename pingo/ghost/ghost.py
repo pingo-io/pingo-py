@@ -1,16 +1,14 @@
-from pingo.board import Board
-from pingo.board import DigitalPin, GroundPin, VddPin
+import pingo
 
-
-class GhostBoard(Board):
+class GhostBoard(pingo.Board):
 
     def __init__(self):
         super(GhostBoard, self).__init__()
 
         pins = [
-            GroundPin(self, 1),
-            VddPin(self, 2, 5.0),
-            DigitalPin(self, 13),
+            pingo.GroundPin(self, 1),
+            pingo.VddPin(self, 2, 5.0),
+            pingo.DigitalPin(self, 13),
         ]
 
         self.add_pins(pins)
@@ -23,3 +21,6 @@ class GhostBoard(Board):
 
     def _set_pin_state(self, pin, state):
         pass
+
+    def _get_pin_state(self, pin):
+        return pingo.LOW
