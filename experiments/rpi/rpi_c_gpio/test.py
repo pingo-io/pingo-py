@@ -9,8 +9,8 @@ for pin in b.pins.values():
 p = b.pins[3]
 p.set_mode(rpi.OUT)
 while 1:
-    p.high()
+    p.on()
     time.sleep(1)
-    p.low()
+    p.off()
     time.sleep(1)
 

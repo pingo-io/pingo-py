@@ -12,6 +12,6 @@ for pin in pins:
     pin.mode = pingo.OUT
 
 for pin in pins:
-    pin.high()
+    pin.on()
 
 time.sleep(2)

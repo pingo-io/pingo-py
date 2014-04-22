@@ -24,7 +24,7 @@ class BoardBasics(BoardTest):
     def test_led(self):
         pin = self.board.pins[13]
         pin.mode = pingo.OUT
-        pin.high()
+        pin.on()
 
 
 class BoardExceptions(BoardTest):
@@ -33,7 +33,7 @@ class BoardExceptions(BoardTest):
         pin = self.board.pins[7]
         pin.mode = pingo.IN
         with self.assertRaises(pingo.WrongPinMode) as cm:
-            pin.high()
+            pin.on()
 
 
 if __name__ == '__main__':

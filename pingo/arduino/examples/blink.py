@@ -17,7 +17,7 @@ led_pin = ard.pins[13]
 led_pin.mode = pingo.OUT
 
 while True:
-    led_pin.high()
+    led_pin.on()
     sleep(.5)
-    led_pin.low()
+    led_pin.off()
     sleep(.5)

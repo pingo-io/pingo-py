@@ -10,10 +10,10 @@ pins = [rpi.pins[loc] for loc in led_locations[:6]]
 
 for pin in pins:
     pin.mode = pingo.OUT
-    pin.low()
+    pin.off()
 
 while True:
     for pin in pins:
-        pin.high()
+        pin.on()
         sleep(.04)
-        pin.low()
+        pin.off()

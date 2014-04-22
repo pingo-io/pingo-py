@@ -16,11 +16,11 @@ Turn on a led for 1s
   >>>
   >>> led_pin = board.pins[11]
   >>> led_pin.set_mode(pingo.OUT)
-  >>> led_pin.high()
+  >>> led_pin.on()
   >>> led_pin.state
   1
   >>> sleep(1)  # 1 second
-  >>> led_pin.low()
+  >>> led_pin.off()
   >>> led_pin.state
   0
   >>> board.cleanup()

@@ -26,9 +26,9 @@ Basic usage
     led_pin.set_mode(pingo.OUT)
 
     while True:
-        led_pin.high()
+        led_pin.on()
         sleep(1)
-        led_pin.low()
+        led_pin.off()
         sleep(1)
 
 To do the same on a Arduino Yún, just change the line where the board is instantiated, and the pin numbers as needed:
@@ -43,9 +43,9 @@ To do the same on a Arduino Yún, just change the line where the board is instan
     led_pin.set_mode(pingo.OUT)
 
     while True:
-        led_pin.high()
+        led_pin.on()
         sleep(1)
-        led_pin.low()
+        led_pin.off()
         sleep(1)
 
 

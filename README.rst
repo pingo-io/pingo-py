@@ -26,9 +26,9 @@ Blink.py on an UDOO board:
     led_pin.set_mode(pingo.OUT)
 
     while True:
-        led_pin.high()
+        led_pin.on()
         sleep(1)
-        led_pin.low()
+        led_pin.off()
         sleep(1)
 
 To do the same on a Arduino Yún, just change the line were the board is instantiated, and the pin numbers as needed:
@@ -43,9 +43,9 @@ To do the same on a Arduino Yún, just change the line were the board is instant
     led_pin.set_mode(pingo.OUT)
 
     while True:
-        led_pin.high()
+        led_pin.on()
         sleep(1)
-        led_pin.low()
+        led_pin.off()
         sleep(1)
 
 .. _drivers-table:

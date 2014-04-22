@@ -30,7 +30,7 @@ class RaspberryBasics(RaspberryTest):
     def test_led(self):
         pin = self.board.pins[7]
         pin.mode = pingo.OUT
-        pin.high()
+        pin.on()
 
 class RaspberryDigitalInput(RaspberryTest):
 
@@ -55,7 +55,7 @@ class RaspberryExceptions(RaspberryTest):
         pin = self.board.pins[7]
         pin.mode = pingo.IN
         with self.assertRaises(pingo.WrongPinMode) as cm:
-            pin.high()
+            pin.on()
 
     @unittest.skip("Discuss about this case")
     def test_wrong_pin_mode_out(self):

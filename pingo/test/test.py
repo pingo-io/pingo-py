@@ -32,7 +32,7 @@ class AnyBoardBasics(AnyBoardTest):
     def test_led(self):
         pin = self.board.pins[13]
         pin.mode = pingo.OUT
-        pin.high()
+        pin.on()
 
 class AnyBoardDigitalInput(AnyBoardTest):
 
@@ -58,13 +58,13 @@ class AnyBoardExceptions(AnyBoardTest):
     def test_disabled_pin(self):
         pin = self.board.pins[13]
         with self.assertRaises(pingo.DisabledPin) as cm:
-            pin.high()
+            pin.on()
 
     def test_wrong_pin_mode_in(self):
         pin = self.board.pins[7]
         pin.mode = pingo.IN
         with self.assertRaises(pingo.WrongPinMode) as cm:
-            pin.high()
+            pin.on()
 
     @unittest.skip("Discuss about this case")
     def test_wrong_pin_mode_out(self):

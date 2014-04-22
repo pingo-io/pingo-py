@@ -122,10 +122,10 @@ class Pin(object):
 
 
 class DigitalPin(Pin):
-    """Defines commmon interface for all digital pins.
+    """Defines common interface for all digital pins.
 
     Implementers of board drivers do not need to subclass this class
-    because pins delegate all board-dependend behavior to the board.
+    because pins delegate all board-dependent behavior to the board.
     """
 
     def __init__(self, board, location, gpio_id=None):
@@ -160,13 +160,16 @@ class DigitalPin(Pin):
         self.board._set_pin_state(self, value)
         self._state = value
 
-    def low(self):
+    def off(self):
         """Set voltage of pin to ``pingo.LOW`` (GND)."""
         self.state = LOW
 
-    def high(self):
+    def on(self):
         """Set state of the pin to ``pingo.HIGH`` (Vcc)."""
         self.state = HIGH
+
+    def toggle(self):
+        self.state = HIGH if self.state == LOW else LOW
 
 
 class GroundPin(Pin):
