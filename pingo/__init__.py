@@ -8,6 +8,3 @@ import pcduino
 import arduino
 import detect
 import bbb
-
-# components
-import spi

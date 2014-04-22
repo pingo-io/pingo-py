@@ -124,18 +124,8 @@ class Pin(object):
 class DigitalPin(Pin):
     """Defines commmon interface for all digital pins.
 
-    Instance attributes of interest to end-users:
-
-    ``«pin».mode``
-        The current mode of the pin: ``pingo.IN`` or ``pingo.OUT``.
-
-    ``«pin».state``
-        The current state of the pin (when in output mode):
-        ``pingo.HIGH`` or ``pingo.LOW``.
-
     Implementers of board drivers do not need to subclass this class
     because pins delegate all board-dependend behavior to the board.
-
     """
 
     def __init__(self, board, location, gpio_id=None):
@@ -146,17 +136,17 @@ class DigitalPin(Pin):
 
     @property
     def mode(self):
+        """[property] Get/set pin mode to ``pingo.IN`` or ``pingo.OUT``"""
         return self._mode
 
     @mode.setter
     def mode(self, value):
-        """Set pin mode to one of: ``pingo.IN`` or ``pingo.OUT``"""
         self.board._set_pin_mode(self, value)
         self._mode = value
 
     @property
     def state(self):
-        """Get state of pin: ``pingo.HIGH`` or ``pingo.LOW``"""
+        """[property] Get/set pin state to ``pingo.HIGH`` or ``pingo.LOW``"""
         if self.mode == IN:
             self._state = self.board._get_pin_state(self)
 
