@@ -26,16 +26,16 @@ class GhostBoard(pingo.Board):
         print('GhostBoard: cleaning up.')
 
     def _set_pin_mode(self, pin, mode):
-        pass
+        print('GhostBoard: %r mode -> %s' % (pin, mode))
 
     def _set_pin_state(self, pin, state):
+        print('GhostBoard: %r state -> %s' % (pin, state))
         _state = 1 if state == pingo.HIGH else 0
         with open(PINS_STATE_FILEPATH, 'r') as fp:
             pins_state = json.load(fp)
             pins_state[str(pin.location)] = _state
 
         with open(PINS_STATE_FILEPATH, 'w') as fp:
-            print pins_state
             json.dump(pins_state, fp, indent=4)
 
     def _get_pin_state(self, pin):
