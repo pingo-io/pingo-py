@@ -37,19 +37,19 @@ class AnyBoardBasics(AnyBoardTest):
 class AnyBoardDigitalInput(AnyBoardTest):
 
     def test_button(self):
-        pin = self.board.pins[7]
+        pin = self.board.pins[8]
         pin.mode = pingo.IN
-
+        output = pingo.LOW
         t0 = time.time()
         delay = 5
-        output = 0
-        while output == 0:
+
+        while output == pingo.LOW:
             output = pin.state
             if time.time() - t0 > delay:
                 break
 
         msg = 'The button must be pressed in %ss for this test to pass' % delay
-        self.assertEqual(output, 1, msg)
+        self.assertEqual(output, pingo.HIGH, msg)
 
 
 class AnyBoardExceptions(AnyBoardTest):

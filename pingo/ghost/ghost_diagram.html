@@ -10,7 +10,7 @@
          <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
          <script type="text/javascript">
              $(function (){
-                board = $.getJSON("pins_state.json", function(json){
+                board = $.getJSON("pin_states.json", function(json){
                     for(var key in json) {
                         if(json.hasOwnProperty(key)){
                             pin_id = "#pin" + key
