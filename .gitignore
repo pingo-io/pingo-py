@@ -45,3 +45,6 @@ nosetests.xml
 
 # Sphinx
 _build/
+
+# Pingo generated files
+pin_states.json
