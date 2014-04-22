@@ -17,6 +17,7 @@ class GhostBoard(pingo.Board):
             pingo.GroundPin(self, 1),
             pingo.VddPin(self, 2, 5.0),
             pingo.DigitalPin(self, 7),
+            pingo.DigitalPin(self, 8),
             pingo.DigitalPin(self, 13),
         ])
 
@@ -29,8 +30,8 @@ class GhostBoard(pingo.Board):
             in self.pins.iteritems()
         }
 
-        # Pin 7 starts on HIGH
-        pin_states[7] = 1
+        # Pin 8 starts on HIGH
+        pin_states[8] = 1
 
         with open(PIN_STATES_FILEPATH, 'w') as fp:
             json.dump(pin_states, fp, indent=4)
@@ -56,4 +57,5 @@ class GhostBoard(pingo.Board):
         with open(PIN_STATES_FILEPATH, 'r') as fp:
             pin_states = json.load(fp)
             state = pin_states[str(pin.location)]
-        return state
+        return  pingo.HIGH if state else pingo.LOW
+
