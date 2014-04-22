@@ -14,13 +14,24 @@ class GhostBoard(pingo.Board):
     def __init__(self):
         super(GhostBoard, self).__init__()
 
-        pins = {
-                pingo.GroundPin(self, 1),
-                pingo.VddPin(self, 2, 5.0),
-                pingo.DigitalPin(self, 7),
-                pingo.DigitalPin(self, 8),
-                pingo.DigitalPin(self, 13),
-            }
+        pins = set([
+            pingo.GroundPin(self, 1),
+            pingo.VddPin(self, 2, 5.0),
+            pingo.DigitalPin(self, 3),
+            pingo.DigitalPin(self, 4),
+            pingo.DigitalPin(self, 5),
+            pingo.DigitalPin(self, 6),
+            pingo.DigitalPin(self, 7),
+            pingo.DigitalPin(self, 8),
+            pingo.DigitalPin(self, 9),
+            pingo.DigitalPin(self, 10),
+            pingo.DigitalPin(self, 11),
+            pingo.DigitalPin(self, 12),
+            pingo.DigitalPin(self, 13),
+            pingo.DigitalPin(self, 14),
+            pingo.GroundPin(self, 15),
+            pingo.VddPin(self, 16, 3.3),
+        ])
 
         self.add_pins(pins)
 
