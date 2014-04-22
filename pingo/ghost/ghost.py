@@ -8,23 +8,24 @@ PIN_STATES_FILEPATH = os.path.join(
             os.path.abspath(__file__)
         ), 'pin_states.json')
 
+
 class GhostBoard(pingo.Board):
 
     def __init__(self):
         super(GhostBoard, self).__init__()
 
-        pins = set([
-            pingo.GroundPin(self, 1),
-            pingo.VddPin(self, 2, 5.0),
-            pingo.DigitalPin(self, 7),
-            pingo.DigitalPin(self, 8),
-            pingo.DigitalPin(self, 13),
-        ])
+        pins = {
+                pingo.GroundPin(self, 1),
+                pingo.VddPin(self, 2, 5.0),
+                pingo.DigitalPin(self, 7),
+                pingo.DigitalPin(self, 8),
+                pingo.DigitalPin(self, 13),
+            }
 
         self.add_pins(pins)
 
         pin_states = {
-            # All pins start on LOW
+            # All pins start on LOW FIXME: use "LOW" instead of 0
             location: 0 if hasattr(pin, 'state') else None
             for location, pin
             in self.pins.iteritems()
@@ -35,7 +36,6 @@ class GhostBoard(pingo.Board):
 
         with open(PIN_STATES_FILEPATH, 'w') as fp:
             json.dump(pin_states, fp, indent=4)
-
 
     def cleanup(self):
         print('GhostBoard: cleaning up.')
