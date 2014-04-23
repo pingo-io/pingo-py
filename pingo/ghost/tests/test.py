@@ -23,9 +23,12 @@ class GhostBoardTest(unittest.TestCase):
 
 class GhostBoardBasics(GhostBoardTest):
 
-    self.test_list_pins = level0.test_list_pins
-    self.test_led = level0.test_led
-    self.button = level0.test_button
+    def __init__(self, *args, **kwargs):
+        super(GhostBoardTest, self).__init__(*args, **kwargs)
+
+        self.test_list_pins = level0.test_list_pins
+        self.test_led = level0.test_led
+        self.button = level0.test_button
 
 if __name__ == '__main__':
     unittest.main()
