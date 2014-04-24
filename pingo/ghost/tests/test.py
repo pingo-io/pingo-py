@@ -6,6 +6,7 @@ import time
 import pingo
 from pingo.test import level0
 
+
 class GhostBoardTest(unittest.TestCase):
 
     def setUp(self):
@@ -21,6 +22,7 @@ class GhostBoardTest(unittest.TestCase):
 
 class GhostBoardBasics(GhostBoardTest, level0.BoardBasics):
     pass
+
 
 class GhostBoardExceptions(GhostBoardTest, level0.BoardExceptions):
     pass
