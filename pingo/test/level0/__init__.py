@@ -1,1 +1,2 @@
-from cases import *
+from cases import BoardBasics
+from cases import BoardExceptions

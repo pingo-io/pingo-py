@@ -3,8 +3,6 @@ import sys
 import unittest
 import time
 
-#sys.path.append('../../..')
-
 import pingo
 from pingo.test import level0
 
@@ -21,15 +19,12 @@ class GhostBoardTest(unittest.TestCase):
         self.board.cleanup()
 
 
-class GhostBoardBasics(GhostBoardTest):
+class GhostBoardBasics(GhostBoardTest, level0.BoardBasics):
+    pass
 
-    def __init__(self, *args, **kwargs):
-        super(GhostBoardTest, self).__init__(*args, **kwargs)
+class GhostBoardExceptions(GhostBoardTest, level0.BoardExceptions):
+    pass
 
-        self.test_list_pins = level0.test_list_pins
-        self.test_led = level0.test_led
-        self.button = level0.test_button
 
 if __name__ == '__main__':
     unittest.main()
-

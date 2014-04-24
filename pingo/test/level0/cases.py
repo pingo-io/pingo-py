@@ -15,53 +15,69 @@ the following atributes on your TestCase setUp:
     self.total_pins = 26
 '''
 
-def test_list_pins(self):
+class BoardBasics(object):
+    def test_list_pins(self):
+        vdd_pin = self.board.pins[self.vdd_pin_number]
+        self.assertIsInstance(vdd_pin, pingo.VddPin)
 
-    vdd_pin = self.board.pins[self.vdd_pin_number]
-    self.assertIsInstance(vdd_pin, pingo.VddPin)
+        pin = self.board.pins[self.digital_output_pin_number]
+        self.assertIsInstance(pin, pingo.DigitalPin)
 
-    pin = self.board.pins[self.digital_output_pin_number]
-    self.assertIsInstance(pin, pingo.DigitalPin)
-
-    self.assertEqual(len(self.board.pins), self.total_pins)
-
-
-def test_led(self):
-    pin = self.board.pins[self.digital_output_pin_number]
-    pin.mode = pingo.OUT
-    pin.on()
+        self.assertEqual(len(self.board.pins), self.total_pins)
 
 
-def test_button(self):
-    pin = self.board.pins[self.digital_input_pin_number]
-    pin.mode = pingo.IN
-    output = pingo.LOW
-    t0 = time.time()
-    delay = 5
+    def test_led(self):
+        pin = self.board.pins[self.digital_output_pin_number]
+        pin.mode = pingo.OUT
+        pin.on()
 
-    while output == pingo.LOW:
+    @unittest.skip("Not automatic enough.")
+    def test_button(self):
+        pin = self.board.pins[self.digital_input_pin_number]
+        pin.mode = pingo.IN
+        output = pingo.LOW
+        t0 = time.time()
+        delay = 5
+
+        while output == pingo.LOW:
+            output = pin.state
+            if time.time() - t0 > delay:
+                break
+
+        msg = 'The button must be pressed in %ss for this test to pass' % delay
+        self.assertEqual(output, pingo.HIGH, msg)
+
+    def test_jumpwire(self):
+        ''' Wire this DigitalPin directly into VDD '''
+        pin = self.board.pins[self.digital_input_pin_number]
+        pin.mode = pingo.IN
         output = pin.state
-        if time.time() - t0 > delay:
-            break
 
-    msg = 'The button must be pressed in %ss for this test to pass' % delay
-    self.assertEqual(output, pingo.HIGH, msg)
+        self.assertEqual(output, pingo.HIGH)
 
 
-def test_disabled_pin(self):
-    pin = self.board.pins[digital_output_pin_number]
-    with self.assertRaises(pingo.DisabledPin) as cm:
-        pin.on()
 
-def test_wrong_pin_mode_in(self):
-    pin = self.board.pins[digital_input_pin_number]
-    pin.mode = pingo.IN
-    with self.assertRaises(pingo.WrongPinMode) as cm:
-        pin.on()
+class BoardExceptions(object):
 
-def test_wrong_pin_mode_out(self):
-    pin = self.board.pins[digital_output_pin_number]
-    pin.mode = pingo.OUT
-    with self.assertRaises(pingo.WrongPinMode) as cm:
-        pin.state
+    def test_disabled_pin(self):
+        pin = self.board.pins[self.digital_output_pin_number]
+        with self.assertRaises(pingo.DisabledPin) as cm:
+            pin.on()
+
+    def test_wrong_pin_mode_in(self):
+        pin = self.board.pins[self.digital_input_pin_number]
+        pin.mode = pingo.IN
+
+        with self.assertRaises(pingo.WrongPinMode) as cm:
+            pin.on()
+
+        with self.assertRaises(pingo.WrongPinMode) as cm:
+            pin.state = pingo.HIGH
+
+
+#    def test_wrong_pin_mode_out(self):
+#        pin = self.board.pins[digital_output_pin_number]
+#        pin.mode = pingo.OUT
+#        with self.assertRaises(pingo.WrongPinMode) as cm:
+#            pin.state
 
