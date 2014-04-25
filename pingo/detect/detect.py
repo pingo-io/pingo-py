@@ -18,11 +18,29 @@ def _read_cpu_info():
                 return value.strip()
 
 
+def _find_arduino_dev():
+    device = []
+    for dev in os.listdir('/dev/'):
+        if ('ttyUSB' in dev) or ('ttyACM' in dev):
+            device.append(dev)
+
+    if len(device) == 1:
+        return os.path.join(os.path.sep, 'dev', device[0])
+
+    return False
+
+
 def MyBoard():
     machine = platform.machine()
     system = platform.system()
 
     if machine == 'x86_64':
+        if system == 'Linux':
+            # TODO: Try to find 'Arduino' inside dmesg output
+            device = _find_arduino_dev()
+            if device:
+                return pingo.arduino.ArduinoFirmata(device)
+
         print('Using GhostBoard...')
         # TODO decide which board return
         return pingo.ghost.GhostBoard()

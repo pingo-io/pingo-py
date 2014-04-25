@@ -61,7 +61,7 @@ class BoardExceptions(object):
 
     def test_disabled_pin(self):
         pin = self.board.pins[self.digital_output_pin_number]
-        with self.assertRaises(pingo.DisabledPin) as cm:
+        with self.assertRaises(pingo.WrongPinMode) as cm:
             pin.on()
 
     def test_wrong_pin_mode_in(self):
