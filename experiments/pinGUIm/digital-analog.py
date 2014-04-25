@@ -7,12 +7,24 @@ except:
 from Tkinter import N, S, W, E
 
 
-class GuiFrame(object):
+class PinFrame(object):
     def __init__(self, root):
         _frame = ttk.Frame(root, padding="3 3 12 12")
         _frame.columnconfigure(0, weight=1)
         _frame.rowconfigure(0, weight=1)
         self.frame = _frame
+
+
+class VddGndFrame(PinFrame):
+    def __init__(self, root, volage):
+        super(VddGndFrame, self).__init__(root)
+        label = "VDD Pin %dV" % volage
+        ttk.Label(self.frame, text=label).grid(column=0, row=0, sticky=W)
+
+
+class GpioFrame(PinFrame):
+    def __init__(self, root):
+        super(GpioFrame, self).__init__(root)
 
         _state = Tkinter.StringVar()
         _state.set("0")
@@ -42,7 +54,7 @@ class GuiFrame(object):
             self.pin_widget.configure(state='disabled')
 
 
-class DigitalGuiFrame(GuiFrame):
+class DigitalGuiFrame(GpioFrame):
     def __init__(self, root):
         super(DigitalGuiFrame, self).__init__(root)
         ttk.Label(self.frame, text="DigitalPin X").grid(column=0, row=0, sticky=W)
@@ -53,7 +65,7 @@ class DigitalGuiFrame(GuiFrame):
         ttk.Label(self.frame, textvariable=self.state).grid(column=1, row=0, sticky=W)
 
 
-class AnalogGuiFrame(GuiFrame):
+class AnalogGuiFrame(GpioFrame):
     def __init__(self, root):
         super(AnalogGuiFrame, self).__init__(root)
         ttk.Label(self.frame, text="AnalogPin X").grid(column=0, row=0, sticky=W)
@@ -70,11 +82,13 @@ class pinGUIm(object):
         self.root.title("pingo :: pinGUIm")
         self.root.geometry("390x240")
 
+        vf = VddGndFrame(self.root, 5)
         df = DigitalGuiFrame(self.root)
         af = AnalogGuiFrame(self.root)
 
         df.frame.grid(column=0, row=0, sticky=(N, W, E, S), padx=15, pady=15)
         af.frame.grid(column=0, row=1, sticky=(N, W, E, S), padx=15, pady=0)
+        vf.frame.grid(column=0, row=2, sticky=(N, W, E, S), padx=15, pady=15)
 
 
 gui = pinGUIm()
