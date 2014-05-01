@@ -35,12 +35,11 @@ class GhostBoard(pingo.Board):
 
         self.add_pins(pins)
 
-        pin_states = {
-            # All pins start on LOW FIXME: use "LOW" instead of 0
-            location: 0 if hasattr(pin, 'state') else None
-            for location, pin
-            in self.pins.iteritems()
-        }
+        pin_states = {}
+        # All pins start on LOW 
+        # FIXME: use "LOW" instead of 0
+        for location, pin in self.pins.iteritems():
+            pin_states[location] = 0 if hasattr(pin, 'state') else None
 
         # Pin 8 starts on HIGH
         pin_states[8] = 1
