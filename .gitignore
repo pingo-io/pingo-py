@@ -48,3 +48,4 @@ _build/
 
 # Pingo generated files
 pin_states.json
+test_output

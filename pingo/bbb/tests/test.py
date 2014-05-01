@@ -6,11 +6,10 @@ import time
 import pingo
 from pingo.test import level0
 
-
-class UdooTest(unittest.TestCase):
+class BeagleBoneBlackTest(unittest.TestCase):
 
     def setUp(self):
-        self.board = pingo.udoo.Udoo()
+        self.board = pingo.bbb.BeagleBoneBlack()
         self.vdd_pin_number = 0
         self.digital_output_pin_number = 0
         self.digital_input_pin_number = 0
@@ -20,11 +19,10 @@ class UdooTest(unittest.TestCase):
         self.board.cleanup()
 
 
-class UdooBasics(UdooTest, level0.BoardBasics):
+class GhostBoardBasics(BeagleBoneBlackTest, level0.BoardBasics):
     pass
 
-
-class UdooExceptions(UdooTest, level0.BoardExceptions):
+class GhostBoardExceptions(BeagleBoneBlackTest, level0.BoardExceptions):
     pass
 
 

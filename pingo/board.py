@@ -11,10 +11,6 @@ IN = 'IN'
 OUT = 'OUT'
 
 
-class DisabledPin(Exception):
-    value = 'Use pin.mode = MODE before using a pin.'
-
-
 class WrongPinMode(Exception):
     value = 'Operation not supported in current mode.'
 

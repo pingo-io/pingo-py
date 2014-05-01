@@ -3,8 +3,6 @@ import sys
 import unittest
 import time
 
-sys.path.append("../../..")
-
 import pingo
 
 
