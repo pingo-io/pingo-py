@@ -66,7 +66,10 @@ class ArduinoFirmata(Board):
         firmata_pin = self.firmata.analog[analog_id]
         if not firmata_pin.reporting:
             firmata_pin.enable_reporting()
-        return firmata_pin.read()
+        value = firmata_pin.read()
+        while value is None:
+            value = firmata_pin.read()
+        return value
 
 
 
