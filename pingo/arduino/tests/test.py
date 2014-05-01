@@ -19,10 +19,10 @@ class ArduinoFirmataTest(unittest.TestCase):
         self.board.cleanup()
 
 
-class GhostBoardBasics(ArduinoFirmataTest, level0.BoardBasics):
+class ArduinoBasics(ArduinoFirmataTest, level0.BoardBasics):
     pass
 
-class GhostBoardExceptions(ArduinoFirmataTest, level0.BoardExceptions):
+class ArduinoExceptions(ArduinoFirmataTest, level0.BoardExceptions):
     pass
 
 

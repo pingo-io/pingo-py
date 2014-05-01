@@ -7,8 +7,8 @@ import pingo
 
 
 '''
-In order to use this set of cases, it is necessery to set
-the following atributes on your TestCase setUp:
+In order to use this set of cases, it is necessary to set
+the following attributes on your TestCase setUp:
     self.vdd_pin_number = 2
     self.digital_output_pin_number = 13
     self.digital_input_pin_number = 8

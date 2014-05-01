@@ -1,4 +1,5 @@
 import os
+import glob
 import platform
 
 import pingo
@@ -18,15 +19,20 @@ def _read_cpu_info():
                 return value.strip()
 
 
-def _find_arduino_dev():
-    device = []
-    for dev in os.listdir('/dev/'):
-        if ('ttyUSB' in dev) or ('ttyACM' in dev):
-            device.append(dev)
+def _find_arduino_dev(system):
+    if system == 'Linux':
+        # TODO: filter possible devices with glob
+        devices = []
+        for dev in os.listdir('/dev/'):
+            if ('ttyUSB' in dev) or ('ttyACM' in dev):
+                devices.append(dev)
+        if len(devices) == 1:
+            return os.path.join(os.path.sep, 'dev', devices[0])
 
-    if len(device) == 1:
-        return os.path.join(os.path.sep, 'dev', device[0])
-
+    elif system == 'Darwin':
+        devices = glob.glob('/dev/tty.usbmodem*')
+        if len(devices) == 1:
+            return os.path.join(os.path.sep, 'dev', devices[0])
     return False
 
 
@@ -35,9 +41,9 @@ def MyBoard():
     system = platform.system()
 
     if machine == 'x86_64':
-        if system == 'Linux':
+        if system in ['Linux', 'Darwin']:
             # TODO: Try to find 'Arduino' inside dmesg output
-            device = _find_arduino_dev()
+            device = _find_arduino_dev(system)
             if device:
                 return pingo.arduino.ArduinoFirmata(device)
 
