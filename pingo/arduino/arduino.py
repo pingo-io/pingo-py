@@ -3,13 +3,24 @@
 Arduino
 """
 
-from pingo.board import Board, DigitalPin, IN, OUT, HIGH, LOW
+import platform
+
+from pingo.board import Board, DigitalPin, AnalogPin, IN, OUT, HIGH, LOW
+from pingo.detect import detect
 
 DIGITAL_PIN_MODES = {IN: 0, OUT: 1}
 DIGITAL_PIN_STATES = {HIGH: 1, LOW: 0}
 LEN_DIGITAL_PINS = 14  # FIXME: this is not true for all Arduino boards
+LEN_ANALOG_PINS = 6  # FIXME: this is not true for all Arduino boards
 # FIXME: Firmata provides board info, but pyFirmata does not support this
 # feature yet
+
+
+def get_arduino():
+    serial_port = detect._find_arduino_dev(platform.system())
+    if not serial_port:
+        raise LookupError('Serial port not found')
+    return ArduinoFirmata(serial_port)
 
 
 class ArduinoFirmata(Board):
@@ -28,8 +39,13 @@ class ArduinoFirmata(Board):
         except OSError:
             raise OSError('Could find %r' % self.port)
 
-        self.add_pins(DigitalPin(self, location)
-                      for location in range(LEN_DIGITAL_PINS))
+        self.serial_iterator = pyfirmata.util.Iterator(self.firmata)
+        self.serial_iterator.daemon = True
+
+        self.add_pins([DigitalPin(self, location)
+                            for location in range(LEN_DIGITAL_PINS)] +
+                      [AnalogPin(self, 'A%s' % location, bits=10)
+                            for location in range(LEN_ANALOG_PINS)])
 
     def __repr__(self):
         cls_name = self.__class__.__name__
@@ -42,3 +58,15 @@ class ArduinoFirmata(Board):
         assert state in DIGITAL_PIN_STATES, '%r not in %r' % (
             state, DIGITAL_PIN_STATES)
         self.firmata.digital[pin.location].write(DIGITAL_PIN_STATES[state])
+
+    def _get_pin_value(self, pin):
+        if not self.serial_iterator.is_alive():
+            self.serial_iterator.start()
+        analog_id = int(pin.location[1:])
+        firmata_pin = self.firmata.analog[analog_id]
+        if not firmata_pin.reporting:
+            firmata_pin.enable_reporting()
+        return firmata_pin.read()
+
+
+

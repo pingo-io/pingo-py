@@ -35,7 +35,6 @@ def _find_arduino_dev(system):
             return os.path.join(os.path.sep, 'dev', devices[0])
     return False
 
-
 def MyBoard():
     machine = platform.machine()
     system = platform.system()

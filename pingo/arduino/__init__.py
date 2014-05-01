@@ -1,1 +1,1 @@
-from arduino import ArduinoFirmata
+from arduino import ArduinoFirmata, get_arduino
