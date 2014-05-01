@@ -70,6 +70,8 @@ class Board(object):
 
     @property
     def digital_pins(self):
+        """[property] Get list of digital pins"""
+ 
         return self.filter_pins(DigitalPin)
 
     @abstractmethod

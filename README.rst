@@ -61,7 +61,7 @@ The following table lists the drivers currently planned or under development.
 ================ ======== =============== ======== ==================================================
 Board            Type     Module/Package  Status   Notes
 ================ ======== =============== ======== ==================================================
-Arduino Firmata  remote   arduino.firmata level 1  requires `firmata library`_ on any Arduino board
+Arduino Firmata  remote   arduino         level 1  requires `firmata library`_ on any Arduino board
 Arduino Yún      on-board arduino.yun     experim. requires `Bridge sketch`_ on the Arduino Yún
 BeagleBone Black on-board bbb             experim.
 Fantasma         fake     ghost           level 0  not a real board, just a software fake for testing

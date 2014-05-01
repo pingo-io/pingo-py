@@ -5,4 +5,4 @@ API
    :members:
 
 .. autoclass:: pingo.DigitalPin
-   :members: mode, state, high, low
+   :members:
