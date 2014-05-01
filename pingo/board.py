@@ -156,13 +156,17 @@ class DigitalPin(Pin):
         self.board._set_pin_state(self, value)
         self._state = value
 
-    def off(self):
+    def low(self):
         """Set voltage of pin to ``pingo.LOW`` (GND)."""
         self.state = LOW
 
-    def on(self):
+    lo = low  # shortcut for interactive use
+
+    def high(self):
         """Set state of the pin to ``pingo.HIGH`` (Vcc)."""
         self.state = HIGH
+
+    hi = high  # shortcut for interactive use
 
     def toggle(self):
         self.state = HIGH if self.state == LOW else LOW

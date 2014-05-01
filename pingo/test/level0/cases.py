@@ -13,6 +13,8 @@ the following attributes on your TestCase setUp:
     self.digital_output_pin_number = 13
     self.digital_input_pin_number = 8
     self.total_pins = 26
+
+AND the VDD pin must be connected to the digital_input_pin_number
 '''
 
 class BoardBasics(object):
@@ -29,7 +31,7 @@ class BoardBasics(object):
     def test_led(self):
         pin = self.board.pins[self.digital_output_pin_number]
         pin.mode = pingo.OUT
-        pin.on()
+        pin.high()
 
     @unittest.skip("Not automatic enough.")
     def test_button(self):
@@ -62,14 +64,14 @@ class BoardExceptions(object):
     def test_disabled_pin(self):
         pin = self.board.pins[self.digital_output_pin_number]
         with self.assertRaises(pingo.WrongPinMode) as cm:
-            pin.on()
+            pin.high()
 
     def test_wrong_pin_mode_in(self):
         pin = self.board.pins[self.digital_input_pin_number]
         pin.mode = pingo.IN
 
         with self.assertRaises(pingo.WrongPinMode) as cm:
-            pin.on()
+            pin.high()
 
         with self.assertRaises(pingo.WrongPinMode) as cm:
             pin.state = pingo.HIGH

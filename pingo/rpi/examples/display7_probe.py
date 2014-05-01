@@ -8,10 +8,10 @@ pins = [rpi.pins[loc] for loc in led_locations]
 
 for pin in pins:
     pin.mode = pingo.OUT
-    pin.off()
+    pin.low()
 
 for pin in pins:
-    pin.on()
+    pin.high()
     raw_input('Lit: pin %s' % pin.location)
-    pin.off()
+    pin.low()
 

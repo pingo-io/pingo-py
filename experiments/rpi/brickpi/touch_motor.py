@@ -14,7 +14,7 @@
 
 1) connect a Lego motor to port "MA" of the BrickPi
 2) connect a Lego touch sensor to port "S1" of the BrickPi
-3) push/release the sensor to turn the motor on/off
+3) push/release the sensor to turn the motor on/low
 """
 
 print __doc__.strip()

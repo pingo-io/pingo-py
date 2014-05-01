@@ -6,7 +6,7 @@ Arduino
 from pingo.board import Board, DigitalPin, IN, OUT, HIGH, LOW
 
 DIGITAL_PIN_MODES = {IN: 0, OUT: 1}
-DIGITAL_PIN_STATES = {HIGH: 0, LOW: 1}
+DIGITAL_PIN_STATES = {HIGH: 1, LOW: 0}
 LEN_DIGITAL_PINS = 14  # FIXME: this is not true for all Arduino boards
 # FIXME: Firmata provides board info, but pyFirmata does not support this
 # feature yet

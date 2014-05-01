@@ -77,5 +77,5 @@ class Udoo(Board):
         for pin in (p for p in self.pins.values()
                     if isinstance(p, DigitalPin)):
             if pin.mode == OUT:
-                pin.off()
+                pin.low()
                 pin.mode = IN
