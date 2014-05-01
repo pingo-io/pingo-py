@@ -105,8 +105,8 @@ class BoardLevel1(object):
     def _set_pin_value(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.
 
-        The ``«pin».mode(…)`` property calls this method because
-        the procedure to set pin mode changes from board to board.
+        The ``«AnalogPin».value(…)`` method calls this method because
+        the procedure to read pin analog signal changes from board to board.
         """
 
 

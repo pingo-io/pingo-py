@@ -41,7 +41,7 @@ To install Pingo from Github, you must have Git installed. Presuming you already
 
 After that, get into the pingo directory and setup Python to use your brand new directory as a library:
 
-`python setup.py install`
+`python setup.py develop`
 
 Done! You are ready to program using Pingo!
 
