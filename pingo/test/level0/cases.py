@@ -27,11 +27,21 @@ class BoardBasics(object):
 
         self.assertEqual(len(self.board.pins), self.total_pins)
 
-
     def test_led(self):
         pin = self.board.pins[self.digital_output_pin_number]
         pin.mode = pingo.OUT
         pin.high()
+
+    def test_filter(self):
+        pins_subset = self.board.filter_pins(pingo.DigitalPin)
+        self.assertTrue(
+            all(isinstance(pin ,pingo.DigitalPin) for pin in pins_subset)
+        )
+
+        other_pins = set(self.board.pins.values()) - set(pins_subset)
+        self.assertFalse(
+            any(isinstance(pin, pingo.DigitalPin) for pin in other_pins)
+        )
 
     @unittest.skip("Not automatic enough.")
     def test_button(self):
