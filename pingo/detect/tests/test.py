@@ -6,11 +6,11 @@ import time
 import pingo
 
 
-class DetectBasics():
+class DetectBasics(unittest.TestCase):
 
     def test_board(self):
         board = pingo.detect.MyBoard()
-        self.assertIsInstance(board, pingo.Board)
+        self.assertIsInstance(board, pingo.BoardLevel0)
 
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
-from pingo.board import Board
+from pingo.board import BoardLevel0
 
 
-class BeagleBoneBlack(Board):
+class BeagleBoneBlack(BoardLevel0):
 
     def __init__(self):
         super(BeagleBoneBlack, self).__init__()

@@ -8,7 +8,7 @@ http://www.udoo.org/ProjectsAndTutorials/linux-gpio-manipulation/
 
 import os
 
-from pingo.board import Board, DigitalPin, IN, OUT, HIGH, LOW
+from pingo.board import BoardLevel0, DigitalPin, IN, OUT, HIGH, LOW
 
 # there are no gaps in the Arduino digital pin numbering
 # of the Arduino Due embedded in the Udoo
@@ -30,7 +30,7 @@ DIGITAL_PIN_MODES = {IN: 'in', OUT: 'out'}
 DIGITAL_PIN_STATES = {HIGH: '1', LOW: '0'}
 
 
-class Udoo(Board):
+class Udoo(BoardLevel0):
 
     def __init__(self):
         Board.__init__(self)

@@ -15,7 +15,7 @@ class WrongPinMode(Exception):
     value = 'Operation not supported in current mode.'
 
 
-class Board(object):
+class BoardLevel0(object):
     """Abstract class defining common interface for all boards.
 
     Instance attributes of interest to end-users:
@@ -71,7 +71,7 @@ class Board(object):
     @property
     def digital_pins(self):
         """[property] Get list of digital pins"""
- 
+
         return self.filter_pins(DigitalPin)
 
     @abstractmethod
@@ -98,6 +98,16 @@ class Board(object):
         GPIO access should ``unexport`` the pins before exiting.
         """
         pass
+
+
+class BoardLevel1(object):
+    @abstractmethod
+    def _set_pin_value(self, pin, mode):
+        """Abstract method to be implemented by each ``Board`` subclass.
+
+        The ``«pin».mode(…)`` property calls this method because
+        the procedure to set pin mode changes from board to board.
+        """
 
 
 class Pin(object):
@@ -130,29 +140,6 @@ class Pin(object):
             gpio_id = ''
         return '<{cls_name} {gpio_id}@{location}>'.format(**locals())
 
-class AnalogPin(Pin):
-    """Defines common interface for all analog pins.
-
-    Implementers of board drivers do not need to subclass this class
-    because pins delegate all board-dependent behavior to the board.
-
-    This Pin suports read operations. If you need analog output
-    please, check out the PWM pins.
-    """
-
-    def __init__(self, board, location, bits, gpio_id=None):
-        Pin.__init__(self, board, location, gpio_id)
-        self.bits = bits
-
-    @property
-    def value(self):
-        """[property] Ge pin value """
-        return self.board._get_pin_value(self)
-
-    def ratio(self, from_min=0, from_max=None, to_min=0.0, to_max=1.0):
-        from_high = 2 ** bits - 1 if from_high is None else from_high
-        return ((self.value-from_min)*(to_max-to_min) /
-                    (from_max-from_min) + to_min)
 
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
@@ -207,6 +194,30 @@ class DigitalPin(Pin):
 
     def toggle(self):
         self.state = HIGH if self.state == LOW else LOW
+
+class AnalogPin(Pin):
+    """Defines common interface for all analog pins.
+
+    Implementers of board drivers do not need to subclass this class
+    because pins delegate all board-dependent behavior to the board.
+
+    This Pin suports read operations. If you need analog output
+    please, check out the PWM pins.
+    """
+
+    def __init__(self, board, location, bits, gpio_id=None):
+        Pin.__init__(self, board, location, gpio_id)
+        self.bits = bits
+
+    @property
+    def value(self):
+        """[property] Ge pin value """
+        return self.board._get_pin_value(self)
+
+    def ratio(self, from_min=0, from_max=None, to_min=0.0, to_max=1.0):
+        from_high = 2 ** bits - 1 if from_high is None else from_high
+        return ((self.value-from_min)*(to_max-to_min) /
+                    (from_max-from_min) + to_min)
 
 
 class GroundPin(Pin):

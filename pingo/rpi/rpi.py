@@ -23,7 +23,7 @@ DIGITAL_PIN_MAP = {
 
 GPIO = None
 
-class RaspberryPi(pingo.Board):
+class RaspberryPi(pingo.BoardLevel0):
 
     def __init__(self):
         global GPIO

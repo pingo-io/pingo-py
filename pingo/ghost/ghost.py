@@ -9,7 +9,7 @@ PIN_STATES_FILEPATH = os.path.join(
         ), 'pin_states.json')
 
 
-class GhostBoard(pingo.Board):
+class GhostBoard(pingo.BoardLevel0):
 
     def __init__(self):
         super(GhostBoard, self).__init__()
@@ -36,7 +36,7 @@ class GhostBoard(pingo.Board):
         self.add_pins(pins)
 
         pin_states = {}
-        # All pins start on LOW 
+        # All pins start on LOW
         # FIXME: use "LOW" instead of 0
         for location, pin in self.pins.iteritems():
             pin_states[location] = 0 if hasattr(pin, 'state') else None
