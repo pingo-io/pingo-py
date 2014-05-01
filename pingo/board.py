@@ -60,6 +60,17 @@ class Board(object):
         for pin in pins:
             self.pins[pin.location] = pin
 
+    def filter_pins(self, *args):
+        filtered = []
+        for pin_type in args:
+            sub = [x for x in self.pins.values() if isinstance(x, pin_type)]
+            filtered += sub
+
+        return filtered
+
+    def digital_pins(self):
+        return self.filter_pins(DigitalPin)
+
     @abstractmethod
     def _set_pin_mode(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.
