@@ -127,6 +127,29 @@ class Pin(object):
             gpio_id = ''
         return '<{cls_name} {gpio_id}@{location}>'.format(**locals())
 
+class AnalogPin(Pin):
+    """Defines common interface for all analog pins.
+
+    Implementers of board drivers do not need to subclass this class
+    because pins delegate all board-dependent behavior to the board.
+
+    This Pin suports read operations. If you need analog output
+    please, check out the PWM pins.
+    """
+
+    def __init__(self, board, location, bits, gpio_id=None):
+        Pin.__init__(self, board, location, gpio_id)
+        self.bits = bits
+
+    @property
+    def value(self):
+        """[property] Ge pin value """
+        return self.board._get_pin_value(self)
+
+    def ratio(self, from_min=0, from_max=None, to_min=0.0, to_max=1.0):
+        from_high = 2 ** bits - 1 if from_high is None else from_high
+        return ((self.value-from_min)*(to_max-to_min) /
+                    (from_max-from_min) + to_min)
 
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
@@ -138,7 +161,6 @@ class DigitalPin(Pin):
     def __init__(self, board, location, gpio_id=None):
 
         Pin.__init__(self, board, location, gpio_id)
-        self._mode = None
         self._state = None
 
     @property
