@@ -68,6 +68,7 @@ class Board(object):
 
         return filtered
 
+    @property
     def digital_pins(self):
         return self.filter_pins(DigitalPin)
 
@@ -162,6 +163,7 @@ class DigitalPin(Pin):
 
         Pin.__init__(self, board, location, gpio_id)
         self._state = None
+        self._mode = None
 
     @property
     def mode(self):
