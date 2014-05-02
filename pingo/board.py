@@ -98,6 +98,9 @@ class BoardLevel0(object):
         GPIO access should ``unexport`` the pins before exiting.
         """
         pass
+    
+Board = BoardLevel0  # FIXME: backward compatibility hack
+# FIXME: also, we should find better names for these classes, BoardLevelN does not sound right
 
 
 class BoardLevel1(object):
