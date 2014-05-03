@@ -103,9 +103,9 @@ Board = BoardLevel0  # FIXME: backward compatibility hack
 # FIXME: also, we should find better names for these classes, BoardLevelN does not sound right
 
 
-class BoardLevel1(object):
+class BoardLevel1(BoardLevel0):
     @abstractmethod
-    def _set_pin_value(self, pin, mode):
+    def _get_pin_value(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«AnalogPin».value(…)`` method calls this method because
