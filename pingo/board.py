@@ -15,7 +15,7 @@ class WrongPinMode(Exception):
     value = 'Operation not supported in current mode.'
 
 
-class BoardLevel0(object):
+class Board(object):
     """Abstract class defining common interface for all boards.
 
     Instance attributes of interest to end-users:
@@ -98,12 +98,13 @@ class BoardLevel0(object):
         GPIO access should ``unexport`` the pins before exiting.
         """
         pass
-    
-Board = BoardLevel0  # FIXME: backward compatibility hack
-# FIXME: also, we should find better names for these classes, BoardLevelN does not sound right
 
 
-class BoardLevel1(BoardLevel0):
+class AnalogInputCapable(object):
+    """Interface for boards that support AnalogInputPin"""
+
+    __metaclass__ = ABCMeta
+
     @abstractmethod
     def _get_pin_value(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.

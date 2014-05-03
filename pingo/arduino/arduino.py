@@ -5,8 +5,8 @@ Arduino
 
 import platform
 
-from pingo.board import DigitalPin, AnalogPin, IN, OUT, HIGH, LOW
-from pingo.board import BoardLevel1
+from pingo.board import Board, AnalogInputCapable, DigitalPin, AnalogPin
+from pingo.board import IN, OUT, HIGH, LOW
 from pingo.detect import detect
 
 DIGITAL_PIN_MODES = {IN: 0, OUT: 1}
@@ -24,7 +24,7 @@ def get_arduino():
     return ArduinoFirmata(serial_port)
 
 
-class ArduinoFirmata(BoardLevel1):
+class ArduinoFirmata(Board, AnalogInputCapable):
 
     def __init__(self, port=None):
         try:

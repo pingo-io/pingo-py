@@ -3,14 +3,14 @@
 pcDuino v1 board
 """
 
-from pingo.board import BoardLevel0, DigitalPin, IN, OUT
+from pingo.board import Board, DigitalPin, IN, OUT
 
 # /sys/class/gpio/gpio40/ --> Arduino pin #13
 DIGITAL_PINS_PATH = '/sys/devices/virtual/misc/gpio/'
 DIGITAL_PIN_MODES = {IN: '0', OUT: '1'}
 
 
-class PcDuino(BoardLevel0):
+class PcDuino(Board):
 
     def __init__(self):
         self.add_pins(DigitalPin(self, location)

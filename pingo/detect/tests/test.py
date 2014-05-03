@@ -10,7 +10,7 @@ class DetectBasics(unittest.TestCase):
 
     def test_board(self):
         board = pingo.detect.MyBoard()
-        self.assertIsInstance(board, pingo.BoardLevel0)
+        self.assertIsInstance(board, pingo.Board)
 
 
 if __name__ == '__main__':

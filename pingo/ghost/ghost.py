@@ -9,7 +9,7 @@ PIN_STATES_FILEPATH = os.path.join(
         ), 'pin_states.json')
 
 
-class GhostBoard(pingo.BoardLevel0):
+class GhostBoard(pingo.Board):
 
     def __init__(self):
         super(GhostBoard, self).__init__()

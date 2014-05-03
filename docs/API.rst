@@ -4,7 +4,7 @@ API
 .. autoclass:: pingo.Board
    :members:
 
-.. autoclass:: pingo.BoardLevel0
+.. autoclass:: pingo.Board
    :members:
 
 .. autoclass:: pingo.BoardLevel1
