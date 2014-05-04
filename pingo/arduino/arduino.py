@@ -16,6 +16,7 @@ LEN_ANALOG_PINS = 6  # FIXME: this is not true for all Arduino boards
 # FIXME: Firmata provides board info, but pyFirmata does not support this
 # feature yet
 
+MAX_BAUD_RATE = 57600  # for Firmata serial communication
 
 def get_arduino():
     serial_port = detect._find_arduino_dev(platform.system())
@@ -26,7 +27,7 @@ def get_arduino():
 
 class ArduinoFirmata(Board, AnalogInputCapable):
 
-    def __init__(self, port=None):
+    def __init__(self, port=None, baud_rate=MAX_BAUD_RATE):
         try:
             import pyfirmata
         except ImportError:
@@ -35,8 +36,9 @@ class ArduinoFirmata(Board, AnalogInputCapable):
 
         super(ArduinoFirmata, self).__init__()
         self.port = port
+        self.baud_rate = baud_rate
         try:
-            self.firmata = pyfirmata.Arduino(self.port)
+            self.firmata = pyfirmata.Arduino(self.port, baudrate=self.baud_rate)
         except OSError:
             raise OSError('Could find %r' % self.port)
 
