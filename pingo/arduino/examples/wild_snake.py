@@ -1,56 +1,74 @@
-import sys
-import atexit
+
+"""
+
+Snake head position and direction is coded like pictured below, i.e. when
+the snake head is at the middle segment going right, the code is 6, going left
+in the same place the code is 13.
+
+      >:0
+      <:7
+      ----
+^:5  |    | v:1
+v:12 |>:6 | ^:8
+      ----
+^:4  |<:13| v:2
+v:11 |    | ^:9
+      ----
+      <:3
+      >:10
+
+To understand this diagram, read:
+
+> as a right arrow
+< as a left arrow
+v as a down arrow
+^ as an up arrow
+"""
+
 from time import sleep
+from random import choice
 
 import pingo
 
-#######
-try:
-    serial_port = sys.argv[1]
-except IndexError:
-    try:
-        ard = pingo.arduino.get_arduino()
-    except LookupError:
-        print('Serial port auto-detect failed.')
-        print('Usage: %s <serial-port>' % sys.argv[0])
-        raise SystemExit
-else:
-    ard = pingo.arduino.ArduinoFirmata(serial_port)
+ard = pingo.arduino.get_arduino()
 
-print('Found: %r' % ard)
-#######
+#           A   B  C  D  E  F   G
+display = [12, 13, 7, 8, 9, 11, 10]
 
-def clear_all():
-    for pin in pins:
-        pin.low()
+pins = [ard.pins[p] for p in display]
 
-atexit.register(clear_all)
-
-pins = [ard.pins[n] for n in (6, 7, 8, 13, 12, 11, 10, 13)]
+# move choices are ordered with the following logic:
+# (1) when both choices are turns, right turn is first;
+# (2) when one choice is a turn and the other is straight, turn is first
+moves = {
+    0:[1],
+    1:[13, 2],
+    2:[3],
+    3:[4],
+    4:[6, 5],
+    5:[0],
+    6:[2,8],
+    7:[12],
+    8:[7],
+    9:[13, 8],
+    10:[9],
+    11:[10],
+    12:[6, 11],
+    13:[5, 11]
+}
 
 for pin in pins:
     pin.mode = pingo.OUT
 
-DELAY = .1
-
-prev_pin = None
+head = 0  # code 0 -> top segment, going left
+tail = 5
 
 pot = ard.pins['A0']
 
-delay = pot.value
-
-while delay is None:
-    delay = pot.value
-
-prev_delay = delay
-
 while True:
-    for pin in pins:
-        pin.high()
-        delay = pot.value
-        if delay is None:
-            delay = prev_delay
-        sleep(delay + 0.001)
-        if prev_pin:
-            prev_pin.low()
-        prev_pin = pin
+    pins[head % 7].high()
+    sleep(pot.value+0.0001)
+    pins[tail % 7].low()
+    tail = head
+    next = moves[head]
+    head = choice(next)
