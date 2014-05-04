@@ -3,18 +3,20 @@ API
 
 .. autoclass:: pingo.Board
    :members:
+   :private-members:
 
-.. autoclass:: pingo.Board
+.. autoclass:: pingo.AnalogInputCapable
    :members:
-
-.. autoclass:: pingo.BoardLevel1
-   :members:
+   :private-members:
 
 .. autoclass:: pingo.Pin
    :members:
+   :private-members:
 
 .. autoclass:: pingo.DigitalPin
    :members:
+   :private-members:
 
 .. autoclass:: pingo.AnalogPin
-   :members:
+   :members:  __init__, value, ratio, percent
+   :private-members:

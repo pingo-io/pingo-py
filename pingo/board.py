@@ -101,12 +101,16 @@ class Board(object):
 
 
 class AnalogInputCapable(object):
-    """Interface for boards that support AnalogInputPin"""
+    """Mixin interface for boards that support AnalogInputPin
+
+    Concrete ``AnalogInputCapable`` subclasses should implement
+    ``_get_pin_value`` to read the values of analog pins.
+    """
 
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def _get_pin_value(self, pin, mode):
+    def _get_pin_value(self, pin):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«AnalogPin».value(…)`` method calls this method because
@@ -205,23 +209,42 @@ class AnalogPin(Pin):
     Implementers of board drivers do not need to subclass this class
     because pins delegate all board-dependent behavior to the board.
 
-    This Pin suports read operations. If you need analog output
-    please, check out the PWM pins.
+    This pin type supports read operations only.
     """
 
-    def __init__(self, board, location, bits, gpio_id=None):
+    def __init__(self, board, location, resolution, gpio_id=None):
+        """
+        :param board: the board to which this ping belongs
+        :param location: the physical location of the pin on the board
+        :param resolution: resolution of the AD converter in bits
+        :param gpio_id: the logical id for GPIO access, if applicable
+        """
         Pin.__init__(self, board, location, gpio_id)
-        self.bits = bits
+        self.bits = resolution
 
     @property
     def value(self):
-        """[property] Ge pin value """
+        """[property] Get pin value as an integer from 0 to 2 ** resolution - 1"""
         return self.board._get_pin_value(self)
 
     def ratio(self, from_min=0, from_max=None, to_min=0.0, to_max=1.0):
-        from_high = 2 ** bits - 1 if from_high is None else from_high
-        return ((self.value-from_min)*(to_max-to_min) /
-                    (from_max-from_min) + to_min)
+        """ Get pin value as a ``float``, by default from ``0.0`` to ``1.0``.
+
+        The ``from...`` and ``to...`` parameters work like in the Arduino map_ function,
+        converting values from an expected input range to a desired output range.
+
+        .. _map: http://arduino.cc/en/reference/map
+        """
+        if from_max is None:
+            from_max = 2 ** self.bits - 1
+        return (float(self.value-from_min)*(to_max-to_min) /
+                (from_max-from_min) + to_min)
+
+    @property
+    def percent(self):
+        """[property] Get pin value as a ``float`` from ``0.0`` to ``100.0`` """
+        return self.ratio(to_max=100.0)
+
 
 
 class GroundPin(Pin):

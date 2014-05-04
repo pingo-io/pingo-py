@@ -41,20 +41,20 @@ pins = [ard.pins[p] for p in display]
 # (1) when both choices are turns, right turn is first;
 # (2) when one choice is a turn and the other is straight, turn is first
 moves = {
-    0:[1],
-    1:[13, 2],
-    2:[3],
-    3:[4],
-    4:[6, 5],
-    5:[0],
-    6:[2,8],
-    7:[12],
-    8:[7],
-    9:[13, 8],
-    10:[9],
-    11:[10],
-    12:[6, 11],
-    13:[5, 11]
+    0:  [1],
+    1:  [13, 2],
+    2:  [3],
+    3:  [4],
+    4:  [6, 5],
+    5:  [0],
+    6:  [2,8],
+    7:  [12],
+    8:  [7],
+    9:  [13, 8],
+    10: [9],
+    11: [10],
+    12: [6, 11],
+    13: [5, 11]
 }
 
 for pin in pins:
@@ -67,7 +67,7 @@ pot = ard.pins['A0']
 
 while True:
     pins[head % 7].high()
-    sleep(pot.value+0.0001)
+    sleep(pot.ratio())
     pins[tail % 7].low()
     tail = head
     next = moves[head]

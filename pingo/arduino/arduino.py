@@ -47,7 +47,7 @@ class ArduinoFirmata(Board, AnalogInputCapable):
 
         self.add_pins([DigitalPin(self, location)
                             for location in range(LEN_DIGITAL_PINS)] +
-                      [AnalogPin(self, 'A%s' % location, bits=10)
+                      [AnalogPin(self, 'A%s' % location, resolution=10)
                             for location in range(LEN_ANALOG_PINS)])
 
     def __repr__(self):
@@ -72,7 +72,7 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         value = firmata_pin.read()
         while value is None:
             value = firmata_pin.read()
-        return value
+        return int(value * 1023)  # the firmata returns
 
 
 

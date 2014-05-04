@@ -18,6 +18,6 @@ pot = ard.pins['A0']
 while True:
     for head in pins:
         head.high()
-        sleep(pot.value)
+        sleep(pot.ratio())
         tail.low()
         tail = head
