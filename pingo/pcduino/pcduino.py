@@ -21,7 +21,7 @@ class PcDuino(Board):
     def __init__(self):
         self.add_pins([DigitalPin(self, location)
                        for location in range(LEN_DIGITAL_PINS)] + 
-                      [AnalogPin(self, 'A%s' % location, bits=bits)
+                      [AnalogPin(self, 'A%s' % location, resolution=bits)
                        for location, bits in enumerate(ANALOG_PIN_RESOLUTIONS)])
 
     def _set_pin_mode(self, pin, mode):
