@@ -72,7 +72,5 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         value = firmata_pin.read()
         while value is None:
             value = firmata_pin.read()
-        return int(value * 1023)  # the firmata returns
-
-
+        return int(value * ((2 ** pin.bits) - 1))
 

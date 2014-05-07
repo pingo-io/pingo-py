@@ -7,12 +7,18 @@ from abc import ABCMeta, abstractmethod
 
 HIGH = 'HIGH'
 LOW = 'LOW'
+
+# TODO: 4 states implementation: IN, OUT, ANALOG, PWM
 IN = 'IN'
 OUT = 'OUT'
-
+ANALOG = 'ANALOG'
+#PWM = 'PWM'
 
 class WrongPinMode(Exception):
     value = 'Operation not supported in current mode.'
+
+class ModeNotSuported(Exception):
+    value = 'Mode not suported by Pin or Board.'
 
 
 class Board(object):
@@ -221,6 +227,20 @@ class AnalogPin(Pin):
         """
         Pin.__init__(self, board, location, gpio_id)
         self.bits = resolution
+
+    @property
+    def mode(self):
+        """[property] Get pin mode ``pingo.IN``"""
+        return self._mode
+
+    @mode.setter
+    def mode(self, value):
+        # TODO: 4 states implementation: IN, OUT, ANALOG, PWM
+        if value not in [IN, ANALOG]:
+            raise ModeNotSuported()
+
+        # TODO: Call Board's methods
+        self._mode = value
 
     @property
     def value(self):
