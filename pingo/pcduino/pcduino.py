@@ -12,7 +12,7 @@ ADC_PATH = '/proc/'
 
 DIGITAL_PIN_MODES = {IN: '0', OUT: '1'}
 DIGITAL_PIN_STATES = {HIGH:'1', LOW:'0'}
-LEN_DIGITAL_PINS = 14   
+LEN_DIGITAL_PINS = 14
 ANALOG_PIN_RESOLUTIONS = [6, 6, 12, 12, 12, 12]
 
 
@@ -20,7 +20,7 @@ class PcDuino(Board):
 
     def __init__(self):
         self.add_pins([DigitalPin(self, location)
-                       for location in range(LEN_DIGITAL_PINS)] + 
+                       for location in range(LEN_DIGITAL_PINS)] +
                       [AnalogPin(self, 'A%s' % location, resolution=bits)
                        for location, bits in enumerate(ANALOG_PIN_RESOLUTIONS)])
 
