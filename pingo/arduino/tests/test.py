@@ -3,16 +3,25 @@ import platform
 
 import pingo
 from pingo.test import level0
+from pingo.test import level1
+
 
 class ArduinoFirmataTest(unittest.TestCase):
 
     def setUp(self):
         device = pingo.detect.detect._find_arduino_dev(platform.system())
         self.board = pingo.arduino.ArduinoFirmata(device)
+
+        # Level0 Parameters
         self.vdd_pin_number = 0
         self.digital_output_pin_number = 13
         self.digital_input_pin_number = 12
         self.total_pins = 14
+
+        # Level1 Parameters
+        self.analog_input_pin_number = 'A4'
+        self.expected_analog_input = 1004
+        self.expected_analog_ratio = 0.98
 
     def tearDown(self):
         self.board.cleanup()
@@ -28,7 +37,16 @@ class ArduinoBasics(ArduinoFirmataTest, level0.BoardBasics):
     def test_jumpwire(self):
         pass
 
-class ArduinoExceptions(ArduinoFirmataTest, level0.BoardExceptions):
+
+class ArduinoDigitalExceptions(ArduinoFirmataTest, level0.BoardExceptions):
+    pass
+
+
+class ArduinoAnalogRead(ArduinoFirmataTest, level1.AnalogReadBasics):
+    pass
+
+
+class ArduinoAnalogExceptions(ArduinoFirmataTest, level1.AnalogExceptions):
     pass
 
 
