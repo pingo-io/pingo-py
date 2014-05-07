@@ -10,17 +10,21 @@ class PcDuinoTest(unittest.TestCase):
 
     def setUp(self):
         self.board = pingo.pcduino.PcDuino()
-        self.vdd_pin_number = 0
-        self.digital_output_pin_number = 0
-        self.digital_input_pin_number = 0
-        self.total_pins = 0
+        self.digital_output_pin_number = 3
+        self.digital_input_pin_number = 11
+        self.total_pins = 20
 
     def tearDown(self):
         self.board.cleanup()
 
 
 class PcDuinoBasics(PcDuinoTest, level0.BoardBasics):
-    pass
+    def test_list_pins(self):
+        pin = self.board.pins[self.digital_output_pin_number]
+        self.assertIsInstance(pin, pingo.DigitalPin)
+
+        data_pins = len(pingo.pcduino.PcDuino().pins)
+        self.assertEqual(data_pins, self.total_pins)
 
 class PcDuinoExceptions(PcDuinoTest, level0.BoardExceptions):
     pass
