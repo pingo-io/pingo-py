@@ -2,6 +2,7 @@
 Name (Github user)
 -------------------
 
+Alexandre Souza (alexandre)
 Danilo J. S. Bellini (danilobellini)
 Estevão U. P. Vieira
 Kemel Zaidan (kemelzaidan)
