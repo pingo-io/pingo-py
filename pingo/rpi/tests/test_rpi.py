@@ -9,7 +9,7 @@ from pingo.test import level0
 from pingo.test import not_has_module
 
 
-@pytest.mark.skipif(not_has_module('RPi'),
+@pytest.mark.xfail(not_has_module('RPi'),
                     reason="pingo.rpi requires RPi.GPIO installed")
 class RaspberryTest(unittest.TestCase):
 
