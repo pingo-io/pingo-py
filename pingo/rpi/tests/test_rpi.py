@@ -3,11 +3,13 @@ import sys
 import unittest
 import pytest
 import time
-
+from pip import get_installed_distributions
 import pingo
 from pingo.test import level0
+from pingo.test import not_has_module
 
-@pytest.mark.skipif(ImportError,
+
+@pytest.mark.skipif(not_has_module('RPi'),
                     reason="pingo.rpi requires RPi.GPIO installed")
 class RaspberryTest(unittest.TestCase):
 
