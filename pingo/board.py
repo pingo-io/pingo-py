@@ -209,6 +209,7 @@ class DigitalPin(Pin):
     def toggle(self):
         self.state = HIGH if self.state == LOW else LOW
 
+
 class AnalogPin(Pin):
     """Defines common interface for all analog pins.
 
@@ -264,7 +265,6 @@ class AnalogPin(Pin):
     def percent(self):
         """[property] Get pin value as a ``float`` from ``0.0`` to ``100.0`` """
         return self.ratio(to_max=100.0)
-
 
 
 class GroundPin(Pin):
