@@ -3,12 +3,25 @@
 # MIT Licensed. See LICENSE for more information.
 """ Pingo setup module """
 
-from setuptools import setup
+from setuptools import setup, find_packages
+from runtests import PyTest
 import io
 import os
 
 pkgname = "pingo"
 version = "0.1.9"
+
+
+install_requires = [
+    '',
+]
+
+tests_require = [
+    'mock',
+    'pytest',
+    'pytest-cov',
+    'pytest-pep8',
+]
 
 metadata = {
     "name": pkgname,
@@ -18,6 +31,10 @@ metadata = {
     "url": "http://github.com/garoa/pingo",
     "description": "Generic API to control boards with programmable IO pins.",
     "license": "MIT",
+    "include_package_data": True,
+    "install_requires": install_requires,
+    "tests_require": tests_require,
+    "cmdclass": {'test': PyTest},
 }
 
 readme_path = os.path.join(os.path.dirname(__file__), 'README.rst')
@@ -58,7 +75,7 @@ metadata["classifiers"] = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 
-metadata["packages"] = [metadata["name"]]
+metadata["packages"] = find_packages(where='.', exclude=['*test*'])
 
 setup(**metadata)
 
