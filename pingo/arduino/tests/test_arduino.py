@@ -1,11 +1,13 @@
 import unittest
 import platform
+import pytest
 
 import pingo
 from pingo.test import level0
 from pingo.test import level1
 
-
+@pytest.mark.skipif(ImportError,
+                    reason="pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoFirmataTest(unittest.TestCase):
 
     def setUp(self):

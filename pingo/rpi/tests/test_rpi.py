@@ -1,12 +1,14 @@
 import os
 import sys
 import unittest
+import pytest
 import time
 
 import pingo
 from pingo.test import level0
 
-
+@pytest.mark.skipif(ImportError,
+                    reason="pingo.rpi requires RPi.GPIO installed")
 class RaspberryTest(unittest.TestCase):
 
     def setUp(self):
