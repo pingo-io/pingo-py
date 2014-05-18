@@ -2973,9 +2973,11 @@ class PyTest(Command):
         pass
 
     def run(self):
-        import sys,subprocess
-        errno = subprocess.call([sys.executable, 'runtests.py'])
-        raise SystemExit(errno)
+        import sys
+        from pkg_resources import load_entry_point
+        sys.exit(
+            load_entry_point('pytest==2.5.2', 'console_scripts', 'py.test')()
+        )
 
 
 if __name__ == "__main__":
