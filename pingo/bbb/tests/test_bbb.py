@@ -2,10 +2,15 @@ import os
 import sys
 import unittest
 import time
+import pytest
 
 import pingo
 from pingo.test import level0
+from pingo.test import not_has_module
 
+
+@pytest.mark.xfail(True,
+                    reason="BeagleBoneBlack is under development")
 class BeagleBoneBlackTest(unittest.TestCase):
 
     def setUp(self):
@@ -21,6 +26,7 @@ class BeagleBoneBlackTest(unittest.TestCase):
 
 class BeagleBoneBlackBasics(BeagleBoneBlackTest, level0.BoardBasics):
     pass
+
 
 class BeagleBoneBlackExceptions(BeagleBoneBlackTest, level0.BoardExceptions):
     pass
