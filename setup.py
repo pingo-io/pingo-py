@@ -75,7 +75,7 @@ metadata["classifiers"] = [
     'Topic :: Software Development :: Libraries :: Python Modules',
 ]
 
-metadata["packages"] = find_packages(where='.', exclude=['*test*'])
+metadata["packages"] = find_packages(where='.')
 
 setup(**metadata)
 
