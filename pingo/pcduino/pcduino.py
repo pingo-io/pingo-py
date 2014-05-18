@@ -43,4 +43,3 @@ class PcDuino(Board):
         with open(ADC_PATH+'adc%s' % adc_id) as fp:
             fp.seek(0)
             return int(fp.read(16).split(':')[1])
-
