@@ -19,10 +19,10 @@ class BeagleBoneBlackTest(unittest.TestCase):
         self.board.cleanup()
 
 
-class GhostBoardBasics(BeagleBoneBlackTest, level0.BoardBasics):
+class BeagleBoneBlackBasics(BeagleBoneBlackTest, level0.BoardBasics):
     pass
 
-class GhostBoardExceptions(BeagleBoneBlackTest, level0.BoardExceptions):
+class BeagleBoneBlackExceptions(BeagleBoneBlackTest, level0.BoardExceptions):
     pass
 
 
