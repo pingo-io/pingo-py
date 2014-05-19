@@ -1,0 +1,16 @@
+Jinja2==2.7.2
+MarkupSafe==0.23
+Pygments==1.6
+Sphinx==1.2.2
+cov-core==1.12
+coverage==3.7.1
+docutils==0.11
+execnet==1.2.0
+mock==1.0.1
+pep8==1.5.6
+py==1.4.20
+pytest==2.5.2
+pytest-cache==1.0
+pytest-cov==1.6
+pytest-pep8==1.0.6
+wsgiref==0.1.2

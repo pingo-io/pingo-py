@@ -34,6 +34,7 @@ class PcDuinoBasics(PcDuinoTest, level0.BoardBasics):
         data_pins = len(pingo.pcduino.PcDuino().pins)
         self.assertEqual(data_pins, self.total_pins)
 
+
 class PcDuinoExceptions(PcDuinoTest, level0.BoardExceptions):
     pass
 

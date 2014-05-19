@@ -1,11 +1,16 @@
+import sys
 import unittest
 import platform
+import pytest
 
 import pingo
 from pingo.test import level0
 from pingo.test import level1
+from pingo.test import not_has_module
 
 
+@pytest.mark.skipif(not_has_module('pyfirmata'),
+                    reason="pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoFirmataTest(unittest.TestCase):
 
     def setUp(self):
