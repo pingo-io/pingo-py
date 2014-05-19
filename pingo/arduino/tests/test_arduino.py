@@ -9,7 +9,7 @@ from pingo.test import level1
 from pingo.test import not_has_module
 
 
-@pytest.mark.xfail(not_has_module('pyfirmata'),
+@pytest.mark.skipif(not_has_module('pyfirmata'),
                     reason="pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoFirmataTest(unittest.TestCase):
 

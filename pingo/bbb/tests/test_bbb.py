@@ -9,7 +9,7 @@ from pingo.test import level0
 from pingo.test import not_has_module
 
 
-@pytest.mark.xfail(True,
+@pytest.mark.skipif(True,
                     reason="BeagleBoneBlack is under development")
 class BeagleBoneBlackTest(unittest.TestCase):
 
