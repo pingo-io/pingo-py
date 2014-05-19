@@ -14,38 +14,25 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 Basic usage
 -----------
 
-Blink.py on an UDOO board:
+In order to run `Pingo`_ you need a Board instantiated, so you can get a Pin instance.
+Each Board's hardware pins are manipulated via a Pin instance.
+For example, in a Arduino: it is needed an instance of pingo.arduino.ArduinoFirmata
+You can also use the detect.MyBoard function to get the right driver for your board.
+With a board instance, its possible to access pins thru Board.pins dict.
 
 .. code-block:: python
 
     import pingo
     from time import sleep
 
-    board = pingo.udoo.Udoo()
+    board = pingo.detect.MyBoard()
     led_pin = board.pins[13]
-    led_pin.set_mode(pingo.OUT)
+    led_pin.mode pingo.OUT
 
     while True:
-        led_pin.on()
+        led_pin.hi()
         sleep(1)
-        led_pin.off()
-        sleep(1)
-
-To do the same on a Arduino Yún, just change the line were the board is instantiated, and the pin numbers as needed:
-
-.. code-block:: python
-
-    import pingo
-    from time import sleep
-
-    board = pingo.arduino.yun.YunBridge()  # <---
-    led_pin = board.pins[13]
-    led_pin.set_mode(pingo.OUT)
-
-    while True:
-        led_pin.on()
-        sleep(1)
-        led_pin.off()
+        led_pin.lo()
         sleep(1)
 
 .. _drivers-table:
@@ -54,7 +41,7 @@ To do the same on a Arduino Yún, just change the line were the board is instant
 Drivers
 -------
 
-In the examples above, ``pingo.udoo`` ``pingo.arduino.yun`` are drivers, and the respective ``Udoo`` and ``YunBridge`` are classes implementing the ``pingo.board.Board`` interface.
+``pingo.udoo.udoo`` ``pingo.arduino.yun`` are examples of drivers, and the respective ``Udoo`` and ``YunBridge`` are extends the ``pingo.board.Board`` interface class.
 
 The following table lists the drivers currently planned or under development.
 
@@ -64,7 +51,7 @@ Board            Type     Module/Package  Status   Notes
 Arduino Firmata  remote   arduino         level 1  requires `firmata library`_ on any Arduino board
 Arduino Yún      on-board arduino.yun     experim. requires `Bridge sketch`_ on the Arduino Yún
 BeagleBone Black on-board bbb             experim.
-Fantasma         fake     ghost           level 0  not a real board, just a software fake for testing
+Fantasma         fake     ghost           level 1  not a real board, just a software fake for testing
 Intel Galileo    on-board galileo         none
 Raspberry Pi     on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
 pcDuino          on-board pcduino         level 1
