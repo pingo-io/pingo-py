@@ -31,7 +31,7 @@ install_requires = [
 ]
 
 tests_require = [
-    'py.test',
+    'pytest',
 ]
 
 metadata = {
