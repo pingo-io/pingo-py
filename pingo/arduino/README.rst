@@ -1,3 +1,5 @@
+# Troubleshooting
+
 If anyone is facing some error like this:
 
 $ arduino
