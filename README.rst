@@ -10,15 +10,18 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 .. _Pingo: https://garoa.net.br/wiki/Pingo
 .. _Garoa Hacker Clube: https://garoa.net.br/wiki/Garoa_Hacker_Clube:About
 
+
+.. _basic-usage:
+
 -----------
 Basic usage
 -----------
 
-In order to run `Pingo`_ you need a Board instantiated, so you can get a Pin instance.
-Each Board's hardware pins are manipulated via a Pin instance.
-For example, in a Arduino: it is needed an instance of pingo.arduino.ArduinoFirmata
-You can also use the detect.MyBoard function to get the right driver for your board.
-With a board instance, its possible to access pins thru Board.pins dict.
+To use ``pingo``, the first step is to instatiate a concrete `Board`. Each Pingo driver is a concrete board, for example, ``pingo.rpi.RaspberryPi`` and ``pingo.arduino.ArduinoFirmata`` are two such boards.
+
+Pingo can automatically detect the board in most common cases. If it is running on a supported board, ``pingo.detect.MyBoard()`` returns an proper board instance. If Pingo is running on an unsupported machine (eg. a PC running GNU/Linux), it will try to find a remote Arduino using the Firmata protocol via USB and -- if succesfull -- will return a ``pingo.arduino.ArduinoFirmata`` instance.
+
+Once you have a board instance, its possible to access its pins through the ``board.pins`` dict.
 
 .. code-block:: python
 
