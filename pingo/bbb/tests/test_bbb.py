@@ -1,7 +1,7 @@
 import os
 import sys
-import unittest
 import time
+
 import pytest
 
 import pingo
@@ -11,16 +11,16 @@ from pingo.test import not_has_module
 
 @pytest.mark.skipif(True,
                     reason="BeagleBoneBlack is under development")
-class BeagleBoneBlackTest(unittest.TestCase):
+class BeagleBoneBlackTest(object):
 
-    def setUp(self):
+    def setup(self):
         self.board = pingo.bbb.BeagleBoneBlack()
         self.vdd_pin_number = 0
         self.digital_output_pin_number = 0
         self.digital_input_pin_number = 0
         self.total_pins = 0
 
-    def tearDown(self):
+    def teardown(self):
         self.board.cleanup()
 
 
@@ -30,7 +30,3 @@ class BeagleBoneBlackBasics(BeagleBoneBlackTest, level0.BoardBasics):
 
 class BeagleBoneBlackExceptions(BeagleBoneBlackTest, level0.BoardExceptions):
     pass
-
-
-if __name__ == '__main__':
-    unittest.main()

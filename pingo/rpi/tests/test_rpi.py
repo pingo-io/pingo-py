@@ -1,9 +1,10 @@
 import os
 import sys
-import unittest
-import pytest
 import time
+
+import pytest
 from pip import get_installed_distributions
+
 import pingo
 from pingo.test import level0
 from pingo.test import not_has_module
@@ -11,16 +12,16 @@ from pingo.test import not_has_module
 
 @pytest.mark.skipif(not_has_module('RPi'),
                     reason="pingo.rpi requires RPi.GPIO installed")
-class RaspberryTest(unittest.TestCase):
+class RaspberryTest(object):
 
-    def setUp(self):
+    def setup(self):
         self.board = pingo.rpi.RaspberryPi()
         self.vdd_pin_number = 2
         self.digital_output_pin_number = 13
         self.digital_input_pin_number = 7
         self.total_pins = 26
 
-    def tearDown(self):
+    def tearuown(self):
         self.board.cleanup()
 
 
@@ -30,8 +31,3 @@ class RaspberryBasics(RaspberryTest, level0.BoardBasics):
 
 class RaspberryExceptions(RaspberryTest, level0.BoardExceptions):
     pass
-
-
-if __name__ == '__main__':
-    unittest.main()
-

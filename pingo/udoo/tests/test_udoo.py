@@ -1,13 +1,14 @@
 import os
 import sys
-import unittest
 import time
+
+import pytest
 
 import pingo
 from pingo.test import level0
 
 
-class UdooTest(unittest.TestCase):
+class UdooTest(object):
 
     def setUp(self):
         self.board = pingo.udoo.Udoo()

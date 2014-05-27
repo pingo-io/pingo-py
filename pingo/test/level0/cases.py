@@ -1,7 +1,8 @@
 import os
 import sys
 import time
-import unittest
+
+import pytest
 
 import pingo
 
@@ -20,12 +21,12 @@ AND the VDD pin must be connected to the digital_input_pin_number
 class BoardBasics(object):
     def test_list_pins(self):
         vdd_pin = self.board.pins[self.vdd_pin_number]
-        self.assertIsInstance(vdd_pin, pingo.VddPin)
+        assert isinstance(vdd_pin, pingo.VddPin)
 
         pin = self.board.pins[self.digital_output_pin_number]
-        self.assertIsInstance(pin, pingo.DigitalPin)
+        assert isinstance(pin, pingo.DigitalPin)
 
-        self.assertEqual(len(self.board.pins), self.total_pins)
+        assert len(self.board.pins) == self.total_pins
 
     def test_led(self):
         pin = self.board.pins[self.digital_output_pin_number]
@@ -34,16 +35,12 @@ class BoardBasics(object):
 
     def test_filter(self):
         pins_subset = self.board.filter_pins(pingo.DigitalPin)
-        self.assertTrue(
-            all(isinstance(pin ,pingo.DigitalPin) for pin in pins_subset)
-        )
+        assert all(isinstance(pin ,pingo.DigitalPin) for pin in pins_subset)
 
         other_pins = set(self.board.pins.values()) - set(pins_subset)
-        self.assertFalse(
-            any(isinstance(pin, pingo.DigitalPin) for pin in other_pins)
-        )
+        assert not any(isinstance(pin, pingo.DigitalPin) for pin in other_pins)
 
-    @unittest.skip("Not automatic enough.")
+    @pytest.mark.skipif(True, reason="Not automatic enough.")
     def test_button(self):
         pin = self.board.pins[self.digital_input_pin_number]
         pin.mode = pingo.IN
@@ -56,8 +53,9 @@ class BoardBasics(object):
             if time.time() - t0 > delay:
                 break
 
+        # TODO: show message on fail
         msg = 'The button must be pressed in %ss for this test to pass' % delay
-        self.assertEqual(output, pingo.HIGH, msg)
+        assert output == pingo.HIGH
 
     def test_jumpwire(self):
         ''' Wire this DigitalPin directly into VDD '''
@@ -65,7 +63,7 @@ class BoardBasics(object):
         pin.mode = pingo.IN
         output = pin.state
 
-        self.assertEqual(output, pingo.HIGH)
+        assert output == pingo.HIGH
 
 
 
@@ -73,17 +71,17 @@ class BoardExceptions(object):
 
     def test_disabled_pin(self):
         pin = self.board.pins[self.digital_output_pin_number]
-        with self.assertRaises(pingo.WrongPinMode) as cm:
+        with pytest.raises(pingo.WrongPinMode) as cm:
             pin.high()
 
     def test_wrong_pin_mode_in(self):
         pin = self.board.pins[self.digital_input_pin_number]
         pin.mode = pingo.IN
 
-        with self.assertRaises(pingo.WrongPinMode) as cm:
+        with pytest.raises(pingo.WrongPinMode) as cm:
             pin.high()
 
-        with self.assertRaises(pingo.WrongPinMode) as cm:
+        with pytest.raises(pingo.WrongPinMode) as cm:
             pin.state = pingo.HIGH
 
 

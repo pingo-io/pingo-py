@@ -1,5 +1,4 @@
 import sys
-import unittest
 import platform
 import pytest
 
@@ -11,9 +10,9 @@ from pingo.test import not_has_module
 
 @pytest.mark.skipif(not_has_module('pyfirmata'),
                     reason="pingo.arduino.Arduino requires pyfirmata installed")
-class ArduinoFirmataTest(unittest.TestCase):
+class ArduinoFirmataTest(object):
 
-    def setUp(self):
+    def setup(self):
         device = pingo.detect.detect._find_arduino_dev(platform.system())
         self.board = pingo.arduino.ArduinoFirmata(device)
 
@@ -28,17 +27,17 @@ class ArduinoFirmataTest(unittest.TestCase):
         self.expected_analog_input = 1004
         self.expected_analog_ratio = 0.98
 
-    def tearDown(self):
+    def teardown(self):
         self.board.cleanup()
 
 
 class ArduinoBasics(ArduinoFirmataTest, level0.BoardBasics):
 
-    @unittest.skip('TODO: decide on the API to list all pins on an Arduino')
+    @pytest.mark.skipif(True, reason='TODO: decide on the API to list all pins on an Arduino')
     def test_list_pins(self):
         pass
 
-    @unittest.skip('This needs a jumper from Vdd to digital_input_pin_number')
+    @pytest.mark.skipif(True, reason='This needs a jumper from Vdd to digital_input_pin_number')
     def test_jumpwire(self):
         pass
 
@@ -53,7 +52,3 @@ class ArduinoAnalogRead(ArduinoFirmataTest, level1.AnalogReadBasics):
 
 class ArduinoAnalogExceptions(ArduinoFirmataTest, level1.AnalogExceptions):
     pass
-
-
-if __name__ == '__main__':
-    unittest.main()
