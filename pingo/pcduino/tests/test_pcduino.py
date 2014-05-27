@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import unittest
 
 import pytest
 
@@ -9,7 +10,7 @@ from pingo.test import level0
 from pingo.test import level1
 
 
-class PcDuinoTest():
+class PcDuinoTest(unittest.TestCase):
 
     def setup(self):
         self.board = pingo.pcduino.PcDuino()

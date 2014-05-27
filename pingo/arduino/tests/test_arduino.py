@@ -1,5 +1,7 @@
 import sys
 import platform
+import unittest
+
 import pytest
 
 import pingo
@@ -8,9 +10,7 @@ from pingo.test import level1
 from pingo.test import not_has_module
 
 
-@pytest.mark.skipif(not_has_module('pyfirmata'),
-                    reason="pingo.arduino.Arduino requires pyfirmata installed")
-class ArduinoFirmataTest(object):
+class ArduinoFirmataTest(unittest.TestCase):
 
     def setup(self):
         device = pingo.detect.detect._find_arduino_dev(platform.system())
@@ -31,6 +31,8 @@ class ArduinoFirmataTest(object):
         self.board.cleanup()
 
 
+@pytest.mark.skipif(not_has_module('pyfirmata'),
+                    reason="pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoBasics(ArduinoFirmataTest, level0.BoardBasics):
 
     @pytest.mark.skipif(True, reason='TODO: decide on the API to list all pins on an Arduino')
@@ -42,13 +44,19 @@ class ArduinoBasics(ArduinoFirmataTest, level0.BoardBasics):
         pass
 
 
+@pytest.mark.skipif(not_has_module('pyfirmata'),
+                    reason="pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoDigitalExceptions(ArduinoFirmataTest, level0.BoardExceptions):
     pass
 
 
+@pytest.mark.skipif(not_has_module('pyfirmata'),
+                    reason="pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoAnalogRead(ArduinoFirmataTest, level1.AnalogReadBasics):
     pass
 
 
+@pytest.mark.skipif(not_has_module('pyfirmata'),
+                    reason="pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoAnalogExceptions(ArduinoFirmataTest, level1.AnalogExceptions):
     pass

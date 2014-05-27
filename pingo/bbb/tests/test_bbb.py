@@ -1,7 +1,7 @@
 import os
 import sys
 import time
-
+import unittest
 import pytest
 
 import pingo
@@ -11,7 +11,7 @@ from pingo.test import not_has_module
 
 @pytest.mark.skipif(True,
                     reason="BeagleBoneBlack is under development")
-class BeagleBoneBlackTest(object):
+class BeagleBoneBlackTest(unittest.TestCase):
 
     def setup(self):
         self.board = pingo.bbb.BeagleBoneBlack()

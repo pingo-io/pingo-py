@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import unittest
 
 import pytest
 
@@ -8,7 +9,7 @@ import pingo
 from pingo.test import level0
 
 
-class UdooTest(object):
+class UdooTest(unittest.TestCase):
 
     def setUp(self):
         self.board = pingo.udoo.Udoo()
@@ -27,7 +28,3 @@ class UdooBasics(UdooTest, level0.BoardBasics):
 
 class UdooExceptions(UdooTest, level0.BoardExceptions):
     pass
-
-
-if __name__ == '__main__':
-    unittest.main()
