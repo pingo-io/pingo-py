@@ -46,48 +46,7 @@ After that, get into the pingo directory and setup Python to use your brand new 
 Done! You are ready to program using Pingo!
 
 
------------
-Basic usage
------------
-
-``blink.py`` on an UDOO board:
-
-.. code-block:: python
-
-    import pingo
-    from time import sleep
-
-    board = pingo.udoo.Udoo()
-    led_pin = board.pins[13]
-    led_pin.set_mode(pingo.OUT)
-
-    while True:
-        led_pin.on()
-        sleep(1)
-        led_pin.off()
-        sleep(1)
-
-To do the same on a Arduino Yún, just change the line where the board is instantiated, and the pin numbers as needed:
-
-.. code-block:: python
-
-    import pingo
-    from time import sleep
-
-    board = pingo.arduino.yun.YunBridge()  # <---
-    led_pin = board.pins[13]
-    led_pin.set_mode(pingo.OUT)
-
-    while True:
-        led_pin.on()
-        sleep(1)
-        led_pin.off()
-        sleep(1)
-
-
-In the examples above, ``pingo.udoo`` ``pingo.arduino.yun`` are drivers, and the respective ``Udoo`` and ``YunBridge`` are classes implementing the ``pingo.board.Board`` interface.
-
-.. _drivers-table:
+.. _basic-usage:
 
 .. include:: ../README.rst
-    :start-after: _drivers-table:
+    :start-after: _basic-usage:
