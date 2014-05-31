@@ -56,8 +56,8 @@ Arduino Yún      on-board arduino.yun     experim. requires `Bridge sketch`_ on
 BeagleBone Black on-board bbb             experim.
 Fantasma         fake     ghost           level 1  not a real board, just a software fake for testing
 Intel Galileo    on-board galileo         none
-Raspberry Pi     on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
 pcDuino          on-board pcduino         level 1
+Raspberry Pi     on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
 UDOO             on-board udoo            level 0
 ================ ======== =============== ======== ==================================================
 
