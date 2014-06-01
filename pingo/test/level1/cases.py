@@ -39,13 +39,13 @@ class AnalogReadBasics(object):
         print "Value Read: ", _input
 
         # Two decimal places check
-        assert abs(_input - self.expected_analog_ratio) < 10e-3
+        assert abs(_input - self.expected_analog_ratio) < 10e-2
 
 
 class AnalogExceptions(object):
 
     def test_wrong_output_mode(self):
         pin = self.board.pins[self.analog_input_pin_number]
-        with pytest.iraises(pingo.ModeNotSuported) as cm:
+        with pytest.raises(pingo.ModeNotSuported) as cm:
             pin.mode = pingo.OUT
 

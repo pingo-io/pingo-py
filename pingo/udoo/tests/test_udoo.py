@@ -3,10 +3,11 @@ import sys
 import time
 import unittest
 
-import pytest
-
 import pingo
 from pingo.test import level0
+from pingo.detect import check_board
+
+running_on_udoo = check_board(pingo.udoo.Udoo)
 
 
 class UdooTest(unittest.TestCase):
@@ -21,10 +22,15 @@ class UdooTest(unittest.TestCase):
     def tearDown(self):
         self.board.cleanup()
 
-
+@unittest.skipIf(not running_on_udoo, 'Udoo not detected')
 class UdooBasics(UdooTest, level0.BoardBasics):
     pass
 
 
+@unittest.skipIf(not running_on_udoo, 'Udoo not detected')
 class UdooExceptions(UdooTest, level0.BoardExceptions):
     pass
+
+
+if __name__ == '__main__':
+    unittest.main()
