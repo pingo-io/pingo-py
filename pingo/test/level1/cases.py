@@ -45,6 +45,6 @@ class AnalogExceptions(object):
 
     def test_wrong_output_mode(self):
         pin = self.board.pins[self.analog_input_pin_number]
-        with unittest.assertRaises(pingo.ModeNotSuported):
+        with self.assertRaises(pingo.ModeNotSuported):
             pin.mode = pingo.OUT
 
