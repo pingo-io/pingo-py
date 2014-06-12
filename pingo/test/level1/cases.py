@@ -1,8 +1,7 @@
 import os
 import sys
 import time
-
-import pytest
+import unittest
 
 import pingo
 
@@ -46,6 +45,6 @@ class AnalogExceptions(object):
 
     def test_wrong_output_mode(self):
         pin = self.board.pins[self.analog_input_pin_number]
-        with pytest.raises(pingo.ModeNotSuported) as cm:
+        with unittest.assertRaises(pingo.ModeNotSuported):
             pin.mode = pingo.OUT
 

@@ -1,8 +1,7 @@
 import os
 import sys
 import time
-
-import pytest
+import unittest
 
 import pingo
 
@@ -40,7 +39,7 @@ class BoardBasics(object):
         other_pins = set(self.board.pins.values()) - set(pins_subset)
         assert not any(isinstance(pin, pingo.DigitalPin) for pin in other_pins)
 
-    @pytest.mark.skipif(True, reason="Not automatic enough.")
+    @unittest.skip("Not automatic enough.")
     def test_button(self):
         pin = self.board.pins[self.digital_input_pin_number]
         pin.mode = pingo.IN
@@ -71,17 +70,17 @@ class BoardExceptions(object):
 
     def test_disabled_pin(self):
         pin = self.board.pins[self.digital_output_pin_number]
-        with pytest.raises(pingo.WrongPinMode) as cm:
+        with self.assertRaises(pingo.WrongPinMode):
             pin.high()
 
     def test_wrong_pin_mode_in(self):
         pin = self.board.pins[self.digital_input_pin_number]
         pin.mode = pingo.IN
 
-        with pytest.raises(pingo.WrongPinMode) as cm:
+        with self.assertRaises(pingo.WrongPinMode):
             pin.high()
 
-        with pytest.raises(pingo.WrongPinMode) as cm:
+        with self.assertRaises(pingo.WrongPinMode):
             pin.state = pingo.HIGH
 
 
