@@ -1,16 +1,14 @@
 import sys
-import unittest
 import platform
-import pytest
+import unittest
 
 import pingo
 from pingo.test import level0
 from pingo.test import level1
-from pingo.test import not_has_module
+from pingo.detect import has_module, check_board
 
+running_on_arduino = check_board(pingo.arduino.ArduinoFirmata)
 
-@pytest.mark.skipif(not_has_module('pyfirmata'),
-                    reason="pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoFirmataTest(unittest.TestCase):
 
     def setUp(self):
@@ -32,25 +30,32 @@ class ArduinoFirmataTest(unittest.TestCase):
         self.board.cleanup()
 
 
+@unittest.skipIf(not running_on_arduino, 'Arduino not detected')
+@unittest.skipIf(not has_module('pyfirmata'),
+    'pingo.arduino.Arduino requires pyfirmata installed')
 class ArduinoBasics(ArduinoFirmataTest, level0.BoardBasics):
-
     @unittest.skip('TODO: decide on the API to list all pins on an Arduino')
     def test_list_pins(self):
         pass
 
-    @unittest.skip('This needs a jumper from Vdd to digital_input_pin_number')
-    def test_jumpwire(self):
-        pass
 
-
+@unittest.skipIf(not running_on_arduino, 'Arduino not detected')
+@unittest.skipIf(not has_module('pyfirmata'),
+    'pingo.arduino.Arduino requires pyfirmata installed')
 class ArduinoDigitalExceptions(ArduinoFirmataTest, level0.BoardExceptions):
     pass
 
 
+@unittest.skipIf(not running_on_arduino, "Arduino not detected")
+@unittest.skipIf(not has_module('pyfirmata'),
+    "pingo.arduino.Arduino requires pyfirmata installed")
 class ArduinoAnalogRead(ArduinoFirmataTest, level1.AnalogReadBasics):
     pass
 
 
+@unittest.skipIf(not running_on_arduino, 'Arduino not detected')
+@unittest.skipIf(not has_module('pyfirmata'),
+    'pingo.arduino.Arduino requires pyfirmata installed')
 class ArduinoAnalogExceptions(ArduinoFirmataTest, level1.AnalogExceptions):
     pass
 

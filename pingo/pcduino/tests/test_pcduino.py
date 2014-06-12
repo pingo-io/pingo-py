@@ -1,12 +1,14 @@
 import os
 import sys
-import unittest
 import time
+import unittest
 
 import pingo
 from pingo.test import level0
 from pingo.test import level1
+from pingo.detect import check_board
 
+running_on_pcduino = check_board(pingo.pcduino.PcDuino)
 
 class PcDuinoTest(unittest.TestCase):
 
@@ -26,23 +28,27 @@ class PcDuinoTest(unittest.TestCase):
         self.board.cleanup()
 
 
+@unittest.skipIf(not running_on_pcduino, 'PcDuino not detected')
 class PcDuinoBasics(PcDuinoTest, level0.BoardBasics):
     def test_list_pins(self):
         pin = self.board.pins[self.digital_output_pin_number]
-        self.assertIsInstance(pin, pingo.DigitalPin)
+        assert isinstance(pin, pingo.DigitalPin)
 
         data_pins = len(pingo.pcduino.PcDuino().pins)
-        self.assertEqual(data_pins, self.total_pins)
+        assert data_pins == self.total_pins
 
 
+@unittest.skipIf(not running_on_pcduino, 'PcDuino not detected')
 class PcDuinoExceptions(PcDuinoTest, level0.BoardExceptions):
     pass
 
 
+@unittest.skipIf(not running_on_pcduino, 'PcDuino not detected')
 class PcDuinoAnalogRead(PcDuinoTest, level1.AnalogReadBasics):
     pass
 
 
+@unittest.skipIf(not running_on_pcduino, 'PcDuino not detected')
 class PcDuinoAnalogExceptions(PcDuinoTest, level1.AnalogExceptions):
     pass
 

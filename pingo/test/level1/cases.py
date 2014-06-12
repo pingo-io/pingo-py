@@ -27,8 +27,8 @@ class AnalogReadBasics(object):
         _input = pin.value
         print "Value Read: ", _input
 
-        self.assertLessEqual(_input, self.expected_analog_input+1)
-        self.assertGreaterEqual(_input, self.expected_analog_input-1)
+        assert _input <= self.expected_analog_input+1
+        assert _input >= self.expected_analog_input-1
 
     def test_pin_ratio(self):
         pin = self.board.pins[self.analog_input_pin_number]
@@ -38,13 +38,13 @@ class AnalogReadBasics(object):
         print "Value Read: ", _input
 
         # Two decimal places check
-        self.assertAlmostEqual(_input, self.expected_analog_ratio, 2)
+        assert abs(_input - self.expected_analog_ratio) < 10e-2
 
 
 class AnalogExceptions(object):
 
     def test_wrong_output_mode(self):
         pin = self.board.pins[self.analog_input_pin_number]
-        with self.assertRaises(pingo.ModeNotSuported) as cm:
+        with unittest.assertRaises(pingo.ModeNotSuported):
             pin.mode = pingo.OUT
 

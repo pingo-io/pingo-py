@@ -1,16 +1,15 @@
 import os
 import sys
-import unittest
 import time
-import pytest
+import unittest
 
 import pingo
 from pingo.test import level0
-from pingo.test import not_has_module
+from pingo.detect import check_board
+
+running_on_beaglebone = check_board(pingo.bbb.BeagleBoneBlack)
 
 
-@pytest.mark.skipif(True,
-                    reason="BeagleBoneBlack is under development")
 class BeagleBoneBlackTest(unittest.TestCase):
 
     def setUp(self):
@@ -24,10 +23,14 @@ class BeagleBoneBlackTest(unittest.TestCase):
         self.board.cleanup()
 
 
+@unittest.skipIf(not running_on_beaglebone,
+    "BeagleBoneBlack not detected")
 class BeagleBoneBlackBasics(BeagleBoneBlackTest, level0.BoardBasics):
     pass
 
 
+@unittest.skipIf(not running_on_beaglebone,
+    "BeagleBoneBlack not detected")
 class BeagleBoneBlackExceptions(BeagleBoneBlackTest, level0.BoardExceptions):
     pass
 
