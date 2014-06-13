@@ -33,7 +33,7 @@ class GhostBoard(pingo.Board):
             pingo.VddPin(self, 16, 3.3),
         ])
 
-        self.add_pins(pins)
+        self._add_pins(pins)
 
         pin_states = {}
         # All pins start on LOW

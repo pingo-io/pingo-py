@@ -34,7 +34,7 @@ class Udoo(Board):
 
     def __init__(self):
         Board.__init__(self)
-        self.add_pins(self._list_pins())
+        self._add_pins(self._list_pins())
         # FIXME: decide what to do with enabling/disabling pins on board like
         # the Udoo where they are always enabled
         for pin in (p for p in self.pins.values() if
