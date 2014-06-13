@@ -46,7 +46,7 @@ class RaspberryPi(pingo.Board):
         pins += [pingo.DigitalPin(self, location, gpio_id)
                  for location, gpio_id in DIGITAL_PIN_MAP.items()]
 
-        self.add_pins(pins)
+        self._add_pins(pins)
 
     def cleanup(self):
         for pin in self.pins.values():

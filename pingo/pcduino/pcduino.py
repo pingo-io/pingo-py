@@ -19,7 +19,7 @@ ANALOG_PIN_RESOLUTIONS = [6, 6, 12, 12, 12, 12]
 class PcDuino(Board):
 
     def __init__(self):
-        self.add_pins([DigitalPin(self, location)
+        self._add_pins([DigitalPin(self, location)
                        for location in range(LEN_DIGITAL_PINS)] +
                       [AnalogPin(self, 'A%s' % location, resolution=bits)
                        for location, bits in enumerate(ANALOG_PIN_RESOLUTIONS)])

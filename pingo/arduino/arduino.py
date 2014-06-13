@@ -45,7 +45,7 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         self.serial_iterator = pyfirmata.util.Iterator(self.firmata)
         self.serial_iterator.daemon = True
 
-        self.add_pins([DigitalPin(self, location)
+        self._add_pins([DigitalPin(self, location)
                             for location in range(LEN_DIGITAL_PINS)] +
                       [AnalogPin(self, 'A%s' % location, resolution=10)
                             for location in range(LEN_ANALOG_PINS)])

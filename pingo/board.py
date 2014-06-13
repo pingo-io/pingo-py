@@ -37,7 +37,7 @@ class Board(object):
     Implementations of ``Board`` subclasses should:
 
     * Call ``super(«BoardSubclass», self).__init__()`` and
-      ``self.add_pins(«pins»)`` in their ``__init__`` method.
+      ``self._add_pins(«pins»)`` in their ``__init__`` method.
 
     * Implement ``_set_pin_mode()`` and ``_set_pin_state()``.
 
@@ -52,23 +52,20 @@ class Board(object):
         This ``__init__`` method should be called by the ``__init__``
         of all ``Board`` subclasses using ``super(MyBoard, self).__init__()``.
         The ``__init__`` of board subclasses should also call
-        ``self.add_pins(pins)`` with an iterable of ``Pin`` instances.
+        ``self._add_pins(pins)`` with an iterable of ``Pin`` instances.
         """
         atexit.register(self.cleanup)
 
-    def add_pins(self, pins):
-        """Populate ``board.pins`` mapping from ``Pin`` instances.
+    def filter_pins(self, *pin_types):
+        """Get a list of pins that are instances of the given pin_types
+
+        See the ``digital_pins`` property for an example of use.
 
         Arguments:
-            ``pins``: an iterable of ``Pin`` instances
+            ``pin_types``: an iterable of types (usually, ``Pin`` subclasses)
         """
-        self.pins = {}
-        for pin in pins:
-            self.pins[pin.location] = pin
-
-    def filter_pins(self, *args):
         filtered = []
-        for pin_type in args:
+        for pin_type in pin_types:
             sub = [x for x in self.pins.values() if isinstance(x, pin_type)]
             filtered += sub
 
@@ -79,6 +76,32 @@ class Board(object):
         """[property] Get list of digital pins"""
 
         return self.filter_pins(DigitalPin)
+
+    def cleanup(self):
+        """Releases pins for use by other applications.
+
+        Overriding this stub may or may not be needed in specific drivers.
+        For example, scripts running on boards using standard ``sysfs``
+        GPIO access should ``unexport`` the pins before exiting.
+        """
+        pass
+
+    ######################################################################
+    # the following methods are of interest only to implementers of
+    # drivers, i.e. concrete Board subclasses
+
+    def _add_pins(self, pins):
+        """Populate ``board.pins`` mapping from ``Pin`` instances.
+
+        The ``__init__`` method of concrete ``Board`` subclasses should
+        call this method to populate the board instance ``pins`` mapping.
+
+        Arguments:
+            ``pins``: an iterable of ``Pin`` instances
+        """
+        self.pins = {}
+        for pin in pins:
+            self.pins[pin.location] = pin
 
     @abstractmethod
     def _set_pin_mode(self, pin, mode):
@@ -95,15 +118,6 @@ class Board(object):
         The ``«pin».__change_state(…)`` method calls this method because
         the procedure to set pin state changes from board to board.
         """
-
-    def cleanup(self):
-        """Releases pins for use by other applications.
-
-        Overriding this stub may or may not be needed in specific drivers.
-        For example, scripts running on boards using standard ``sysfs``
-        GPIO access should ``unexport`` the pins before exiting.
-        """
-        pass
 
 
 class AnalogInputCapable(object):
