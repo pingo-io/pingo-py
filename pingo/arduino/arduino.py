@@ -3,6 +3,7 @@
 Arduino
 """
 
+import time
 import platform
 
 from pingo.board import Board, AnalogInputCapable, DigitalPin, AnalogPin
@@ -54,8 +55,34 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         cls_name = self.__class__.__name__
         return '<{cls_name} {self.port!r}>'.format(**locals())
 
-    def _set_pin_mode(self, pin, state):
-        pass
+    def _set_pin_mode(self, pin, mode):
+        assert mode in [IN, OUT]
+        firmata_pin = self.firmata.digital[pin.location]
+        if mode == OUT:
+            #firmata_pin.mode = pyfirmata.OUTPUT
+            firmata_pin.mode = 1
+        elif mode == IN:
+            #firmata_pin.mode = pyfirmata.INPUT
+            firmata_pin.mode = 0
+
+    def _get_pin_state(self, pin):
+        if not self.serial_iterator.is_alive():
+            self.serial_iterator.start()
+
+        digital_id = int(pin.location)
+        firmata_pin = self.firmata.digital[digital_id]
+
+        if not firmata_pin.reporting:
+            firmata_pin.enable_reporting()
+
+        # TODO: .read() returns the pyfirmata.Pin.value attribute.
+        # so if this variable is set to None, it will always return None
+        state = firmata_pin.read()
+
+        if state == 1:
+            return HIGH
+        elif state == 0:
+            return LOW
 
     def _set_pin_state(self, pin, state):
         assert state in DIGITAL_PIN_STATES, '%r not in %r' % (
@@ -72,5 +99,6 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         value = firmata_pin.read()
         while value is None:
             value = firmata_pin.read()
+            time.sleep(0.01)
         return int(value * ((2 ** pin.bits) - 1))
 

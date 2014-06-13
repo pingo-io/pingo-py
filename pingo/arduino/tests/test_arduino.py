@@ -38,6 +38,10 @@ class ArduinoBasics(ArduinoFirmataTest, level0.BoardBasics):
     def test_list_pins(self):
         pass
 
+    @unittest.skip('Unsupported by pyFirmata')
+    def test_jumpwire(self):
+        pass
+
 
 @unittest.skipIf(not running_on_arduino, 'Arduino not detected')
 @unittest.skipIf(not has_module('pyfirmata'),
