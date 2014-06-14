@@ -137,6 +137,14 @@ class AnalogInputCapable(object):
         the procedure to read pin analog signal changes from board to board.
         """
 
+    @abstractmethod
+    def _set_analog_mode(self, pin, mode):
+        """Abstract method to be implemented by each ``Board`` subclass.
+
+        The ``«pin».mode(…)`` property calls this method because
+        the procedure to set pin mode changes from board to board.
+        """
+
 
 class Pin(object):
     """Abstract class defining common interface for all pins."""
@@ -249,13 +257,13 @@ class AnalogPin(Pin):
         return self._mode
 
     @mode.setter
-    def mode(self, value):
-        # TODO: 4 states implementation: IN, OUT, ANALOG, PWM
-        if value not in [IN, ANALOG]:
+    def mode(self, mode):
+        if mode not in [IN, ANALOG]:
             raise ModeNotSuported()
 
+        self.board._set_analog_mode(self, mode)
         # TODO: Call Board's methods
-        self._mode = value
+        self._mode = mode
 
     @property
     def value(self):
