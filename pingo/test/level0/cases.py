@@ -5,7 +5,6 @@ import unittest
 
 import pingo
 
-
 '''
 In order to use this set of cases, it is necessary to set
 the following attributes on your TestCase setUp:
@@ -16,6 +15,7 @@ the following attributes on your TestCase setUp:
 
 AND the VDD pin must be connected to the digital_input_pin_number
 '''
+
 
 class BoardBasics(object):
     def test_list_pins(self):
@@ -29,7 +29,9 @@ class BoardBasics(object):
 
     def test_led(self):
         pin = self.board.pins[self.digital_output_pin_number]
+        time.sleep(0.2)
         pin.mode = pingo.OUT
+        time.sleep(0.2)
         pin.high()
 
     def test_filter(self):
@@ -42,7 +44,9 @@ class BoardBasics(object):
     @unittest.skip("Not automatic enough.")
     def test_button(self):
         pin = self.board.pins[self.digital_input_pin_number]
+        time.sleep(0.2)
         pin.mode = pingo.IN
+        time.sleep(0.2)
         output = pingo.LOW
         t0 = time.time()
         delay = 5
@@ -59,11 +63,12 @@ class BoardBasics(object):
     def test_jumpwire(self):
         ''' Wire this DigitalPin directly into VDD '''
         pin = self.board.pins[self.digital_input_pin_number]
+        time.sleep(0.2)
         pin.mode = pingo.IN
+        time.sleep(0.2)
         output = pin.state
 
         assert output == pingo.HIGH
-
 
 
 class BoardExceptions(object):
@@ -77,12 +82,13 @@ class BoardExceptions(object):
         pin = self.board.pins[self.digital_input_pin_number]
         pin.mode = pingo.IN
 
+        time.sleep(0.2)
         with self.assertRaises(pingo.WrongPinMode):
             pin.high()
 
+        time.sleep(0.2)
         with self.assertRaises(pingo.WrongPinMode):
             pin.state = pingo.HIGH
-
 
 #    def test_wrong_pin_mode_out(self):
 #        pin = self.board.pins[digital_output_pin_number]

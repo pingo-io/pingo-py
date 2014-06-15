@@ -23,15 +23,19 @@ class AnalogReadBasics(object):
 
     def test_200ohmRead(self):
         pin = self.board.pins[self.analog_input_pin_number]
+        time.sleep(0.2)
         pin.mode = pingo.IN
+        time.sleep(0.2)
         _input = pin.value
         #print "Value Read: ", _input
 
-        assert self.expected_analog_input-2 <= _input <= self.expected_analog_input+2
+        assert self.expected_analog_input-3 <= _input <= self.expected_analog_input+3
 
     def test_pin_ratio(self):
         pin = self.board.pins[self.analog_input_pin_number]
+        time.sleep(0.2)
         pin.mode = pingo.IN
+        time.sleep(0.2)
         bits_resolution = (2 ** pin.bits) - 1
         _input = pin.ratio(0, bits_resolution, 0.0, 1.0)
         #print "Value Read: ", _input

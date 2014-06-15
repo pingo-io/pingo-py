@@ -1,5 +1,6 @@
 # coding: utf-8
 
+import time
 import atexit
 
 from abc import ABCMeta, abstractmethod
@@ -250,6 +251,7 @@ class AnalogPin(Pin):
         """
         Pin.__init__(self, board, location, gpio_id)
         self.bits = resolution
+        self._mode = None
 
     @property
     def mode(self):
@@ -280,7 +282,9 @@ class AnalogPin(Pin):
         """
         if from_max is None:
             from_max = 2 ** self.bits - 1
-        return (float(self.value-from_min)*(to_max-to_min) /
+
+        _value = self.value
+        return (float(_value-from_min)*(to_max-to_min) /
                 (from_max-from_min) + to_min)
 
     @property

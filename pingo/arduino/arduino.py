@@ -56,6 +56,14 @@ class ArduinoFirmata(Board, AnalogInputCapable):
                 for location in range(detected_analog_pins)]
         )
 
+    def cleanup(self):
+        #self.PyMata.close() has sys.exit(0)
+        if hasattr(self, 'PyMata'):
+            try:
+                self.PyMata.transport.close()
+            except AttributeError:
+                pass
+
     def __repr__(self):
         cls_name = self.__class__.__name__
         return '<{cls_name} {self.port!r}>'.format(**locals())
@@ -68,7 +76,10 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         )
 
     def _get_pin_state(self, pin):
-        self.PyMata.digital_read(pin.location)
+        _state = self.PyMata.digital_read(pin.location)
+        if _state == self.PyMata.HIGH:
+            return pingo.HIGH
+        return pingo.LOW
 
     def _set_pin_state(self, pin, state):
         self.PyMata.digital_write(
@@ -86,4 +97,5 @@ class ArduinoFirmata(Board, AnalogInputCapable):
 
     def _get_pin_value(self, pin):
         pin_id = int(pin.location[1:])
-        self.PyMata.analog_read(pin_id)
+        return self.PyMata.analog_read(pin_id)
+
