@@ -5,7 +5,6 @@ import unittest
 
 import pingo
 
-
 '''
 In order to use this set of cases, it is necessary to set
 the following attributes on your TestCase setUp:
@@ -16,6 +15,7 @@ the following attributes on your TestCase setUp:
 
 AND the VDD pin must be connected to the digital_input_pin_number
 '''
+
 
 class BoardBasics(object):
     def test_list_pins(self):
@@ -65,7 +65,6 @@ class BoardBasics(object):
         assert output == pingo.HIGH
 
 
-
 class BoardExceptions(object):
 
     def test_disabled_pin(self):
@@ -82,7 +81,6 @@ class BoardExceptions(object):
 
         with self.assertRaises(pingo.WrongPinMode):
             pin.state = pingo.HIGH
-
 
 #    def test_wrong_pin_mode_out(self):
 #        pin = self.board.pins[digital_output_pin_number]

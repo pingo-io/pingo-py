@@ -27,7 +27,7 @@ class AnalogReadBasics(object):
         _input = pin.value
         #print "Value Read: ", _input
 
-        assert self.expected_analog_input-2 <= _input <= self.expected_analog_input+2
+        assert self.expected_analog_input-3 <= _input <= self.expected_analog_input+3
 
     def test_pin_ratio(self):
         pin = self.board.pins[self.analog_input_pin_number]
