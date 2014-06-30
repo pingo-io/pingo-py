@@ -47,7 +47,7 @@ class GhostBoard(pingo.Board):
         self._write_json(pin_states)
 
     def __del__(self):
-        fp.close()
+        _fp.close()
 
     def cleanup(self):
         print('GhostBoard: cleaning up.')
@@ -60,7 +60,7 @@ class GhostBoard(pingo.Board):
 
     def _read_json(self):
         self._fp.seek(0)
-        return = json.load(_self.fp)
+        return json.load(self._fp)
 
     def _set_pin_mode(self, pin, mode):
         print('GhostBoard: %r mode -> %s' % (pin, mode))
