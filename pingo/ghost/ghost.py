@@ -1,17 +1,13 @@
 import os
 import json
+import tempfile
 
 import pingo
-
-PIN_STATES_FILEPATH = os.path.join(
-        os.path.dirname(
-            os.path.abspath(__file__)
-        ), 'pin_states.json')
 
 
 class GhostBoard(pingo.Board):
 
-    def __init__(self):
+    def __init__(self, filepath=None):
         super(GhostBoard, self).__init__()
 
         pins = set([
@@ -44,11 +40,27 @@ class GhostBoard(pingo.Board):
         # Pin 8 starts on HIGH
         pin_states[8] = 1
 
-        with open(PIN_STATES_FILEPATH, 'w') as fp:
-            json.dump(pin_states, fp, indent=4)
+        if filepath:
+            self._fp = open(filepath, 'w+')
+        else:
+            self._fp = tempfile.NamedTemporaryFile(mode='w+', delete=False)
+        self._write_json(pin_states)
+
+    def __del__(self):
+        _fp.close()
 
     def cleanup(self):
         print('GhostBoard: cleaning up.')
+
+    def _write_json(self, pin_states):
+        self._fp.seek(0)
+        json.dump(pin_states, self._fp, indent=4)
+        self._fp.truncate()
+        self._fp.flush()
+
+    def _read_json(self):
+        self._fp.seek(0)
+        return json.load(self._fp)
 
     def _set_pin_mode(self, pin, mode):
         print('GhostBoard: %r mode -> %s' % (pin, mode))
@@ -56,16 +68,12 @@ class GhostBoard(pingo.Board):
     def _set_pin_state(self, pin, state):
         print('GhostBoard: %r state -> %s' % (pin, state))
         _state = 1 if state == pingo.HIGH else 0
-        with open(PIN_STATES_FILEPATH, 'r') as fp:
-            pin_states = json.load(fp)
-            pin_states[str(pin.location)] = _state
-
-        with open(PIN_STATES_FILEPATH, 'w') as fp:
-            json.dump(pin_states, fp, indent=4)
+        pin_states = self._read_json()
+        pin_states[str(pin.location)] = _state
+        self._write_json(pin_states)
 
     def _get_pin_state(self, pin):
-        with open(PIN_STATES_FILEPATH, 'r') as fp:
-            pin_states = json.load(fp)
-            state = pin_states[str(pin.location)]
+        pin_states = self._read_json()
+        state = pin_states[str(pin.location)]
         return  pingo.HIGH if state else pingo.LOW
 
