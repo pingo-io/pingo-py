@@ -36,7 +36,7 @@ class MainWindow(gtk.Window):
             # Button
             pack[1].set_size_request(40, 20)
             if isinstance(pin, pingo.GroundPin) or \
-                isinstance(pin, pingo.VddPin):
+                isinstance(pin, pingo.VccPin):
                 pack[1].set_sensitive(False)
             else:
                 label = 'OFF' if pin.state is None else pin.state
@@ -52,7 +52,7 @@ class MainWindow(gtk.Window):
             # Button
             pack[5].set_size_request(40, 20)
             if isinstance(pin, pingo.GroundPin) or \
-                isinstance(pin, pingo.VddPin):
+                isinstance(pin, pingo.VccPin):
                 pack[5].set_sensitive(False)
             else:
                 label = 'OFF' if pin.state is None else pin.state

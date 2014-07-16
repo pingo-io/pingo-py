@@ -16,12 +16,12 @@ class PcDuinoTest(unittest.TestCase):
         self.board = pingo.pcduino.PcDuino()
         # Level0 Parameters
         self.digital_output_pin_number = 3
-        self.digital_input_pin_number = 11
+        self.digital_input_pin_number = 0
         self.total_pins = 20
 
         # Level1 Parameters
-        self.analog_input_pin_number = 'A2'
-        self.expected_analog_input = 4014
+        self.analog_input_pin_number = 'A3'
+        self.expected_analog_input = 4096
         self.expected_analog_ratio = 0.98
 
     def tearDown(self):

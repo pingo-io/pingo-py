@@ -299,7 +299,7 @@ class GroundPin(Pin):
         return '<%s>' % self.__class__.__name__
 
 
-class VddPin(Pin):
+class VccPin(Pin):
 
     def __init__(self, board, location, voltage):
         Pin.__init__(self, board, location)

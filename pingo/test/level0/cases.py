@@ -20,7 +20,7 @@ AND the VDD pin must be connected to the digital_input_pin_number
 class BoardBasics(object):
     def test_list_pins(self):
         vdd_pin = self.board.pins[self.vdd_pin_number]
-        assert isinstance(vdd_pin, pingo.VddPin)
+        assert isinstance(vdd_pin, pingo.VccPin)
 
         pin = self.board.pins[self.digital_output_pin_number]
         assert isinstance(pin, pingo.DigitalPin)

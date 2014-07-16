@@ -12,7 +12,7 @@ class GhostBoard(pingo.Board):
 
         pins = set([
             pingo.GroundPin(self, 1),
-            pingo.VddPin(self, 2, 5.0),
+            pingo.VccPin(self, 2, 5.0),
             pingo.DigitalPin(self, 3),
             pingo.DigitalPin(self, 4),
             pingo.DigitalPin(self, 5),
@@ -26,7 +26,7 @@ class GhostBoard(pingo.Board):
             pingo.DigitalPin(self, 13),
             pingo.DigitalPin(self, 14),
             pingo.GroundPin(self, 15),
-            pingo.VddPin(self, 16, 3.3),
+            pingo.VccPin(self, 16, 3.3),
         ])
 
         self._add_pins(pins)

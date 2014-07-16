@@ -91,7 +91,7 @@ class GroundPin(Pin):
         return '<%s>' % self.__class__.__name__
 
 
-class VddPin(Pin):
+class VccPin(Pin):
 
     def __init__(self, board, location, voltage):
         Pin.__init__(self, board, location)
@@ -127,10 +127,10 @@ class cRaspberryPi(Board):
         super(cRaspberryPi, self).__init__()
         self.dll = ctypes.cdll.LoadLibrary("./fsgpio.so");
 
-        pins = [VddPin(self, 1, 3.3),
-                VddPin(self, 2, 5.0),
-                VddPin(self, 4, 5.0),
-                VddPin(self, 17, 3.3)]
+        pins = [VccPin(self, 1, 3.3),
+                VccPin(self, 2, 5.0),
+                VccPin(self, 4, 5.0),
+                VccPin(self, 17, 3.3)]
 
         pins += [GroundPin(self, n) for n in [6, 9, 14, 20, 25]]
 

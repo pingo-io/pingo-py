@@ -4,6 +4,7 @@ pcDuino v1 board
 """
 
 from pingo.board import Board, DigitalPin, AnalogPin, IN, OUT, HIGH, LOW
+from pingo.board import AnalogInputCapable
 from pingo.detect import detect
 
 # /sys/class/gpio/gpio40/ --> Arduino pin #13
@@ -16,7 +17,7 @@ LEN_DIGITAL_PINS = 14
 ANALOG_PIN_RESOLUTIONS = [6, 6, 12, 12, 12, 12]
 
 
-class PcDuino(Board):
+class PcDuino(Board, AnalogInputCapable):
 
     def __init__(self):
         self._add_pins([DigitalPin(self, location)
@@ -37,6 +38,9 @@ class PcDuino(Board):
         with open(DIGITAL_PINS_PATH+'pin/gpio%s' % pin.location, 'r') as fp:
             state = fp.read().strip()
             return HIGH if state == '1' else LOW
+
+    def _set_analog_mode(self, pin, mode):
+        pass
 
     def _get_pin_value(self, pin):
         adc_id = pin.location[-1]

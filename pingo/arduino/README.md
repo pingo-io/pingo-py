@@ -1,7 +1,8 @@
 # Troubleshooting
 
+## Arduino IDE
 If anyone is facing some error like this:
-
+```
 $ arduino
 java.lang.UnsatisfiedLinkError: no rxtxSerial in java.library.path thrown while loading gnu.io.RXTXCommDriver
 Exception in thread "main" java.lang.UnsatisfiedLinkError: no rxtxSerial in java.library.path
@@ -18,8 +19,9 @@ Exception in thread "main" java.lang.UnsatisfiedLinkError: no rxtxSerial in java
 	at processing.app.Base.handleNew(Base.java:565)
 	at processing.app.Base.<init>(Base.java:305)
 	at processing.app.Base.main(Base.java:194)
-
-The fix is this: 
+```
+The fix is this:
+```
 $ sudo ln -s /usr/lib/jni/librxtxSerial-2.2pre1.so /usr/lib/jni/librxtxSerial.so
-
+```
 PS: I'm running here a CrunchBang 11. But Debian/Ubuntu/Mint user may have this problem too.

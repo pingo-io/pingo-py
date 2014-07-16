@@ -15,9 +15,9 @@ class PinFrame(object):
         self.frame = _frame
 
 
-class VddGndFrame(PinFrame):
+class VccGndFrame(PinFrame):
     def __init__(self, root, volage):
-        super(VddGndFrame, self).__init__(root)
+        super(VccGndFrame, self).__init__(root)
         label = "VDD Pin %dV" % volage
         ttk.Label(self.frame, text=label).grid(column=0, row=0, sticky=W)
 
@@ -82,7 +82,7 @@ class pinGUIm(object):
         self.root.title("pingo :: pinGUIm")
         self.root.geometry("390x240")
 
-        vf = VddGndFrame(self.root, 5)
+        vf = VccGndFrame(self.root, 5)
         df = DigitalGuiFrame(self.root)
         af = AnalogGuiFrame(self.root)
 
