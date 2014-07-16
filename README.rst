@@ -48,18 +48,20 @@ Drivers
 
 The following table lists the drivers currently planned or under development.
 
-================ ======== =============== ======== ==================================================
-Board            Type     Module/Package  Status   Notes
-================ ======== =============== ======== ==================================================
-Arduino Firmata  remote   arduino         level 1  requires `firmata library`_ on any Arduino board
-Arduino Yún      on-board arduino.yun     experim. requires `Bridge sketch`_ on the Arduino Yún
-BeagleBone Black on-board bbb             experim.
-Fantasma         fake     ghost           level 1  not a real board, just a software fake for testing
-Intel Galileo    on-board galileo         none
-pcDuino          on-board pcduino         level 1
-Raspberry Pi     on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
-UDOO             on-board udoo            level 0
-================ ======== =============== ======== ==================================================
+===================== ======== =============== ======== ==================================================
+Board                 Type     Module/Package  Status   Notes
+===================== ======== =============== ======== ==================================================
+Arduino Firmata       remote   arduino         level 1  requires `firmata library`_ on any Arduino board
+Arduino Yún           on-board arduino.yun     experim. requires `Bridge sketch`_ on the Arduino Yún
+TI BeagleBone Black   on-board bbb             experim.
+Cubietech Cubieboard  on-board -               none
+Fantasma              fake     ghost           level 1  not a real board, just a software fake for testing
+SolidRun HummingBoard on-board -               none
+Intel Galileo         on-board galileo         none
+LinkSprite pcDuino    on-board pcduino         level 1
+element14 RaspberryPi on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
+SECO UDOO             on-board udoo            level 0
+===================== ======== =============== ======== ==================================================
 
 .. _Firmata library: http://arduino.cc/en/reference/firmata
 .. _Bridge sketch: http://arduino.cc/en/Reference/YunBridgeLibrary
