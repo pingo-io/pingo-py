@@ -30,7 +30,7 @@ Once you have a board instance, its possible to access its pins through the ``bo
 
     board = pingo.detect.MyBoard()
     led_pin = board.pins[13]
-    led_pin.mode pingo.OUT
+    led_pin.mode = pingo.OUT
 
     while True:
         led_pin.hi()
