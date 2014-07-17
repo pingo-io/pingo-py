@@ -17,7 +17,7 @@ import pingo
 board = pingo.detect.MyBoard()
 print('board: %s' % board)
 pot = board.pins['A0']
-leds = board.digital_pins[6:13]
+leds = board.digital_pins[6:14]
 
 for led in leds:
     led.mode = pingo.OUT
@@ -28,4 +28,5 @@ while True:
             continue
         led.high()
         time.sleep(pot.ratio())
+        print pot.ratio()
         led.low()

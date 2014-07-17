@@ -34,7 +34,7 @@ class PcDuinoBasics(PcDuinoTest, level0.BoardBasics):
         pin = self.board.pins[self.digital_output_pin_number]
         assert isinstance(pin, pingo.DigitalPin)
 
-        data_pins = len(pingo.pcduino.PcDuino().pins)
+        data_pins = len(self.board.pins)
         assert data_pins == self.total_pins
 
 
