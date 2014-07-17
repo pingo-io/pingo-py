@@ -1,13 +1,11 @@
-import os
 from pingo.board import Board, DigitalPin, AnalogPin, IN, OUT, HIGH, LOW
 from pingo.board import AnalogInputCapable
 
 
 class PcDuino(Board, AnalogInputCapable):
     """
-    pcDuino v1 board
+    pcDuino board (works on V1 and V3)
     """
-    # /sys/class/gpio/gpio40/ --> Arduino pin #13
     DIGITAL_PINS_PATH = '/sys/devices/virtual/misc/gpio/'
     ADC_PATH = '/proc/'
 
