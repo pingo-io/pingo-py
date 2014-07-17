@@ -54,9 +54,9 @@ Board                 Type     Module/Package  Status   Notes
 Arduino Firmata       remote   arduino         level 1  requires `firmata library`_ on any Arduino board
 Arduino Yún           on-board arduino.yun     experim. requires `Bridge sketch`_ on the Arduino Yún
 TI BeagleBone Black   on-board bbb             experim.
-Cubietech Cubieboard  on-board -               none
+Cubietech Cubieboard  on-board                 none
 Fantasma              fake     ghost           level 1  not a real board, just a software fake for testing
-SolidRun HummingBoard on-board -               none
+SolidRun HummingBoard on-board                 none
 Intel Galileo         on-board galileo         none
 LinkSprite pcDuino    on-board pcduino         level 1
 element14 RaspberryPi on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
