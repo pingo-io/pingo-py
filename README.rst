@@ -30,7 +30,7 @@ Once you have a board instance, its possible to access its pins through the ``bo
 
     board = pingo.detect.MyBoard()
     led_pin = board.pins[13]
-    led_pin.mode pingo.OUT
+    led_pin.mode = pingo.OUT
 
     while True:
         led_pin.hi()
@@ -51,19 +51,20 @@ The following table lists the drivers currently planned or under development.
 ===================== ======== =============== ======== ==================================================
 Board                 Type     Module/Package  Status   Notes
 ===================== ======== =============== ======== ==================================================
-Arduino Firmata       remote   arduino         level 1  requires `firmata library`_ on any Arduino board
-Arduino Yún           on-board arduino.yun     experim. requires `Bridge sketch`_ on the Arduino Yún
+Arduino Firmata       remote   arduino         level 1  requires `firmata protocol`_ on any Arduino board
+Arduino Yún           on-board                 experim. requires `Bridge sketch`_ on the Arduino Yún
 TI BeagleBone Black   on-board bbb             experim.
 Cubietech Cubieboard  on-board                 none
 Fantasma              fake     ghost           level 1  not a real board, just a software fake for testing
 SolidRun HummingBoard on-board                 none
 Intel Galileo         on-board galileo         none
+TI MSP430             remote                   none     requires `firmata protocol`_ on any MSP430 board
 LinkSprite pcDuino    on-board pcduino         level 1
 element14 RaspberryPi on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
 SECO UDOO             on-board udoo            level 0
 ===================== ======== =============== ======== ==================================================
 
-.. _Firmata library: http://arduino.cc/en/reference/firmata
+.. _Firmata protocol: http://arduino.cc/en/reference/firmata
 .. _Bridge sketch: http://arduino.cc/en/Reference/YunBridgeLibrary
 .. _RPi.GPIO: https://pypi.python.org/pypi/RPi.GPIO
 
