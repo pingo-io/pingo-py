@@ -1,14 +1,16 @@
 import pingo
 import time
 
-b = pingo.detect.MyBoard()
-p = b.pins['A0']
-p.mode = pingo.ANALOG
+board = pingo.detect.MyBoard()
+# board = pingo.arduino.get_arduino()
+
+pot = board.pins['A0']
+pot.mode = pingo.ANALOG
 
 def bar(pin):
     print "*" * int(pin.ratio() * 70)
 
-for i in xrange(10):
-    bar(p)
+while True:
+    bar(pot)
     time.sleep(0.05)
 
