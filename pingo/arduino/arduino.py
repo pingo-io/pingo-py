@@ -40,7 +40,7 @@ class ArduinoFirmata(Board, AnalogInputCapable):
             from PyMata.pymata import PyMata
         except ImportError:
             msg = 'pingo.arduino.Arduino requires PyMata installed'
-            raise SystemExit(msg)
+            raise ImportError(msg)
 
         super(ArduinoFirmata, self).__init__()
         self.port = port
