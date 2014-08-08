@@ -30,7 +30,7 @@ class RaspberryPi(pingo.Board):
         try:
             import RPi.GPIO as GPIO
         except ImportError:
-            raise SystemExit('pingo.rpi requires RPi.GPIO installed')
+            raise ImportError('pingo.rpi.RaspberryPi requires RPi.GPIO installed')
 
         super(RaspberryPi, self).__init__()
         GPIO.setmode(GPIO.BCM)
