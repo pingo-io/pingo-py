@@ -5,6 +5,7 @@ Name (Github user)
 Alexandre Souza (alexandre)
 Danilo J. S. Bellini (danilobellini)
 Estevão U. P. Vieira
+Kang Yang (linksprite)
 Kemel Zaidan (kemelzaidan)
 Leonardo Rochael (leorochael)
 Lucas S. Simões
