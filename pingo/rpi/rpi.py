@@ -38,10 +38,10 @@ class RaspberryPi(pingo.Board):
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(True)
 
-        pins = [pingo.VddPin(self, 1, 3.3),
-                pingo.VddPin(self, 2, 5.0),
-                pingo.VddPin(self, 4, 5.0),
-                pingo.VddPin(self, 17, 3.3)]
+        pins = [pingo.VccPin(self, 1, 3.3),
+                pingo.VccPin(self, 2, 5.0),
+                pingo.VccPin(self, 4, 5.0),
+                pingo.VccPin(self, 17, 3.3)]
 
         pins += [pingo.GroundPin(self, n) for n in self.GROUNDS_LIST]
 
