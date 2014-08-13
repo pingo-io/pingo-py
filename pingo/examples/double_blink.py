@@ -11,7 +11,7 @@ This script assumes:
 import time
 import pingo
 
-board = pingo.detect.MyBoard()
+board = pingo.rpi.RaspberryPiBPlus()
 local_led = board.pins[13]
 local_led.mode = pingo.OUT
 
