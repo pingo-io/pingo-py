@@ -5,6 +5,7 @@ import atexit
 
 from abc import ABCMeta, abstractmethod
 
+from .util import StrKeyDict
 
 HIGH = 'HIGH'
 LOW = 'LOW'
@@ -100,7 +101,7 @@ class Board(object):
         Arguments:
             ``pins``: an iterable of ``Pin`` instances
         """
-        self.pins = {}
+        self.pins = StrKeyDict()
         for pin in pins:
             self.pins[pin.location] = pin
 
