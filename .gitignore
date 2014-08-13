@@ -47,6 +47,9 @@ nosetests.xml
 # Sphinx
 _build/
 
+# OSX
+.DS_Store
+
 # Pingo generated files
 pin_states.json
 test_output
