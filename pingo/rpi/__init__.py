@@ -1,1 +1,1 @@
-from rpi import RaspberryPi
+from rpi import RaspberryPi, RaspberryPiBPlus
