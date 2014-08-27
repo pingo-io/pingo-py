@@ -55,6 +55,9 @@ class StrKeyDict(UserDict.UserDict):
     def __setitem__(self, key, item):
         self.data[str(key)] = item
 
+    def __iter__(self):
+        return self.iterkeys()
+
     def update(self, iterable=None, **kwds):
         if iterable is not None:
             if isinstance(iterable, collections.Mapping):
