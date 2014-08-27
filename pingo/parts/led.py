@@ -46,8 +46,16 @@ class Led(object):
         :param on_delay: delay while LED is on
         :param off_delay: delay while LED is off
         """
+        if self.blinking:
+            self.stop()
         self.blink_task = BlinkTask(self, times, on_delay, off_delay)
         threading.Thread(target=self.blink_task.run).start()
+
+    def stop(self):
+        """Stop blinking"""
+        if self.blinking:
+            self.blink_task.terminate()
+            self.blink_task = None
 
 
 class BlinkTask(object):
