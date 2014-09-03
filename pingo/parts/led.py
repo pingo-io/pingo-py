@@ -111,7 +111,9 @@ DIGIT_MAP = {
     12: '1001110',
     13: '0111101',
     14: '1001111',
-    15: '1000111'
+    15: '1000111',
+    'G': '1011110',  # to spell GArOA
+    'r': '0000101',  # to spell GArOA
 }
 
 
@@ -129,6 +131,7 @@ class SevenSegments(object):
             self._leds.append(Led(pin_dp, lit_state))
 
         self._digit = 0
+        self._dot = False
 
     def _configure(self, pattern):
         for segment, state in zip(self._leds, pattern):
@@ -152,3 +155,18 @@ class SevenSegments(object):
 
     def off(self):
         self._configure('0' * 7)
+
+    @property
+    def dot(self):
+        return self._dot
+
+    @dot.setter
+    def dot(self, state):
+        if len(self._leds) < 8:
+            raise LookupError('Decimal point LED undefined')
+        if state:
+            self._dot = True
+            self._leds[7].on()
+        else:
+            self._dot = False
+            self._leds[7].off()
