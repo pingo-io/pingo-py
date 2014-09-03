@@ -6,6 +6,7 @@ and lights a PWM Led on 6 (or the dicimal point)
 
 """
 
+from pprint import pprint
 import pingo
 import time
 
@@ -28,6 +29,9 @@ def bar(pin):
     n = int(reading * 10)
     seg_display.digit = n
     led.value = reading 
+
+
+pprint(board.pins, indent=4, width=1)
 
 while True:
     bar(pot)

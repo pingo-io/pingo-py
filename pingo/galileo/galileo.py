@@ -39,7 +39,7 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
                 for location in '012345']
         )
 
-        self.mraa_pins, self.mraa_analogs, mraa_pwms = {}, {}, {}
+        self.mraa_pins, self.mraa_analogs, self.mraa_pwms = {}, {}, {}
 
     def _set_pin_mode(self, pin, mode):
         if pin.mode == pingo.PWM:
