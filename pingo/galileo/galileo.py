@@ -1,4 +1,9 @@
-import mraa
+mraa = None
+
+try:
+   import mraa as mraa
+except:
+   pass
 
 import pingo
 
@@ -30,4 +35,8 @@ class Galileo2(pingo.Board):
 
     def _set_pin_state(self, pin, state):
         self.mraa_pins[pin.location].write(self.PIN_STATES[state])
+
+    def _get_pin_state(self, pin):
+        value = self.mraa_pins[pin.location].read()
+        return pingo.HIGH if value == 1 else pingo.LOW
 
