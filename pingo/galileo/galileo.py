@@ -27,13 +27,10 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
 
         pwm_pin_numbers = [3, 5, 6, 9, 10, 11, 13]
         digital_pin_numbers = [1, 2, 4, 7, 8, 12]
-        # FIXME: PwmPins are DigitalPins while implementation is broken
-        digital_pin_numbers += pwm_pin_numbers
-        # FIXME: removing PwmPins while implementation is broken
-        pwm_pin_numbers = []
+
         self._add_pins(
             [pingo.PwmPin(self, location)
-                for location in []] +
+                for location in pwm_pin_numbers] +
 
             [pingo.DigitalPin(self, location)
                 for location in digital_pin_numbers] +
@@ -42,30 +39,22 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
                 for location in '012345']
         )
 
-        self.mraa_pins = {
-            location: mraa.Gpio(location)
-            for location in range(1, 14)
-        }
-
-        self.mraa_analogs = {
-            'A' + location: mraa.Aio(int(location))
-            for location in '012345'
-        }
-
-        self.mraa_pwms = {
-            location: mraa.Pwm(location)
-            for location in [3, 5, 6, 9, 10, 11, 13]
-        }
+        self.mraa_pins, self.mraa_analogs, mraa_pwms = {}, {}, {}
 
     def _set_pin_mode(self, pin, mode):
         if pin.mode == pingo.PWM:
             self.mraa_pwms[pin.location].enable(False)
+        self.mraa_pins[pin.location] = mraa.Gpio(pin.location)
         self.mraa_pins[pin.location].dir(self.PIN_MODES[mode])
 
     def _set_analog_mode(self, pin, mode):
-        pass
+        mraa_id = int(pin.location[1])
+        self.mraa_analogs[pin.location] = mraa.Aio(mraa_id)
 
     def _set_pwm_mode(self, pin, mode):
+        if pin.mode == pingo.IN:
+            self.mraa_pins[pin.location].dir(mraa.DIR_OUT)
+        self.mraa_pwms[pin.location] = mraa.Pwm(pin.location)
         self.mraa_pwms[pin.location].enable(True)
 
     def _set_pin_state(self, pin, state):
@@ -79,7 +68,11 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
         return self.mraa_analogs[pin.location].read()
 
     def _get_pwm_duty_cycle(self, pin):
-        return 0  # TODO
+	if hasattr(pin, '_duty_cycle'):
+            return pin._duty_cycle
+        else:
+            return 0.0
 
     def _set_pwm_duty_cycle(self, pin, value):
         self.mraa_pwms[pin.location].write(value)
+	pin._duty_cycle = value

@@ -17,10 +17,12 @@ import pingo
 board = pingo.detect.MyBoard()
 print('board: %s' % board)
 pot = board.pins['A0']
+pot.mode = pingo.ANALOG
 leds = board.digital_pins[6:14]
 
 for led in leds:
     led.mode = pingo.OUT
+    led.low()
 
 while True:
     for led in leds:
