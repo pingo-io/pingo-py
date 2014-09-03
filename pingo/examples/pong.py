@@ -25,10 +25,6 @@ def new_ball_pos(pos, velocity):
     y = pos[1] + velocity[1]
     return (x, y)
 
-def paddle_collision(ball_pos, paddle_pos, paddle_size):
-    return (ball_pos[0] == paddle_pos[0] and
-             paddle_pos[1] <= ball_pos[1] <= paddle_pos[1] + PADDLE_SIZE)
-
 def draw_paddle(x, y, color):
     for offset in range(PADDLE_SIZE):
         screen.addstr(y + offset, x, ' ', color)
@@ -45,11 +41,13 @@ if __name__ == '__main__':
     screen.clear()
     curses.start_color()
 
+    # Initializes the color pairs we'll use (black on white and white on black)
     curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
     ball_pos, ball_velocity = init_ball()
 
+    # Start communicating with the local and remote sensors
     galileo = pingo.detect.MyBoard()
     arduino = pingo.arduino.get_arduino()
 
@@ -59,16 +57,19 @@ if __name__ == '__main__':
     pot_arduino = arduino.pins['A0']
     pot_arduino.mode = pingo.ANALOG
 
-
+    # Read the initial values of the paddles
     paddle_1_pos = int(pot_arduino.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
     paddle_2_pos = int(pot_galileo.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
 
     while True:
+        # Erases the paddles for the previous moment
         draw_paddle(MIN_X, paddle_1_pos, curses.color_pair(2))
         draw_paddle(MAX_X, paddle_2_pos, curses.color_pair(2))
 
+        # Erase the ball
         screen.addstr(ball_pos[1], ball_pos[0], ' ', curses.color_pair(2))
 
+        # Read current paddle positions
         paddle_1_pos = int(pot_arduino.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
         paddle_2_pos = int(pot_galileo.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
 
@@ -83,7 +84,7 @@ if __name__ == '__main__':
         if ball_pos[0] >= MAX_X:
             ball_velocity[0] = - ball_velocity[0]
             # Check whether we collided with a paddle
-            if not paddle_1_pos < ball_pos[1] < paddle_1_pos + PADDLE_SIZE:
+            if not paddle_2_pos < ball_pos[1] < paddle_1_pos + PADDLE_SIZE:
                 ball_pos, ball_velocity = init_ball()
 
         # If top or botton collision, invert vy
@@ -99,5 +100,3 @@ if __name__ == '__main__':
         screen.refresh()
 
         time.sleep(0.05)
-
-
