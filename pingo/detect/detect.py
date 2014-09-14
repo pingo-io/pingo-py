@@ -15,12 +15,15 @@ class DetectionFailed(Exception):
 
 def _read_cpu_info():
     cpuinfo = {}
+    # pattern = '(?P<key>[^\t\n]*)\t{1,2}: (?P<value>\.*)\n'
     with open('/proc/cpuinfo', 'r') as fp:
         for line in fp:
-            key, value = tuple(line.split(':'))
-            cpuinfo[key.strip()] = value.strip()
+            line = line.strip()
+            if line:
+                tokens = tuple(
+                    token.strip() for token in line.split(':'))
+            cpuinfo[tokens[0]] = tokens[-1]
     return cpuinfo
-
 
 def _find_arduino_dev(system):
     if system == 'Linux':
