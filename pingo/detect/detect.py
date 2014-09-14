@@ -1,5 +1,7 @@
 import os
+import re
 import glob
+import string
 import platform
 
 import pingo
@@ -51,13 +53,23 @@ def MyBoard():
         return pingo.ghost.GhostBoard()
 
     if machine == 'armv6l':
-        print('Using RaspberryPi...')
-        return pingo.rpi.RaspberryPi()
+        with open('/proc/cpuinfo', 'r') as fp:
+            info = fp.read()
+
+        #TODO: Use this code in _read_cpu_info
+        pattern = '(?P<key>[^\t\n]*)\t{1,2}: (?P<value>\.*)\n'
+        cpuinfo = dict(re.findall(info, pattern))
+        revision = string.atoi(cpuinfo['Revision'], 16) # str to hex
+
+        if revision < 16:
+            print('Using RaspberryPi...')
+            return pingo.rpi.RaspberryPi()
+        else:
+            print('Using RaspberryPi Model B+...')
+            return pingo.rpi.RaspberryPiBPlus()
 
     if machine == 'armv7l':
-
         if system == 'Linux':
-
             hardware = _read_cpu_info()
             lsproc = os.listdir('/proc/')
             adcx = [p for p in lsproc if p.startswith('adc')]
@@ -74,4 +86,4 @@ def MyBoard():
                 print('Using Udoo...')
                 return pingo.udoo.Udoo()
 
-        raise DetectionFailed()
+    raise DetectionFailed()
