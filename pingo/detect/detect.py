@@ -14,11 +14,12 @@ class DetectionFailed(Exception):
 
 
 def _read_cpu_info():
+    cpuinfo = {}
     with open('/proc/cpuinfo', 'r') as fp:
         for line in fp:
-            if line.startswith('Hardware'):
-                key, value = tuple(line.split(':'))
-                return value.strip()
+            key, value = tuple(line.split(':'))
+            cpuinfo[key.strip()] = value.strip()
+    return cpuinfo
 
 
 def _find_arduino_dev(system):
@@ -53,12 +54,13 @@ def MyBoard():
         return pingo.ghost.GhostBoard()
 
     if machine == 'armv6l':
-        with open('/proc/cpuinfo', 'r') as fp:
-            info = fp.read()
+        # FIX: Regex does not work.
+        # with open('/proc/cpuinfo', 'r') as fp:
+        #    info = fp.read()
+        # #TODO: Use this code in _read_cpu_info
+        # pattern = '(?P<key>[^\t\n]*)\t{1,2}: (?P<value>\.*)\n'
 
-        #TODO: Use this code in _read_cpu_info
-        pattern = '(?P<key>[^\t\n]*)\t{1,2}: (?P<value>\.*)\n'
-        cpuinfo = dict(re.findall(info, pattern))
+        cpuinfo = _read_cpu_info()
         revision = string.atoi(cpuinfo['Revision'], 16) # str to hex
 
         if revision < 16:
@@ -70,7 +72,7 @@ def MyBoard():
 
     if machine == 'armv7l':
         if system == 'Linux':
-            hardware = _read_cpu_info()
+            hardware = _read_cpu_info()['Hardware']
             lsproc = os.listdir('/proc/')
             adcx = [p for p in lsproc if p.startswith('adc')]
 
