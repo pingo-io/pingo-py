@@ -14,13 +14,16 @@ LOW = 'LOW'
 IN = 'IN'
 OUT = 'OUT'
 ANALOG = 'ANALOG'
-#PWM = 'PWM'
+PWM = 'PWM'
 
 class WrongPinMode(Exception):
     value = 'Operation not supported in current mode.'
 
 class ModeNotSuported(Exception):
     value = 'Mode not suported by Pin or Board.'
+
+class ArgumentOutOfRange(Exception):
+    value = 'Argument not in the range 0.0 to 1.0'
 
 
 class Board(object):
@@ -148,9 +151,45 @@ class AnalogInputCapable(object):
         """
 
 
+class PwmOutputCapable(object):
+    """Mixin interface for boards that support PwmOutputPin
+
+    Concrete ``PwmOutputCapable`` subclasses should implement
+    ``_get_pin_value`` to write the PWM signal of analog pins.
+    """
+
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def _set_pwm_mode(self, pin, mode):
+        """Abstract method to be implemented by each ``Board`` subclass.
+
+        The ``«pin».mode(…)`` property calls this method because
+        the procedure to set pin mode changes from board to board.
+        """
+
+    @abstractmethod
+    def _get_pwm_value(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass.
+
+        The ``«PwmPin».value(…)`` method calls this method because
+        the procedure to read the PWM signal changes from board to board.
+        """
+
+    @abstractmethod
+    def _set_pwm_value(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass.
+
+        The ``«PwmPin».value(…)`` method calls this method because
+        the procedure to write a PWM signal changes from board to board.
+        """
+
+
 class Pin(object):
     """Abstract class defining common interface for all pins."""
     __metaclass__ = ABCMeta
+
+    suported_modes = []
 
     def __init__(self, board, location, gpio_id=None):
         """Initialize ``Pin`` instance with
@@ -168,6 +207,7 @@ class Pin(object):
         self.location = location
         if gpio_id is not None:
             self.gpio_id = gpio_id
+        self._mode = None
 
     def __repr__(self):
         cls_name = self.__class__.__name__
@@ -178,6 +218,19 @@ class Pin(object):
             gpio_id = ''
         return '<{cls_name} {gpio_id}@{location}>'.format(**locals())
 
+    @property
+    def mode(self):
+        """[property] Get/set pin mode to ``pingo.IN`` or ``pingo.OUT``"""
+        return self._mode
+
+    @mode.setter
+    def mode(self, value):
+        if value not in self.suported_modes:
+            raise ModeNotSuported()
+        self.board._set_pin_mode(self, value)
+        self._mode = value
+
+
 
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
@@ -186,21 +239,11 @@ class DigitalPin(Pin):
     because pins delegate all board-dependent behavior to the board.
     """
 
-    def __init__(self, board, location, gpio_id=None):
+    suported_modes = [IN, OUT]
 
+    def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
         self._state = None
-        self._mode = None
-
-    @property
-    def mode(self):
-        """[property] Get/set pin mode to ``pingo.IN`` or ``pingo.OUT``"""
-        return self._mode
-
-    @mode.setter
-    def mode(self, value):
-        self.board._set_pin_mode(self, value)
-        self._mode = value
 
     @property
     def state(self):
@@ -234,6 +277,26 @@ class DigitalPin(Pin):
         self.state = HIGH if self.state == LOW else LOW
 
 
+class PwmPin(DigitalPin):
+
+    suported_modes = [IN, OUT, PWM]
+
+    @property
+    def value(self):
+        if self.mode != PWM:
+            raise WrongPinMode()
+        return self.board._get_pwm_value(self)
+
+
+    @value.setter
+    def value(self, value):
+        if self.mode != PWM:
+            raise WrongPinMode()
+        if not 0.0 <= value <= 1.0:
+            raise ArgumentOutOfRange()
+        self.board._set_pwm_state(self, value)
+
+
 class AnalogPin(Pin):
     """Defines common interface for all analog pins.
 
@@ -242,6 +305,8 @@ class AnalogPin(Pin):
 
     This pin type supports read operations only.
     """
+
+    suported_modes = [IN, ANALOG]
 
     def __init__(self, board, location, resolution, gpio_id=None):
         """
@@ -253,20 +318,6 @@ class AnalogPin(Pin):
         Pin.__init__(self, board, location, gpio_id)
         self.bits = resolution
         self._mode = None
-
-    @property
-    def mode(self):
-        """[property] Get pin mode ``pingo.IN``"""
-        return self._mode
-
-    @mode.setter
-    def mode(self, mode):
-        if mode not in [IN, ANALOG]:
-            raise ModeNotSuported()
-
-        self.board._set_analog_mode(self, mode)
-        # TODO: Call Board's methods
-        self._mode = mode
 
     @property
     def value(self):

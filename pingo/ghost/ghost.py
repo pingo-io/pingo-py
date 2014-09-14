@@ -3,7 +3,9 @@ import os
 import pingo
 
 
-class GhostBoard(pingo.Board):
+class GhostBoard(pingo.Board,
+        pingo.AnalogInputCapable,
+        pingo.PwmOutputCapable):
 
     def __init__(self, filepath=None):
         super(GhostBoard, self).__init__()
@@ -52,4 +54,19 @@ class GhostBoard(pingo.Board):
     def _get_pin_state(self, pin):
         state = self.pin_states[pin.location]
         return pingo.HIGH if state else pingo.LOW
+
+    def _get_pin_value(self, pin):
+        return self.pin_states[pin.location]
+
+    def _set_analog_mode(self, pin, mode):
+        self._set_pin_mode(pin, mode)
+
+    def _set_pwm_mode(self, pin, mode):
+        self._set_pin_mode(pin, mode)
+
+    def _get_pwm_value(self, pin):
+        return self.pin_states[pin.location]
+
+    def _set_pwm_value(self, pin, value):
+        self.pin_states[pin.location] = value
 
