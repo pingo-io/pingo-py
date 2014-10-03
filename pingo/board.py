@@ -162,7 +162,7 @@ class PwmOutputCapable(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def _get_pwm_duty_cycle(:self, pin):
+    def _get_pwm_duty_cycle(self, pin):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«PwmPin».value(…)`` method calls this method because
@@ -285,7 +285,7 @@ class PwmPin(DigitalPin):
     def value(self, value):
         if self.mode != PWM:
             raise WrongPinMode()
-        if not 0.0 <= value <= 1.0:
+        if not 0.0 <= value <= 100.0:
             raise ArgumentOutOfRange()
         self.board._set_pwm_duty_cycle(self, value)
 

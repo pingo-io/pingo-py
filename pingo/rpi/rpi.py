@@ -18,16 +18,19 @@ else:
             self.duty_cycle = 100.
             super(PwmWrapper, self).__init__(channel, frequency)
 
-        def start(self, *args, **kwargs):
+        def start(self, duty_cycle):
             self.is_running = True
-            return super(PwmWrapper, self).start()
+            self.duty_cycle = duty_cycle
+            return super(PwmWrapper, self).start(duty_cycle)
 
         def stop(self):
             self.is_running = False
-            return super(PwmWrapper, self).start()
+            return super(PwmWrapper, self).stop()
 
         def ChangeDutyCycle(self, duty_cycle):
             self.duty_cycle = duty_cycle
+            if not self.is_running:
+                self.start(duty_cycle)
             return super(PwmWrapper, self).ChangeDutyCycle(duty_cycle)
 
         # TODO: ChangeFrequency
