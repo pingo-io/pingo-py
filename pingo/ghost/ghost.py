@@ -61,12 +61,9 @@ class GhostBoard(pingo.Board,
     def _set_analog_mode(self, pin, mode):
         self._set_pin_mode(pin, mode)
 
-    def _set_pwm_mode(self, pin, mode):
-        self._set_pin_mode(pin, mode)
-
-    def _get_pwm_value(self, pin):
+    def _get_pwm_duty_cycle(self, pin):
         return self.pin_states[pin.location]
 
-    def _set_pwm_value(self, pin, value):
+    def _set_pwm_duty_cycle(self, pin, value):
         self.pin_states[pin.location] = value
 

@@ -142,6 +142,7 @@ class AnalogInputCapable(object):
         the procedure to read pin analog signal changes from board to board.
         """
 
+    # FIX: Should we drop it?
     @abstractmethod
     def _set_analog_mode(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.
@@ -161,7 +162,7 @@ class PwmOutputCapable(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def _get_pwm_value(self, pin):
+    def _get_pwm_duty_cycle(:self, pin):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«PwmPin».value(…)`` method calls this method because
@@ -169,7 +170,7 @@ class PwmOutputCapable(object):
         """
 
     @abstractmethod
-    def _set_pwm_value(self, pin, value):
+    def _set_pwm_duty_cycle(self, pin, value):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«PwmPin».value(…)`` method calls this method because
@@ -277,7 +278,7 @@ class PwmPin(DigitalPin):
     def value(self):
         if self.mode != PWM:
             raise WrongPinMode()
-        return self.board._get_pwm_value(self)
+        return self.board._get_pwm_duty_cycle(self)
 
 
     @value.setter
@@ -286,7 +287,7 @@ class PwmPin(DigitalPin):
             raise WrongPinMode()
         if not 0.0 <= value <= 1.0:
             raise ArgumentOutOfRange()
-        self.board._set_pwm_state(self, value)
+        self.board._set_pwm_duty_cycle(self, value)
 
 
 class AnalogPin(Pin):

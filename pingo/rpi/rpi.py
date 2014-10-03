@@ -110,10 +110,10 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
     def _get_pin_state(self, pin):
         return pingo.HIGH if GPIO.input(int(pin.gpio_id)) else pingo.LOW
 
-    def _get_pwm_value(self, pin):
+    def _get_pwm_duty_cycle(self, pin):
         return pin.pwm_ctrl.duty_cycle
 
-    def _set_pwm_value(self, pin, value):
+    def _set_pwm_duty_cycle(self, pin, value):
         pin.pwm_ctrl.ChangeFrequency(value)
 
 
