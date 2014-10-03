@@ -89,7 +89,7 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
 
     def _set_pin_mode(self, pin, mode):
         # Cleans previous PWM mode
-        if self.mode == pingo.PWM:
+        if pin.mode == pingo.PWM:
         #if hasattr(pin, 'pwm_ctrl'):
             if pin.pwm_ctrl.is_running:
                 pin.pwm_ctrl.stop()

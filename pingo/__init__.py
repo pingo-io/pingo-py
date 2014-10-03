@@ -1,5 +1,5 @@
 # api
-from board import ANALOG, IN, OUT, HIGH, LOW
+from board import ANALOG, IN, OUT, PWM, HIGH, LOW
 from board import ModeNotSuported, WrongPinMode
 from board import PwmOutputCapable, AnalogInputCapable, Board
 from board import PwmPin, AnalogPin, DigitalPin, GroundPin, Pin, VccPin
