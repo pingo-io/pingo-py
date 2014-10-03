@@ -161,14 +161,6 @@ class PwmOutputCapable(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def _set_pwm_mode(self, pin, mode):
-        """Abstract method to be implemented by each ``Board`` subclass.
-
-        The ``«pin».mode(…)`` property calls this method because
-        the procedure to set pin mode changes from board to board.
-        """
-
-    @abstractmethod
     def _get_pwm_value(self, pin):
         """Abstract method to be implemented by each ``Board`` subclass.
 
@@ -177,7 +169,7 @@ class PwmOutputCapable(object):
         """
 
     @abstractmethod
-    def _set_pwm_value(self, pin):
+    def _set_pwm_value(self, pin, value):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«PwmPin».value(…)`` method calls this method because

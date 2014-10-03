@@ -2,7 +2,34 @@ import pingo
 
 GPIO = None
 
-class RaspberryPi(pingo.Board):
+class PwmWrapper(GPIO.PWM):
+
+    def __init__(self, channel, frequency=60.):
+        """
+            PwmWrapper recives a integer and a float.
+            - channel as GPIO number
+            - PWM's frequency in Hz
+        """
+        self.is_running = False
+        self.duty_cycle = 100.
+        super(PwmWrapper, self).__init__(channel, frequency)
+
+    def start(self, *args, **kwargs):
+        self.is_running = True
+        return super(PwmWrapper, self).start()
+
+    def stop(self):
+        self.is_running = False
+        return super(PwmWrapper, self).start()
+
+    def ChangeDutyCycle(self, duty_cycle):
+        self.duty_cycle = duty_cycle
+        return super(PwmWrapper, self).ChangeDutyCycle(duty_cycle)
+
+    # TODO: ChangeFrequency
+
+
+class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
 
     # connector_p1_location: gpio_id
     DIGITAL_PIN_MAP = {
@@ -57,8 +84,20 @@ class RaspberryPi(pingo.Board):
                 pin.enabled = False
 
     def _set_pin_mode(self, pin, mode):
-        rpi_mode = GPIO.IN if mode == pingo.IN else GPIO.OUT
-        GPIO.setup(int(pin.gpio_id), rpi_mode, pull_up_down=GPIO.PUD_DOWN)
+        # Cleans previous PWM mode
+        if self.mode == pingo.PWM:
+        #if hasattr(pin, 'pwm_ctrl'):
+            if pin.pwm_ctrl.is_running:
+                pin.pwm_ctrl.stop()
+                del pin.pwm_ctrl
+        # Sets up new modes
+        if mode == pingo.IN:
+            GPIO.setup(int(pin.gpio_id), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+        elif mode == pingo.OUT:
+            GPIO.setup(int(pin.gpio_id), GPIO.OUT)
+        elif mode == pingo.PWM:
+            GPIO.setup(int(pin.gpio_id), GPIO.OUT)
+            pin.pwm_ctrl = PwmWrapper(int(pin.gpio_id))
 
     def _set_pin_state(self, pin, state):
         rpi_state = GPIO.HIGH if state == pingo.HIGH else GPIO.LOW
@@ -66,6 +105,12 @@ class RaspberryPi(pingo.Board):
 
     def _get_pin_state(self, pin):
         return pingo.HIGH if GPIO.input(int(pin.gpio_id)) else pingo.LOW
+
+    def _get_pwm_value(self, pin):
+        return pin.pwm_ctrl.duty_cycle
+
+    def _set_pwm_value(self, pin, value):
+        pin.pwm_ctrl.ChangeFrequency(value)
 
 
 class RaspberryPiBPlus(RaspberryPi):
