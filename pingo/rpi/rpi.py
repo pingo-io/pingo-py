@@ -2,37 +2,41 @@ import pingo
 
 GPIO = None
 
-class PwmWrapper(GPIO.PWM):
+try:
+    import RPi.GPIO as GPIO
+except ImportError:
+    pass
+else:
+    class PwmWrapper(GPIO.PWM):
+        def __init__(self, channel, frequency=60.):
+            """
+                PwmWrapper recives a integer and a float.
+                - channel as GPIO number
+                - PWM's frequency in Hz
+            """
+            self.is_running = False
+            self.duty_cycle = 100.
+            super(PwmWrapper, self).__init__(channel, frequency)
 
-    def __init__(self, channel, frequency=60.):
-        """
-            PwmWrapper recives a integer and a float.
-            - channel as GPIO number
-            - PWM's frequency in Hz
-        """
-        self.is_running = False
-        self.duty_cycle = 100.
-        super(PwmWrapper, self).__init__(channel, frequency)
+        def start(self, *args, **kwargs):
+            self.is_running = True
+            return super(PwmWrapper, self).start()
 
-    def start(self, *args, **kwargs):
-        self.is_running = True
-        return super(PwmWrapper, self).start()
+        def stop(self):
+            self.is_running = False
+            return super(PwmWrapper, self).start()
 
-    def stop(self):
-        self.is_running = False
-        return super(PwmWrapper, self).start()
+        def ChangeDutyCycle(self, duty_cycle):
+            self.duty_cycle = duty_cycle
+            return super(PwmWrapper, self).ChangeDutyCycle(duty_cycle)
 
-    def ChangeDutyCycle(self, duty_cycle):
-        self.duty_cycle = duty_cycle
-        return super(PwmWrapper, self).ChangeDutyCycle(duty_cycle)
-
-    # TODO: ChangeFrequency
+        # TODO: ChangeFrequency
 
 
 class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
 
     # connector_p1_location: gpio_id
-    DIGITAL_PIN_MAP = {
+    PWM_PIN_MAP = {
         3: 2,
         5: 3,
         7: 4,
@@ -72,8 +76,8 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
 
         pins += [pingo.GroundPin(self, n) for n in self.GROUNDS_LIST]
 
-        pins += [pingo.DigitalPin(self, location, gpio_id)
-                 for location, gpio_id in self.DIGITAL_PIN_MAP.items()]
+        pins += [pingo.PwmPin(self, location, gpio_id)
+                 for location, gpio_id in self.PWM_PIN_MAP.items()]
 
         self._add_pins(pins)
 
@@ -116,7 +120,7 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
 class RaspberryPiBPlus(RaspberryPi):
 
     # header_j8_location: gpio_id
-    DIGITAL_PIN_MAP = {
+    PWM_PIN_MAP = {
       # 1: 3.3v DC Power
       # 2: 5v DC Power
         3: 2, # SDA1, I2C
