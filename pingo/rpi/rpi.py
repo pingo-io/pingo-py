@@ -117,7 +117,7 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
         return pin.pwm_ctrl.duty_cycle
 
     def _set_pwm_duty_cycle(self, pin, value):
-        pin.pwm_ctrl.ChangeFrequency(value)
+        pin.pwm_ctrl.ChangeDutyCycle(value)
 
 
 class RaspberryPiBPlus(RaspberryPi):
