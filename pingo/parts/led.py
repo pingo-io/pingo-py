@@ -130,10 +130,25 @@ class SevenSegments(object):
 
         self._digit = 0
 
-    def on(self):
-        pattern = DIGIT_MAP[self._digit]
+    def _configure(self, pattern):
         for segment, state in zip(self._leds, pattern):
             if state == '1':
                 segment.on()
             else:
                 segment.off()
+
+    @property
+    def digit(self):
+        return self._digit
+
+    @digit.setter
+    def digit(self, digit):
+        self._digit = digit
+        pattern = DIGIT_MAP[digit]
+        self._configure(pattern)
+
+    def on(self):
+        self.digit = self._digit
+
+    def off(self):
+        self._configure('0'*7)
