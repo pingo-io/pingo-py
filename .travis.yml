@@ -1,0 +1,7 @@
+language: python
+python: 2.7
+install: pip install -qq pytest pytest-cov tox
+script: py.test pingo -vrsx --cov pingo
+after_success:
+  - pip install -qq coveralls
+  - coveralls
