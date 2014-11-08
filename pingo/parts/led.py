@@ -95,8 +95,24 @@ class BlinkTask(object):
             self.active = False
 
 
-DIGIT_MAP = (0x7E, 0x30, 0x6D, 0x79, 0x33, 0x5B, 0x5F, 0x70,
-             0x7F, 0x7B, 0x77, 0x1F, 0x4E, 0x3D, 0x4F, 0x47)
+DIGIT_MAP = {
+    0: '1111110',
+    1: '0110000',
+    2: '1101101',
+    3: '1111001',
+    4: '0110011',
+    5: '1011011',
+    6: '1011111',
+    7: '1110000',
+    8: '1111111',
+    9: '1111011',
+    10: '1110111',
+    11: '0011111',
+    12: '1001110',
+    13: '0111101',
+    14: '1001111',
+    15: '1000111'
+}
 
 
 class SevenSegments(object):
@@ -111,3 +127,13 @@ class SevenSegments(object):
 
         if pin_dp:
             self._leds.append(Led(pin_dp, lit_state))
+
+        self._digit = 0
+
+    def on(self):
+        pattern = DIGIT_MAP[self._digit]
+        for segment, state in zip(self._leds, pattern):
+            if state == '1':
+                segment.on()
+            else:
+                segment.off()
