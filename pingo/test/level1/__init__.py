@@ -1,2 +1,2 @@
-from cases import AnalogReadBasics
-from cases import AnalogExceptions
+from cases import AnalogReadBasics  # noqa
+from cases import AnalogExceptions  # noqa

@@ -2,9 +2,8 @@
 
 import pingo
 import time
-import sys
 
-board = pingo.ghost.GhostBoard('foo.json') # gets an instance of your board's driver
+board = pingo.ghost.GhostBoard('foo.json')  # gets an instance of your board's driver
 
 # this is equivalent to init_io from your code
 a_rotation = board.pins[12]               # this pin controls a relay that turns the drill on/off
@@ -64,5 +63,4 @@ if __name__ == '__main__':
         time.sleep(1)
         if step < max_steps:
             pass
-            #sys.exit()
-
+            # sys.exit()

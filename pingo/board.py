@@ -1,6 +1,5 @@
 # coding: utf-8
 
-import time
 import atexit
 
 from abc import ABCMeta, abstractmethod
@@ -16,11 +15,14 @@ OUT = 'OUT'
 ANALOG = 'ANALOG'
 PWM = 'PWM'
 
+
 class WrongPinMode(Exception):
     value = 'Operation not supported in current mode.'
 
+
 class ModeNotSuported(Exception):
     value = 'Mode not suported by Pin or Board.'
+
 
 class ArgumentOutOfRange(Exception):
     value = 'Argument not in the range 0.0 to 1.0'
@@ -224,7 +226,6 @@ class Pin(object):
         self._mode = value
 
 
-
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
 
@@ -280,7 +281,6 @@ class PwmPin(DigitalPin):
             raise WrongPinMode()
         return self.board._get_pwm_duty_cycle(self)
 
-
     @value.setter
     def value(self, value):
         if self.mode != PWM:
@@ -329,8 +329,8 @@ class AnalogPin(Pin):
             from_max = 2 ** self.bits - 1
 
         _value = self.value
-        return (float(_value-from_min)*(to_max-to_min) /
-                (from_max-from_min) + to_min)
+        return (float(_value - from_min) * (to_max - to_min) /
+                (from_max - from_min) + to_min)
 
     @property
     def percent(self):

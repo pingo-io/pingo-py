@@ -1,11 +1,7 @@
-import os
-import sys
-import time
 import unittest
 
 import pingo
 from pingo.test import level0
-from pingo.test import level1
 
 
 class GhostBoardTest(unittest.TestCase):
@@ -24,7 +20,6 @@ class GhostBoardTest(unittest.TestCase):
         self.expected_analog_input = 1004
         self.expected_analog_ratio = 0.98
 
-
     def tearDown(self):
         self.board.cleanup()
 
@@ -37,11 +32,11 @@ class GhostBoardExceptions(GhostBoardTest, level0.BoardExceptions):
     pass
 
 
-#class GhostAnalogRead(GhostBoardTest, level1.AnalogReadBasics):
+# class GhostAnalogRead(GhostBoardTest, level1.AnalogReadBasics):
 #    pass
 
 
-#class GhostAnalogExceptions(GhostBoardTest, level1.AnalogExceptions):
+# class GhostAnalogExceptions(GhostBoardTest, level1.AnalogExceptions):
 #    pass
 
 
