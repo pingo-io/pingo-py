@@ -9,13 +9,13 @@ ard = pingo.arduino.get_arduino()
 print '*' * 60
 
 segments = [
-    11, # A
-    10, # B
-     8, # C
-     7, # D
-     6, # E
-    12, # F
-    # 13, # G
+    11,  # A
+    10,  # B
+    8,  # C
+    7,  # D
+    6,  # E
+    12,  # F
+    #  13,  # G
 ]
 
 for seg in segments:
@@ -34,5 +34,3 @@ while True:
         print '%0.3f' % delay
         time.sleep(delay)
         pin.low()
-
-

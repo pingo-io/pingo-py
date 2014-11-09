@@ -19,4 +19,3 @@ while True:
         sleep(.11)
         prev_pin.low()
         prev_pin = pin
-

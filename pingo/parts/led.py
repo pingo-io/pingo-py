@@ -151,4 +151,4 @@ class SevenSegments(object):
         self.digit = self._digit
 
     def off(self):
-        self._configure('0'*7)
+        self._configure('0' * 7)

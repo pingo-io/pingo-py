@@ -1,2 +1,2 @@
-from cases import BoardBasics
-from cases import BoardExceptions
+from cases import BoardBasics  # noqa
+from cases import BoardExceptions  # noqa

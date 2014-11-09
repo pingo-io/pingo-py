@@ -14,4 +14,3 @@ for pin in pins:
     pin.high()
     raw_input('Lit: pin %s' % pin.location)
     pin.low()
-

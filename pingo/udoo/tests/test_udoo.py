@@ -1,6 +1,3 @@
-import os
-import sys
-import time
 import unittest
 
 import pingo
@@ -21,6 +18,7 @@ class UdooTest(unittest.TestCase):
 
     def tearDown(self):
         self.board.cleanup()
+
 
 @unittest.skipIf(not running_on_udoo, 'Udoo not detected')
 class UdooBasics(UdooTest, level0.BoardBasics):

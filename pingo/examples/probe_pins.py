@@ -13,7 +13,7 @@ def probe(first, last):
     board = pingo.detect.MyBoard()
     print('Found: %r' % board)
 
-    pins = board.digital_pins[first:last+1]
+    pins = board.digital_pins[first:last + 1]
 
     for pin in pins:
         pin.mode = pingo.OUT
@@ -31,4 +31,3 @@ if __name__ == '__main__':
     except ValueError:
         print('Usage: %s <first_pin> <last_pin>' % sys.argv[0])
         sys.exit(-1)
-

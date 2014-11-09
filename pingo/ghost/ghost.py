@@ -1,11 +1,11 @@
-import os
-
 import pingo
 
 
-class GhostBoard(pingo.Board,
-        pingo.AnalogInputCapable,
-        pingo.PwmOutputCapable):
+class GhostBoard(
+    pingo.Board,
+    pingo.AnalogInputCapable,
+    pingo.PwmOutputCapable
+):
 
     def __init__(self, filepath=None):
         super(GhostBoard, self).__init__()
@@ -66,4 +66,3 @@ class GhostBoard(pingo.Board,
 
     def _set_pwm_duty_cycle(self, pin, value):
         self.pin_states[pin.location] = value
-
