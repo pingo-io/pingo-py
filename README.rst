@@ -1,5 +1,5 @@
-pingo
-=====
+Pingo means "pin, go!"
+======================
 
 .. image:: https://secure.travis-ci.org/garoa/pingo.png?branch=master
     :alt: Travis CI badge
