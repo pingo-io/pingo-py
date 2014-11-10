@@ -7,7 +7,7 @@ INTERVAL = 0.3
 
 ard = detect.MyBoard()
 
-display_pins = [ard.pins[i] for i in range(8, 14)] + [7]
+display_pins = [ard.pins[i] for i in range(8, 14) + [7]]
 
 for pin in display_pins:
     pin.mode = OUT
