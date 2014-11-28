@@ -13,4 +13,3 @@ def bar(pin):
 while True:
     bar(pot)
     time.sleep(0.05)
-
