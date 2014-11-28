@@ -4,7 +4,7 @@ import pingo
 
 gg = pingo.galileo.Galileo2()
 
-pins = [gg.digital_pins[i] for i in range(8, 14) + [7]]
+pins = [gg.pins[i] for i in range(8, 14) + [7]]
 
 d7 = pingo.parts.led.SevenSegment(*pins)
 
