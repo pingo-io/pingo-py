@@ -7,6 +7,7 @@ board = pingo.detect.MyBoard()
 pot = board.pins['A0']
 pot.mode = pingo.ANALOG
 
+
 def bar(pin):
     print "*" * int(pin.ratio() * 70)
 

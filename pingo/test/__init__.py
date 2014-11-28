@@ -1,2 +1,2 @@
-import level0
-import level1
+import level0  # noqa
+import level1  # noqa

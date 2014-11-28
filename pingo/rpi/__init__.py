@@ -1,1 +1,2 @@
-from rpi import RaspberryPi, RaspberryPiBPlus
+from rpi import RaspberryPi  # noqa
+from rpi import RaspberryPiBPlus  # noqa

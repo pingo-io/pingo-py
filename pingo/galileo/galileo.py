@@ -2,22 +2,44 @@ from pingo.board import Board, DigitalPin, AnalogPin, IN, OUT, HIGH, LOW
 from pingo.board import AnalogInputCapable
 
 
-class PcDuino(Board, AnalogInputCapable):
+class Galileo2(Board, AnalogInputCapable):
     """
     pcDuino board (works on V1 and V3)
     """
-    DIGITAL_PINS_PATH = '/sys/devices/virtual/misc/gpio/'
+    DIGITAL_PINS_PATH = '/sys/class/gpio/'
     ADC_PATH = '/proc/'
 
     DIGITAL_PIN_MODES = {IN: '0', OUT: '1'}
     DIGITAL_PIN_STATES = {HIGH: '1', LOW: '0'}
-    LEN_DIGITAL_PINS = 14
-    ANALOG_PIN_RESOLUTIONS = [6, 6, 12, 12, 12, 12]
+
+    DIGITAL_PINS_MAP = {
+	0: 11,
+	1: 12,
+	2: 13,
+	3: 14,
+	4: 6,
+	5: 0,
+	6: 1,
+	7: 38,
+	8: 40,
+	9: 4,
+	10: 10,
+	11: 5,
+	13: 15,
+	14: 7,
+    }
+
+    ANALOG_PIN_RESOLUTIONS = [12, 12, 12, 12, 12, 12]
 
     def __init__(self):
         self._add_pins(
-            [DigitalPin(self, location)
-                for location in range(self.LEN_DIGITAL_PINS)] +
+
+            [
+		DigitalPin(self, location, gpio)
+                for location, gpio in 
+		self.DIGITAL_PINS_MAP.items()
+	    ] +
+
             [AnalogPin(self, 'A%s' % location, resolution=bits)
                 for location, bits in enumerate(self.ANALOG_PIN_RESOLUTIONS)])
 

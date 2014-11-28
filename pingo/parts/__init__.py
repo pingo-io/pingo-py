@@ -1,1 +1,1 @@
-from .led import *
+from .led import Led  # noqa

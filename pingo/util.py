@@ -1,6 +1,7 @@
 import collections
 import UserDict
 
+
 class StrKeyDict(UserDict.UserDict):
     """StrKeyDict always converts non-string keys to `str`
 

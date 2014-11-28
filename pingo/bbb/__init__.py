@@ -1,1 +1,1 @@
-from bbb import BeagleBoneBlack
+from bbb import BeagleBoneBlack  # noqa

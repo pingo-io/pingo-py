@@ -1,5 +1,13 @@
-pingo
-=====
+Pingo means "pin, go!"
+======================
+
+.. image:: https://secure.travis-ci.org/garoa/pingo.png?branch=master
+    :alt: Travis CI badge
+    :target: http://travis-ci.org/garoa/pingo
+
+.. image:: https://coveralls.io/repos/garoa/pingo/badge.png?branch=master
+    :alt: Coveralls badge
+    :target: https://coveralls.io/r/garoa/pingo
 
 Pingo provides a uniform API to program devices like the Raspberry Pi, BeagleBone Black, pcDuino etc. just like the Python DBAPI provides an uniform API for database programming in Python.
 

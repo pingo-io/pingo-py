@@ -1,5 +1,4 @@
 import os
-import re
 import glob
 import string
 import platform
@@ -25,6 +24,7 @@ def _read_cpu_info():
             cpuinfo[tokens[0]] = tokens[-1]
     return cpuinfo
 
+
 def _find_arduino_dev(system):
     if system == 'Linux':
         # TODO: filter possible devices with glob
@@ -40,6 +40,7 @@ def _find_arduino_dev(system):
         if len(devices) == 1:
             return os.path.join(os.path.sep, 'dev', devices[0])
     return False
+
 
 def MyBoard():
     machine = platform.machine()
@@ -64,7 +65,7 @@ def MyBoard():
         # pattern = '(?P<key>[^\t\n]*)\t{1,2}: (?P<value>\.*)\n'
 
         cpuinfo = _read_cpu_info()
-        revision = string.atoi(cpuinfo['Revision'], 16) # str to hex
+        revision = string.atoi(cpuinfo['Revision'], 16)  # str to hex
 
         if revision < 16:
             print('Using RaspberryPi...')
