@@ -125,7 +125,11 @@ class Board(object):
         The ``«pin».__change_state(…)`` method calls this method because
         the procedure to set pin state changes from board to board.
         """
-
+    
+    @abstractmethod
+    def _get_pin_state(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass
+        """
 
 class AnalogInputCapable(object):
     """Mixin interface for boards that support AnalogInputPin
