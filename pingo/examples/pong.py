@@ -84,7 +84,7 @@ if __name__ == '__main__':
         if ball_pos[0] >= MAX_X:
             ball_velocity[0] = - ball_velocity[0]
             # Check whether we collided with a paddle
-            if not paddle_2_pos < ball_pos[1] < paddle_1_pos + PADDLE_SIZE:
+            if not paddle_2_pos < ball_pos[1] < paddle_2_pos + PADDLE_SIZE:
                 ball_pos, ball_velocity = init_ball()
 
         # If top or botton collision, invert vy
