@@ -1,3 +1,5 @@
+# flake8: noqa
+
 import curses
 import pingo
 import time
