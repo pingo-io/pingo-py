@@ -28,6 +28,9 @@ class PcDuino(Board, AnalogInputCapable):
         with open(sys_string, 'w') as fp:
             fp.write(self.DIGITAL_PIN_MODES[mode])
 
+    def _set_analog_mode(self, pin, mode):
+        pass
+
     def _set_pin_state(self, pin, state):
         sys_string = self.DIGITAL_PINS_PATH + 'pin/gpio%s' % pin.location
         with open(sys_string, 'w') as fp:
@@ -38,9 +41,6 @@ class PcDuino(Board, AnalogInputCapable):
         with open(sys_string, 'r') as fp:
             state = fp.read().strip()
             return HIGH if state == '1' else LOW
-
-    def _set_analog_mode(self, pin, mode):
-        pass
 
     def _get_pin_value(self, pin):
         sys_string = self.ADC_PATH + 'adc%s' % pin.location[1:]  # eg. A5

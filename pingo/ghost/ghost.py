@@ -46,6 +46,12 @@ class GhostBoard(
     def _set_pin_mode(self, pin, mode):
         print('GhostBoard: %r mode -> %s' % (pin, mode))
 
+    def _set_analog_mode(self, pin, mode):
+        self._set_pin_mode(pin, mode)
+
+    def _set_pwm_mode(self, pin, mode):
+        self._set_pin_mode(pin, mode)
+
     def _set_pin_state(self, pin, state):
         print('GhostBoard: %r state -> %s' % (pin, state))
         _state = 1 if state == pingo.HIGH else 0
@@ -57,9 +63,6 @@ class GhostBoard(
 
     def _get_pin_value(self, pin):
         return self.pin_states[pin.location]
-
-    def _set_analog_mode(self, pin, mode):
-        self._set_pin_mode(pin, mode)
 
     def _get_pwm_duty_cycle(self, pin):
         return self.pin_states[pin.location]

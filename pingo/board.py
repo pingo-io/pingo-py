@@ -174,6 +174,10 @@ class PwmOutputCapable(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
+    def _set_pwm_mode(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass."""
+
+    @abstractmethod
     def _get_pwm_duty_cycle(self, pin):
         """Abstract method to be implemented by each ``Board`` subclass.
 
@@ -225,14 +229,22 @@ class Pin(object):
 
     @property
     def mode(self):
-        """[property] Get/set pin mode to ``pingo.IN`` or ``pingo.OUT``"""
+        """[property] Get/set pin mode to ``pingo.IN``, ``pingo.OUT``
+         ``pingo.ANALOG`` or ``pingo.PWM``"""
         return self._mode
 
     @mode.setter
     def mode(self, value):
         if value not in self.suported_modes:
             raise ModeNotSuported()
-        self.board._set_pin_mode(self, value)
+
+        if value in [IN, OUT]:
+            self.board._set_pin_mode(self, value)
+        elif value == ANALOG:
+            self.board._set_analog_mode(self, value)
+        elif value == PWM:
+            self.board._set_pwm_mode(self, value)
+
         self._mode = value
 
 

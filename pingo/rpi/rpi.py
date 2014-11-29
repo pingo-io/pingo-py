@@ -102,7 +102,9 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
             GPIO.setup(int(pin.gpio_id), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         elif mode == pingo.OUT:
             GPIO.setup(int(pin.gpio_id), GPIO.OUT)
-        elif mode == pingo.PWM:
+
+    def _set_pwm_mode(self, pin, mode):
+        if pin.mode != pingo.PWM:
             GPIO.setup(int(pin.gpio_id), GPIO.OUT)
             pin.pwm_ctrl = PwmWrapper(int(pin.gpio_id))
 
