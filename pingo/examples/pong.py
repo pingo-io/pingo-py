@@ -14,8 +14,8 @@ score_2 = 0
 
 def init_ball():
     return ([39, 12],
-        random.choice([[1, 0],
-            [1, 1], [-1, 0],
+        random.choice([ # [1, 0],
+            [1, 1],     # [-1, 0],
             [-1, 1], [1, -1]]))
 
 def new_ball_pos(pos, velocity):
