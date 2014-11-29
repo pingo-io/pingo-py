@@ -36,7 +36,10 @@ def _find_arduino_dev(system):
             return os.path.join(os.path.sep, 'dev', devices[0])
 
     elif system == 'Darwin':
-        devices = glob.glob('/dev/tty.usbmodem*')
+        devices = (
+                glob.glob('/dev/tty.usbmodem*') +
+                glob.glob('/dev/tty.usbserial*')
+        )
         if len(devices) == 1:
             return os.path.join(os.path.sep, 'dev', devices[0])
     return False
