@@ -6,8 +6,8 @@ import pingo
 galileo = pingo.galileo.Galileo2()     # explicit board selection
 arduino = pingo.arduino.get_arduino()  # get Arduino via serial
 
-galileo_pins = [galileo.pins[i] for i in range(8, 14) + [7]]
-arduino_pins = [arduino.pins[i] for i in range(8, 14) + [7]]
+galileo_pins = galileo.select_pins(range(8, 14) + [7])
+arduino_pins = arduino.select_pins(range(8, 14) + [7])
 
 galileo_d7s = pingo.parts.led.SevenSegments(*galileo_pins)
 arduino_d7s = pingo.parts.led.SevenSegments(*arduino_pins)

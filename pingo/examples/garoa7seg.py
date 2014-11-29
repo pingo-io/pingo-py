@@ -4,7 +4,7 @@ import pingo
 
 gg = pingo.detect.MyBoard()
 
-pins = [gg.pins[i] for i in range(8, 14) + [7]]
+pins = gg.select_pins(range(8, 14) + [7])
 
 d7 = pingo.parts.led.SevenSegments(*pins)
 
