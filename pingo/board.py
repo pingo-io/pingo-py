@@ -78,6 +78,11 @@ class Board(object):
 
         return filtered
 
+    def select_pins(self, locations):
+        """Get list of pins from iterable of locations"""
+        locations = sorted(locations)
+        return [self.pins[location] for location in locations]
+
     @property
     def digital_pins(self):
         """[property] Get list of digital pins"""
