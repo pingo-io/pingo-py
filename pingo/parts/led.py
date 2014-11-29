@@ -167,6 +167,6 @@ class SevenSegments(object):
         if state:
             self._dot = True
             self._leds[7].on()
-        else state:
+        else:
             self._dot = False
             self._leds[7].off()
