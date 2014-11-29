@@ -14,9 +14,9 @@ class Galileo2(pingo.Board):
         pingo.OUT: mraa.DIR_OUT,
     }
 
-    PIN_STATES = {                       
-        pingo.HIGH: 1,         
-        pingo.LOW: 0,                 
+    PIN_STATES = {
+        pingo.HIGH: 1,
+        pingo.LOW: 0,
     }
 
     def __init__(self):
@@ -25,10 +25,10 @@ class Galileo2(pingo.Board):
             for location in range(1, 14)
         )
 
-	self.mraa_pins = {
+        self.mraa_pins = {
             location: mraa.Gpio(location)
             for location in range(1, 14)
-        }                  
+        }
 
     def _set_pin_mode(self, pin, mode):
         self.mraa_pins[pin.location].dir(self.PIN_MODES[mode])

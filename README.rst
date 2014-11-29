@@ -65,7 +65,7 @@ TI BeagleBone Black   on-board bbb             experim.
 Cubietech Cubieboard  on-board                 none
 Fantasma              fake     ghost           level 1  not a real board, just a software fake for testing
 SolidRun HummingBoard on-board                 none
-Intel Galileo         on-board galileo         none
+Intel Galileo Gen 2   on-board galileo         level 2  requires Intel IoT Dev Kit `mraa`_
 TI MSP430             remote                   none     requires `firmata protocol`_ on any MSP430 board
 LinkSprite pcDuino    on-board pcduino         level 1
 element14 RaspberryPi on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
