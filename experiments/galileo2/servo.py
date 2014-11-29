@@ -8,7 +8,7 @@ import time
 button = mraa.Gpio(8)
 button.dir(mraa.DIR_IN)
 
-servo = pyupm_servo.Servo(5)
+servo = pyupm_servo.ES08A(8)
 
 flag = 0
 
