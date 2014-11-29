@@ -1,5 +1,6 @@
 import pingo
 
+
 class Galileo2(pingo.Board, pingo.AnalogInputCapable):
 
     def __init__(self):
@@ -8,25 +9,25 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable):
             import mraa as mraa
         except ImportError:
             raise ImportError(
-                    'pingo.galileo.Galileo2 requires mraa installed')
+                'pingo.galileo.Galileo2 requires mraa installed')
 
         super(Galileo2, self).__init__()
 
-        PIN_MODES = {
+        self.PIN_MODES = {
             pingo.IN: mraa.DIR_IN,
             pingo.OUT: mraa.DIR_OUT,
         }
 
-        PIN_STATES = {
+        self.PIN_STATES = {
             pingo.HIGH: 1,
             pingo.LOW: 0,
         }
 
         self._add_pins(
             [pingo.DigitalPin(self, location)
-            for location in range(1, 14)] +
+                for location in range(1, 14)] +
             [pingo.AnalogPin(self, 'A'+location, 12)
-            for location in '012345']
+                for location in '012345']
         )
 
         self.mraa_pins = {
@@ -50,7 +51,7 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable):
         return pingo.HIGH if value == 1 else pingo.LOW
 
     def _get_pin_value(self, pin):
-       return self.mraa_analogs[pin.location].read()
+        return self.mraa_analogs[pin.location].read()
 
     def _set_analog_mode(self, pin, mode):
         pass
