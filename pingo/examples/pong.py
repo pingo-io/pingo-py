@@ -63,13 +63,13 @@ if __name__ == '__main__':
 
 
     while True:
-        paddle_1_pos = int(pot_arduino.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
-        paddle_2_pos = int(pot_galileo.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
+        draw_paddle(MIN_X, paddle_1_pos, curses.color_pair(2))
+        draw_paddle(MAX_X, paddle_2_pos, curses.color_pair(2))
 
         screen.addstr(ball_pos[1], ball_pos[0], ' ', curses.color_pair(2))
 
-        draw_paddle(MIN_X, paddle_1_pos, curses.color_pair(2))
-        draw_paddle(MAX_X, paddle_2_pos, curses.color_pair(2))
+        paddle_1_pos = int(pot_arduino.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
+        paddle_2_pos = int(pot_galileo.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
 
         # If left border collision, increase score and invert vx
         if ball_pos[0] <= MIN_X:
