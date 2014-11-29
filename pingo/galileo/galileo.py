@@ -1,27 +1,27 @@
-import ctypes
-
-mraa = None
-
-try:
-   import mraa as mraa
-except:
-   pass
-
 import pingo
 
 class Galileo2(pingo.Board, pingo.AnalogInputCapable):
 
-    PIN_MODES = {
-        pingo.IN: mraa.DIR_IN,
-        pingo.OUT: mraa.DIR_OUT,
-    }
-
-    PIN_STATES = {                       
-        pingo.HIGH: 1,         
-        pingo.LOW: 0,                 
-    }
-
     def __init__(self):
+        global mraa
+        try:
+            import mraa as mraa
+        except ImportError:
+            raise ImportError(
+                    'pingo.galileo.Galileo2 requires mraa installed')
+
+        super(Galileo2, self).__init__()
+
+        PIN_MODES = {
+            pingo.IN: mraa.DIR_IN,
+            pingo.OUT: mraa.DIR_OUT,
+        }
+
+        PIN_STATES = {
+            pingo.HIGH: 1,
+            pingo.LOW: 0,
+        }
+
         self._add_pins(
             [pingo.DigitalPin(self, location)
             for location in range(1, 14)] +
@@ -29,12 +29,12 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable):
             for location in '012345']
         )
 
-	self.mraa_pins = {
+        self.mraa_pins = {
             location: mraa.Gpio(location)
             for location in range(1, 14)
         }
 
-	self.mraa_analogs = {
+        self.mraa_analogs = {
             'A'+location: mraa.Aio(int(location))
             for location in '012345'
         }
