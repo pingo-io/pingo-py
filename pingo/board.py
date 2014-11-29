@@ -80,7 +80,7 @@ class Board(object):
 
     def select_pins(self, locations):
         """Get list of pins from iterable of locations"""
-        locations = sorted(locations)
+        locations = list(locations)
         return [self.pins[location] for location in locations]
 
     @property
