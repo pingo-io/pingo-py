@@ -3,9 +3,6 @@ import pingo
 import time
 import random
 
-paddle_1_pos = 0, 10
-paddle_2_pos = 79, 10
-
 PADDLE_SIZE = 5
 MIN_X = 0
 MIN_Y = 0
@@ -61,6 +58,9 @@ if __name__ == '__main__':
     pot_arduino = arduino.pins['A0']
     pot_arduino.mode = pingo.ANALOG
 
+
+    paddle_1_pos = int(pot_arduino.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
+    paddle_2_pos = int(pot_galileo.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))
 
     while True:
         draw_paddle(MIN_X, paddle_1_pos, curses.color_pair(2))
