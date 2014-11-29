@@ -2,9 +2,9 @@ from time import sleep
 
 import pingo
 
-#board = pingo.detect.MyBoard()
-galileo = pingo.galileo.Galileo2()
-arduino = pingo.arduino.get_arduino()
+# board = pingo.detect.MyBoard()       # auto-detect board
+galileo = pingo.galileo.Galileo2()     # explicit board selection
+arduino = pingo.arduino.get_arduino()  # get Arduino via serial
 
 galileo_pins = [galileo.pins[i] for i in range(8, 14) + [7]]
 arduino_pins = [arduino.pins[i] for i in range(8, 14) + [7]]

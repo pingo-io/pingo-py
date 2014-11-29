@@ -26,7 +26,7 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable):
         self._add_pins(
             [pingo.DigitalPin(self, location)
                 for location in range(1, 14)] +
-            [pingo.AnalogPin(self, 'A'+location, 12)
+            [pingo.AnalogPin(self, 'A' + location, 12)
                 for location in '012345']
         )
 
@@ -36,7 +36,7 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable):
         }
 
         self.mraa_analogs = {
-            'A'+location: mraa.Aio(int(location))
+            'A' + location: mraa.Aio(int(location))
             for location in '012345'
         }
 
