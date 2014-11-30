@@ -68,11 +68,11 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
         return self.mraa_analogs[pin.location].read()
 
     def _get_pwm_duty_cycle(self, pin):
-	if hasattr(pin, '_duty_cycle'):
+        if hasattr(pin, '_duty_cycle'):
             return pin._duty_cycle
         else:
             return 0.0
 
     def _set_pwm_duty_cycle(self, pin, value):
         self.mraa_pwms[pin.location].write(value)
-	pin._duty_cycle = value
+        pin._duty_cycle = value
