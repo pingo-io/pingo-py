@@ -1,6 +1,5 @@
 # coding: utf-8
 
-import time
 import atexit
 
 from abc import ABCMeta, abstractmethod
@@ -16,11 +15,14 @@ OUT = 'OUT'
 ANALOG = 'ANALOG'
 PWM = 'PWM'
 
+
 class WrongPinMode(Exception):
     value = 'Operation not supported in current mode.'
 
+
 class ModeNotSuported(Exception):
     value = 'Mode not suported by Pin or Board.'
+
 
 class ArgumentOutOfRange(Exception):
     value = 'Argument not in the range 0.0 to 1.0'
@@ -76,6 +78,11 @@ class Board(object):
 
         return filtered
 
+    def select_pins(self, locations):
+        """Get list of pins from iterable of locations"""
+        locations = list(locations)
+        return [self.pins[location] for location in locations]
+
     @property
     def digital_pins(self):
         """[property] Get list of digital pins"""
@@ -124,6 +131,11 @@ class Board(object):
         the procedure to set pin state changes from board to board.
         """
 
+    @abstractmethod
+    def _get_pin_state(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass
+        """
+
 
 class AnalogInputCapable(object):
     """Mixin interface for boards that support AnalogInputPin
@@ -160,6 +172,10 @@ class PwmOutputCapable(object):
     """
 
     __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def _set_pwm_mode(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass."""
 
     @abstractmethod
     def _get_pwm_duty_cycle(self, pin):
@@ -213,16 +229,23 @@ class Pin(object):
 
     @property
     def mode(self):
-        """[property] Get/set pin mode to ``pingo.IN`` or ``pingo.OUT``"""
+        """[property] Get/set pin mode to ``pingo.IN``, ``pingo.OUT``
+         ``pingo.ANALOG`` or ``pingo.PWM``"""
         return self._mode
 
     @mode.setter
     def mode(self, value):
         if value not in self.suported_modes:
             raise ModeNotSuported()
-        self.board._set_pin_mode(self, value)
-        self._mode = value
 
+        if value in [IN, OUT]:
+            self.board._set_pin_mode(self, value)
+        elif value == ANALOG:
+            self.board._set_analog_mode(self, value)
+        elif value == PWM:
+            self.board._set_pwm_mode(self, value)
+
+        self._mode = value
 
 
 class DigitalPin(Pin):
@@ -280,7 +303,6 @@ class PwmPin(DigitalPin):
             raise WrongPinMode()
         return self.board._get_pwm_duty_cycle(self)
 
-
     @value.setter
     def value(self, value):
         if self.mode != PWM:
@@ -314,14 +336,15 @@ class AnalogPin(Pin):
 
     @property
     def value(self):
-        """[property] Get pin value as an integer from 0 to 2 ** resolution - 1"""
+        """[property] Pin value as integer from 0 to 2 ** resolution - 1"""
         return self.board._get_pin_value(self)
 
     def ratio(self, from_min=0, from_max=None, to_min=0.0, to_max=1.0):
-        """ Get pin value as a ``float``, by default from ``0.0`` to ``1.0``.
+        """ Pin value as a float, by default from 0.0 to 1.0.
 
-        The ``from...`` and ``to...`` parameters work like in the Arduino map_ function,
-        converting values from an expected input range to a desired output range.
+        The ``from...`` and ``to...`` parameters work like in the Arduino map_
+        function, converting values from an expected input range to a desired
+        output range.
 
         .. _map: http://arduino.cc/en/reference/map
         """
@@ -329,12 +352,12 @@ class AnalogPin(Pin):
             from_max = 2 ** self.bits - 1
 
         _value = self.value
-        return (float(_value-from_min)*(to_max-to_min) /
-                (from_max-from_min) + to_min)
+        return (float(_value - from_min) * (to_max - to_min) /
+                (from_max - from_min) + to_min)
 
     @property
     def percent(self):
-        """[property] Get pin value as a ``float`` from ``0.0`` to ``100.0`` """
+        """[property] Pin value as float from 0.0 to 100.0"""
         return self.ratio(to_max=100.0)
 
 

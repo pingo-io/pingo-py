@@ -1,1 +1,2 @@
-from arduino import ArduinoFirmata, get_arduino
+from arduino import ArduinoFirmata  # noqa
+from arduino import get_arduino  # noqa

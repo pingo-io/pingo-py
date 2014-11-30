@@ -1,6 +1,3 @@
-import os
-import sys
-import time
 import unittest
 
 import pingo
@@ -9,6 +6,7 @@ from pingo.test import level1
 from pingo.detect import check_board
 
 running_on_pcduino = check_board(pingo.pcduino.PcDuino)
+
 
 class PcDuinoTest(unittest.TestCase):
 

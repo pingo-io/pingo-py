@@ -1,1 +1,1 @@
-from udoo import Udoo
+from udoo import Udoo  # noqa

@@ -93,7 +93,7 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
     def _set_pin_mode(self, pin, mode):
         # Cleans previous PWM mode
         if pin.mode == pingo.PWM:
-        #if hasattr(pin, 'pwm_ctrl'):
+            # if hasattr(pin, 'pwm_ctrl'):
             if pin.pwm_ctrl.is_running:
                 pin.pwm_ctrl.stop()
                 del pin.pwm_ctrl
@@ -102,7 +102,9 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
             GPIO.setup(int(pin.gpio_id), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
         elif mode == pingo.OUT:
             GPIO.setup(int(pin.gpio_id), GPIO.OUT)
-        elif mode == pingo.PWM:
+
+    def _set_pwm_mode(self, pin, mode):
+        if pin.mode != pingo.PWM:
             GPIO.setup(int(pin.gpio_id), GPIO.OUT)
             pin.pwm_ctrl = PwmWrapper(int(pin.gpio_id))
 
@@ -124,47 +126,46 @@ class RaspberryPiBPlus(RaspberryPi):
 
     # header_j8_location: gpio_id
     PWM_PIN_MAP = {
-      # 1: 3.3v DC Power
-      # 2: 5v DC Power
-        3: 2, # SDA1, I2C
-      # 4: 5v DC Power
-        5: 3, # SCL1, I2C
-      # 6: Ground
-        7: 4, # GPIO_GCLK
-        8: 14, # TXD0
-      # 9: Ground
-        10: 15, # RXD0
-        11: 17, # GPIO_GEN0
-        12: 18, # GPIO_GEN1
-        13: 27, # GPIO_GEN2
-      # 14: Ground
-        15: 22, # GPIO_GEN3
-        16: 23, # GPIO_GEN4
-      # 17: 3.3v DC Power
-        18: 24, # GPIO_GEN5
-        19: 10, # SPI_MOSI
-      # 20: Ground
-        21: 9, # SPI_MOSO
-        22: 25, # GPIO_GEN6
-        23: 11, # SPI_CLK
-        24: 8, # SPI_CE0_N
-      # 25: Ground
-        26: 7, # SPI_CE1_N
-      # 27: ID_SD (I2C ID EEPROM)
-      # 28: ID_SC (I2C ID EEPROM)
+        # 1: 3.3v DC Power
+        # 2: 5v DC Power
+        3: 2,  # SDA1, I2C
+        # 4: 5v DC Power
+        5: 3,  # SCL1, I2C
+        # 6: Ground
+        7: 4,  # GPIO_GCLK
+        8: 14,  # TXD0
+        # 9: Ground
+        10: 15,  # RXD0
+        11: 17,  # GPIO_GEN0
+        12: 18,  # GPIO_GEN1
+        13: 27,  # GPIO_GEN2
+        # 14: Ground
+        15: 22,  # GPIO_GEN3
+        16: 23,  # GPIO_GEN4
+        # 17: 3.3v DC Power
+        18: 24,  # GPIO_GEN5
+        19: 10,  # SPI_MOSI
+        # 20: Ground
+        21: 9,  # SPI_MOSO
+        22: 25,  # GPIO_GEN6
+        23: 11,  # SPI_CLK
+        24: 8,  # SPI_CE0_N
+        # 25: Ground
+        26: 7,  # SPI_CE1_N
+        # 27: ID_SD (I2C ID EEPROM)
+        # 28: ID_SC (I2C ID EEPROM)
         29: 5,
-      # 30: Ground
+        # 30: Ground
         31: 6,
         32: 12,
         33: 13,
-      # 34: Ground
+        # 34: Ground
         35: 19,
         36: 16,
         37: 26,
         38: 20,
-      # 39: Ground
+        # 39: Ground
         40: 21,
     }
 
     GROUNDS_LIST = [6, 9, 14, 20, 25, 30, 34, 39]
-

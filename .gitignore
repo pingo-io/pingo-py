@@ -42,6 +42,7 @@ nosetests.xml
 .idea/
 *.sw[po]
 *.geany
+*.sublime-*
 
 # Sphinx
 _build/

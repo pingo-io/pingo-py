@@ -1,5 +1,13 @@
-pingo
-=====
+Pingo means "pin, go!"
+======================
+
+.. image:: https://secure.travis-ci.org/garoa/pingo.png?branch=master
+    :alt: Travis CI badge
+    :target: http://travis-ci.org/garoa/pingo
+
+.. image:: https://coveralls.io/repos/garoa/pingo/badge.png?branch=master
+    :alt: Coveralls badge
+    :target: https://coveralls.io/r/garoa/pingo
 
 Pingo provides a uniform API to program devices like the Raspberry Pi, BeagleBone Black, pcDuino etc. just like the Python DBAPI provides an uniform API for database programming in Python.
 
@@ -51,22 +59,24 @@ The following table lists the drivers currently planned or under development.
 ===================== ======== =============== ======== ==================================================
 Board                 Type     Module/Package  Status   Notes
 ===================== ======== =============== ======== ==================================================
-Arduino Firmata       remote   arduino         level 1  requires `firmata protocol`_ on any Arduino board
+Arduino Firmata       remote   ``arduino``     level 1  requires `firmata protocol`_ on any Arduino board
 Arduino Yún           on-board                 experim. requires `Bridge sketch`_ on the Arduino Yún
-TI BeagleBone Black   on-board bbb             experim.
-Cubietech Cubieboard  on-board                 none
-Fantasma              fake     ghost           level 1  not a real board, just a software fake for testing
-SolidRun HummingBoard on-board                 none
-Intel Galileo         on-board galileo         none
-TI MSP430             remote                   none     requires `firmata protocol`_ on any MSP430 board
-LinkSprite pcDuino    on-board pcduino         level 1
-element14 RaspberryPi on-board rpi             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
-SECO UDOO             on-board udoo            level 0
+BeagleBone Black      on-board ``bbb``         experim.
+Intel Galileo Gen 2   on-board ``galileo``     level 2  requires Intel IoT Dev Kit `mraa`_ library
+LinkSprite pcDuino    on-board ``pcduino``     level 1
+RaspberryPi           on-board ``rpi``         level 0  requires `RPi.GPIO`_ on the Raspberry Pi
+SECO UDOO             on-board ``udoo``        level 0
 ===================== ======== =============== ======== ==================================================
 
 .. _Firmata protocol: http://arduino.cc/en/reference/firmata
 .. _Bridge sketch: http://arduino.cc/en/Reference/YunBridgeLibrary
 .. _RPi.GPIO: https://pypi.python.org/pypi/RPi.GPIO
+.. _mraa: https://github.com/intel-iot-devkit/mraa
+
+We are also interested in supporting: Banana Pi, Cubietech Cubieboard, SolidRun HummingBoard, TI MSP430 (via `firmata protocol`_ ). 
+
+In a addition, Pingo implements ``ghost``, a mock software-only board for testing the API.
+
 
 Types of drivers
 ----------------

@@ -1,10 +1,4 @@
-import os
-import sys
-import time
-import unittest
-
 import pingo
-
 
 '''
 In order to use this set of cases, it is necessary to set
@@ -13,6 +7,7 @@ the following attributes on your TestCase setUp:
     self.expected_analog_input = 1004
     self.expected_analog_ratio = 0.98
 '''
+
 
 class AnalogReadBasics(object):
     '''
@@ -25,16 +20,16 @@ class AnalogReadBasics(object):
         pin = self.board.pins[self.analog_input_pin_number]
         pin.mode = pingo.IN
         _input = pin.value
-        #print "Value Read: ", _input
+        # print "Value Read: ", _input
 
-        assert self.expected_analog_input-3 <= _input <= self.expected_analog_input+3
+        assert self.expected_analog_input - 3 <= _input <= self.expected_analog_input + 3
 
     def test_pin_ratio(self):
         pin = self.board.pins[self.analog_input_pin_number]
         pin.mode = pingo.IN
         bits_resolution = (2 ** pin.bits) - 1
         _input = pin.ratio(0, bits_resolution, 0.0, 1.0)
-        #print "Value Read: ", _input
+        # print "Value Read: ", _input
 
         # Two decimal places check
         assert abs(_input - self.expected_analog_ratio) < 10e-1
@@ -46,4 +41,3 @@ class AnalogExceptions(object):
         pin = self.board.pins[self.analog_input_pin_number]
         with self.assertRaises(pingo.ModeNotSuported):
             pin.mode = pingo.OUT
-

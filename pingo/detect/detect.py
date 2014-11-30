@@ -1,5 +1,4 @@
 import os
-import re
 import glob
 import string
 import platform
@@ -25,6 +24,7 @@ def _read_cpu_info():
             cpuinfo[tokens[0]] = tokens[-1]
     return cpuinfo
 
+
 def _find_arduino_dev(system):
     if system == 'Linux':
         # TODO: filter possible devices with glob
@@ -36,13 +36,12 @@ def _find_arduino_dev(system):
             return os.path.join(os.path.sep, 'dev', devices[0])
 
     elif system == 'Darwin':
-        devices = (
-                glob.glob('/dev/tty.usbmodem*') +
-                glob.glob('/dev/tty.usbserial*')
-        )
+        devices = (glob.glob('/dev/tty.usbmodem*')
+                   + glob.glob('/dev/tty.usbserial*'))
         if len(devices) == 1:
             return os.path.join(os.path.sep, 'dev', devices[0])
     return False
+
 
 def MyBoard():
     machine = platform.machine()
@@ -59,15 +58,20 @@ def MyBoard():
         # TODO decide which board return
         return pingo.ghost.GhostBoard()
 
-    if machine == 'armv6l':
-        # FIX: Regex does not work.
+    elif machine == 'i586':
+        # TODO: assume it's a Galileo2
+        # FIXME: detect Galileo gen1. and Edison
+        return pingo.galileo.Galileo2()
+
+    elif machine == 'armv6l':
+        # FIXME: Regex does not work.
         # with open('/proc/cpuinfo', 'r') as fp:
         #    info = fp.read()
         # #TODO: Use this code in _read_cpu_info
         # pattern = '(?P<key>[^\t\n]*)\t{1,2}: (?P<value>\.*)\n'
 
         cpuinfo = _read_cpu_info()
-        revision = string.atoi(cpuinfo['Revision'], 16) # str to hex
+        revision = string.atoi(cpuinfo['Revision'], 16)  # str to hex
 
         if revision < 16:
             print('Using RaspberryPi...')
@@ -76,7 +80,7 @@ def MyBoard():
             print('Using RaspberryPi Model B+...')
             return pingo.rpi.RaspberryPiBPlus()
 
-    if machine == 'armv7l':
+    elif machine == 'armv7l':
         if system == 'Linux':
             hardware = _read_cpu_info()['Hardware']
             lsproc = os.listdir('/proc/')

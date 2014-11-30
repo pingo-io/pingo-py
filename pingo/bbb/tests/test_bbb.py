@@ -1,6 +1,3 @@
-import os
-import sys
-import time
 import unittest
 
 import pingo
@@ -23,17 +20,16 @@ class BeagleBoneBlackTest(unittest.TestCase):
         self.board.cleanup()
 
 
-@unittest.skipIf(not running_on_beaglebone,
-    "BeagleBoneBlack not detected")
+@unittest.skipIf(
+    not running_on_beaglebone, "BeagleBoneBlack not detected")
 class BeagleBoneBlackBasics(BeagleBoneBlackTest, level0.BoardBasics):
     pass
 
 
-@unittest.skipIf(not running_on_beaglebone,
-    "BeagleBoneBlack not detected")
+@unittest.skipIf(
+    not running_on_beaglebone, "BeagleBoneBlack not detected")
 class BeagleBoneBlackExceptions(BeagleBoneBlackTest, level0.BoardExceptions):
     pass
-
 
 if __name__ == '__main__':
     unittest.main()

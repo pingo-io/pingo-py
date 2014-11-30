@@ -1,6 +1,7 @@
 import collections
 import UserDict
 
+
 class StrKeyDict(UserDict.UserDict):
     """StrKeyDict always converts non-string keys to `str`
 
@@ -29,6 +30,13 @@ class StrKeyDict(UserDict.UserDict):
         >>> d['0']
         'zero'
 
+    Test for case-insensitive retrieval::
+
+        >>> d['A0'] = 'A-zero'
+        >>> d['a0']
+        'A-zero'
+        >>> del d['A0']
+
     Tests for update using a `dict` or a sequence of pairs::
 
         >>> d.update({6:'six', '8':'eight'})
@@ -44,16 +52,19 @@ class StrKeyDict(UserDict.UserDict):
 
     """
 
+    def normalize(self, key):
+        return str(key).upper()
+
     def __missing__(self, key):
-        if isinstance(key, str):
+        if isinstance(key, str) and key == self.normalize(key):
             raise KeyError(key)
-        return self[str(key)]
+        return self[self.normalize(key)]
 
     def __contains__(self, key):
-        return str(key) in self.data
+        return self.normalize(key) in self.data
 
     def __setitem__(self, key, item):
-        self.data[str(key)] = item
+        self.data[self.normalize(key)] = item
 
     def __iter__(self):
         return self.iterkeys()
