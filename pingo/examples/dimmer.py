@@ -28,7 +28,7 @@ def bar(pin):
     reading = pot.ratio()
     n = int(reading * 10)
     seg_display.digit = n
-    led.value = reading 
+    led.value = reading
 
 
 pprint(board.pins, indent=4, width=1)
