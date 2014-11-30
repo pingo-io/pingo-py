@@ -2,6 +2,7 @@ import pingo
 
 mraa = None
 
+
 class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
 
     def __init__(self):
@@ -24,12 +25,18 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
             pingo.LOW: 0,
         }
 
+        pwm_pin_numbers = [3, 5, 6, 9, 10, 11, 13]
+        digital_pin_numbers = [1, 2, 4, 7, 8, 12]
+        # FIXME: PwmPins are DigitalPins while implementation is broken
+        digital_pin_numbers += pwm_pin_numbers
+        # FIXME: removing PwmPins while implementation is broken
+        pwm_pin_numbers = []
         self._add_pins(
             [pingo.PwmPin(self, location)
-                for location in [3, 5, 6, 9, 10, 11, 13]] +
+                for location in []] +
 
             [pingo.DigitalPin(self, location)
-                for location in [1, 2, 4, 7 , 8, 12]] +
+                for location in digital_pin_numbers] +
 
             [pingo.AnalogPin(self, 'A' + location, 12)
                 for location in '012345']
@@ -72,8 +79,7 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
         return self.mraa_analogs[pin.location].read()
 
     def _get_pwm_duty_cycle(self, pin):
-        return 0 # TODO
+        return 0  # TODO
 
     def _set_pwm_duty_cycle(self, pin, value):
         self.mraa_pwms[pin.location].write(value)
-
