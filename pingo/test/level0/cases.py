@@ -1,5 +1,3 @@
-import os
-import sys
 import time
 import unittest
 
@@ -20,7 +18,7 @@ AND the VDD pin must be connected to the digital_input_pin_number
 class BoardBasics(object):
     def test_list_pins(self):
         vdd_pin = self.board.pins[self.vdd_pin_number]
-        assert isinstance(vdd_pin, pingo.VddPin)
+        assert isinstance(vdd_pin, pingo.VccPin)
 
         pin = self.board.pins[self.digital_output_pin_number]
         assert isinstance(pin, pingo.DigitalPin)
@@ -34,7 +32,7 @@ class BoardBasics(object):
 
     def test_filter(self):
         pins_subset = self.board.filter_pins(pingo.DigitalPin)
-        assert all(isinstance(pin ,pingo.DigitalPin) for pin in pins_subset)
+        assert all(isinstance(pin, pingo.DigitalPin) for pin in pins_subset)
 
         other_pins = set(self.board.pins.values()) - set(pins_subset)
         assert not any(isinstance(pin, pingo.DigitalPin) for pin in other_pins)
@@ -53,7 +51,7 @@ class BoardBasics(object):
                 break
 
         # TODO: show message on fail
-        msg = 'The button must be pressed in %ss for this test to pass' % delay
+        # msg = 'The button must be pressed in %ss for this test to pass' % delay
         assert output == pingo.HIGH
 
     def test_jumpwire(self):
@@ -87,4 +85,3 @@ class BoardExceptions(object):
 #        pin.mode = pingo.OUT
 #        with self.assertRaises(pingo.WrongPinMode) as cm:
 #            pin.state
-

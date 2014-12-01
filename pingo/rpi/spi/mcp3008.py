@@ -8,12 +8,12 @@ Object interface for MCP3008 A/D converter using bit-banged SPI
 __author__ = 'Luciano Ramalho'
 
 import time
-import os
 import atexit
 import RPi.GPIO as GPIO
 
 # make sure GPIO.cleanup will be called when script exits
 atexit.register(GPIO.cleanup)
+
 
 class Mcp3008(object):
     def __init__(self, spi_clock, spi_miso, spi_mosi, spi_cs):
@@ -28,7 +28,7 @@ class Mcp3008(object):
 
     def read(self, channel):
         assert 0 <= channel <= 7, 'channel must be 0...7'
-        GPIO.output(self.cs, True)    
+        GPIO.output(self.cs, True)
         GPIO.output(self.clock, False)
         GPIO.output(self.cs, False)
         cmd = channel
@@ -52,6 +52,7 @@ class Mcp3008(object):
         GPIO.output(self.cs, True)
         return res
 
+
 def test():
     # select pins for SPI
     SPI_CLK = 18
@@ -63,11 +64,11 @@ def test():
     display = '{0:6d}  {1:010b}  {1:4}  {2:3.2f} V {3}'
     while True:
         res = ad_chip.read(1)
-        volts = float(res)/1023 * 3.3
-        ticks = int(round(float(res)/1023*40))*'='
+        volts = float(res) / 1023 * 3.3
+        ticks = int(round(float(res) / 1023 * 40)) * '='
         print display.format(count, res, volts, ticks)
         time.sleep(.2)
         count += 1
-    
-if __name__=='__main__':
+
+if __name__ == '__main__':
     test()

@@ -1,5 +1,6 @@
 import os
 import glob
+import string
 import platform
 
 import pingo
@@ -12,11 +13,16 @@ class DetectionFailed(Exception):
 
 
 def _read_cpu_info():
+    cpuinfo = {}
+    # pattern = '(?P<key>[^\t\n]*)\t{1,2}: (?P<value>\.*)\n'
     with open('/proc/cpuinfo', 'r') as fp:
         for line in fp:
-            if line.startswith('Hardware'):
-                key, value = tuple(line.split(':'))
-                return value.strip()
+            line = line.strip()
+            if line:
+                tokens = tuple(
+                    token.strip() for token in line.split(':'))
+            cpuinfo[tokens[0]] = tokens[-1]
+    return cpuinfo
 
 
 def _find_arduino_dev(system):
@@ -30,10 +36,12 @@ def _find_arduino_dev(system):
             return os.path.join(os.path.sep, 'dev', devices[0])
 
     elif system == 'Darwin':
-        devices = glob.glob('/dev/tty.usbmodem*')
+        devices = (glob.glob('/dev/tty.usbmodem*')
+                   + glob.glob('/dev/tty.usbserial*'))
         if len(devices) == 1:
             return os.path.join(os.path.sep, 'dev', devices[0])
     return False
+
 
 def MyBoard():
     machine = platform.machine()
@@ -50,15 +58,31 @@ def MyBoard():
         # TODO decide which board return
         return pingo.ghost.GhostBoard()
 
-    if machine == 'armv6l':
-        print('Using RaspberryPi...')
-        return pingo.rpi.RaspberryPi()
+    elif machine == 'i586':
+        # TODO: assume it's a Galileo2
+        # FIXME: detect Galileo gen1. and Edison
+        return pingo.galileo.Galileo2()
 
-    if machine == 'armv7l':
+    elif machine == 'armv6l':
+        # FIXME: Regex does not work.
+        # with open('/proc/cpuinfo', 'r') as fp:
+        #    info = fp.read()
+        # #TODO: Use this code in _read_cpu_info
+        # pattern = '(?P<key>[^\t\n]*)\t{1,2}: (?P<value>\.*)\n'
 
+        cpuinfo = _read_cpu_info()
+        revision = string.atoi(cpuinfo['Revision'], 16)  # str to hex
+
+        if revision < 16:
+            print('Using RaspberryPi...')
+            return pingo.rpi.RaspberryPi()
+        else:
+            print('Using RaspberryPi Model B+...')
+            return pingo.rpi.RaspberryPiBPlus()
+
+    elif machine == 'armv7l':
         if system == 'Linux':
-
-            hardware = _read_cpu_info()
+            hardware = _read_cpu_info()['Hardware']
             lsproc = os.listdir('/proc/')
             adcx = [p for p in lsproc if p.startswith('adc')]
 
@@ -74,4 +98,4 @@ def MyBoard():
                 print('Using Udoo...')
                 return pingo.udoo.Udoo()
 
-        raise DetectionFailed()
+    raise DetectionFailed()

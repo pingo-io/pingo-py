@@ -1,10 +1,10 @@
 # coding: utf-8
 
-import time
 import atexit
 
 from abc import ABCMeta, abstractmethod
 
+from .util import StrKeyDict
 
 HIGH = 'HIGH'
 LOW = 'LOW'
@@ -13,13 +13,19 @@ LOW = 'LOW'
 IN = 'IN'
 OUT = 'OUT'
 ANALOG = 'ANALOG'
-#PWM = 'PWM'
+PWM = 'PWM'
+
 
 class WrongPinMode(Exception):
     value = 'Operation not supported in current mode.'
 
+
 class ModeNotSuported(Exception):
     value = 'Mode not suported by Pin or Board.'
+
+
+class ArgumentOutOfRange(Exception):
+    value = 'Argument not in the range 0.0 to 1.0'
 
 
 class Board(object):
@@ -72,6 +78,11 @@ class Board(object):
 
         return filtered
 
+    def select_pins(self, locations):
+        """Get list of pins from iterable of locations"""
+        locations = list(locations)
+        return [self.pins[location] for location in locations]
+
     @property
     def digital_pins(self):
         """[property] Get list of digital pins"""
@@ -100,7 +111,7 @@ class Board(object):
         Arguments:
             ``pins``: an iterable of ``Pin`` instances
         """
-        self.pins = {}
+        self.pins = StrKeyDict()
         for pin in pins:
             self.pins[pin.location] = pin
 
@@ -118,6 +129,11 @@ class Board(object):
 
         The ``«pin».__change_state(…)`` method calls this method because
         the procedure to set pin state changes from board to board.
+        """
+
+    @abstractmethod
+    def _get_pin_state(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass
         """
 
 
@@ -138,6 +154,7 @@ class AnalogInputCapable(object):
         the procedure to read pin analog signal changes from board to board.
         """
 
+    # FIX: Should we drop it?
     @abstractmethod
     def _set_analog_mode(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.
@@ -147,9 +164,41 @@ class AnalogInputCapable(object):
         """
 
 
+class PwmOutputCapable(object):
+    """Mixin interface for boards that support PwmOutputPin
+
+    Concrete ``PwmOutputCapable`` subclasses should implement
+    ``_get_pin_value`` to write the PWM signal of analog pins.
+    """
+
+    __metaclass__ = ABCMeta
+
+    @abstractmethod
+    def _set_pwm_mode(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass."""
+
+    @abstractmethod
+    def _get_pwm_duty_cycle(self, pin):
+        """Abstract method to be implemented by each ``Board`` subclass.
+
+        The ``«PwmPin».value(…)`` method calls this method because
+        the procedure to read the PWM signal changes from board to board.
+        """
+
+    @abstractmethod
+    def _set_pwm_duty_cycle(self, pin, value):
+        """Abstract method to be implemented by each ``Board`` subclass.
+
+        The ``«PwmPin».value(…)`` method calls this method because
+        the procedure to write a PWM signal changes from board to board.
+        """
+
+
 class Pin(object):
     """Abstract class defining common interface for all pins."""
     __metaclass__ = ABCMeta
+
+    suported_modes = []
 
     def __init__(self, board, location, gpio_id=None):
         """Initialize ``Pin`` instance with
@@ -167,6 +216,7 @@ class Pin(object):
         self.location = location
         if gpio_id is not None:
             self.gpio_id = gpio_id
+        self._mode = None
 
     def __repr__(self):
         cls_name = self.__class__.__name__
@@ -177,6 +227,26 @@ class Pin(object):
             gpio_id = ''
         return '<{cls_name} {gpio_id}@{location}>'.format(**locals())
 
+    @property
+    def mode(self):
+        """[property] Get/set pin mode to ``pingo.IN``, ``pingo.OUT``
+         ``pingo.ANALOG`` or ``pingo.PWM``"""
+        return self._mode
+
+    @mode.setter
+    def mode(self, value):
+        if value not in self.suported_modes:
+            raise ModeNotSuported()
+
+        if value in [IN, OUT]:
+            self.board._set_pin_mode(self, value)
+        elif value == ANALOG:
+            self.board._set_analog_mode(self, value)
+        elif value == PWM:
+            self.board._set_pwm_mode(self, value)
+
+        self._mode = value
+
 
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
@@ -185,21 +255,11 @@ class DigitalPin(Pin):
     because pins delegate all board-dependent behavior to the board.
     """
 
-    def __init__(self, board, location, gpio_id=None):
+    suported_modes = [IN, OUT]
 
+    def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
         self._state = None
-        self._mode = None
-
-    @property
-    def mode(self):
-        """[property] Get/set pin mode to ``pingo.IN`` or ``pingo.OUT``"""
-        return self._mode
-
-    @mode.setter
-    def mode(self, value):
-        self.board._set_pin_mode(self, value)
-        self._mode = value
 
     @property
     def state(self):
@@ -233,6 +293,25 @@ class DigitalPin(Pin):
         self.state = HIGH if self.state == LOW else LOW
 
 
+class PwmPin(DigitalPin):
+
+    suported_modes = [IN, OUT, PWM]
+
+    @property
+    def value(self):
+        if self.mode != PWM:
+            raise WrongPinMode()
+        return self.board._get_pwm_duty_cycle(self)
+
+    @value.setter
+    def value(self, value):
+        if self.mode != PWM:
+            raise WrongPinMode()
+        if not 0.0 <= value <= 100.0:
+            raise ArgumentOutOfRange()
+        self.board._set_pwm_duty_cycle(self, value)
+
+
 class AnalogPin(Pin):
     """Defines common interface for all analog pins.
 
@@ -241,6 +320,8 @@ class AnalogPin(Pin):
 
     This pin type supports read operations only.
     """
+
+    suported_modes = [IN, ANALOG]
 
     def __init__(self, board, location, resolution, gpio_id=None):
         """
@@ -254,29 +335,16 @@ class AnalogPin(Pin):
         self._mode = None
 
     @property
-    def mode(self):
-        """[property] Get pin mode ``pingo.IN``"""
-        return self._mode
-
-    @mode.setter
-    def mode(self, mode):
-        if mode not in [IN, ANALOG]:
-            raise ModeNotSuported()
-
-        self.board._set_analog_mode(self, mode)
-        # TODO: Call Board's methods
-        self._mode = mode
-
-    @property
     def value(self):
-        """[property] Get pin value as an integer from 0 to 2 ** resolution - 1"""
+        """[property] Pin value as integer from 0 to 2 ** resolution - 1"""
         return self.board._get_pin_value(self)
 
     def ratio(self, from_min=0, from_max=None, to_min=0.0, to_max=1.0):
-        """ Get pin value as a ``float``, by default from ``0.0`` to ``1.0``.
+        """ Pin value as a float, by default from 0.0 to 1.0.
 
-        The ``from...`` and ``to...`` parameters work like in the Arduino map_ function,
-        converting values from an expected input range to a desired output range.
+        The ``from...`` and ``to...`` parameters work like in the Arduino map_
+        function, converting values from an expected input range to a desired
+        output range.
 
         .. _map: http://arduino.cc/en/reference/map
         """
@@ -284,12 +352,12 @@ class AnalogPin(Pin):
             from_max = 2 ** self.bits - 1
 
         _value = self.value
-        return (float(_value-from_min)*(to_max-to_min) /
-                (from_max-from_min) + to_min)
+        return (float(_value - from_min) * (to_max - to_min) /
+                (from_max - from_min) + to_min)
 
     @property
     def percent(self):
-        """[property] Get pin value as a ``float`` from ``0.0`` to ``100.0`` """
+        """[property] Pin value as float from 0.0 to 100.0"""
         return self.ratio(to_max=100.0)
 
 
@@ -299,7 +367,7 @@ class GroundPin(Pin):
         return '<%s>' % self.__class__.__name__
 
 
-class VddPin(Pin):
+class VccPin(Pin):
 
     def __init__(self, board, location, voltage):
         Pin.__init__(self, board, location)

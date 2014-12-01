@@ -3,7 +3,6 @@
 Arduino
 """
 
-import time
 import platform
 
 import pingo
@@ -40,14 +39,14 @@ class ArduinoFirmata(Board, AnalogInputCapable):
             from PyMata.pymata import PyMata
         except ImportError:
             msg = 'pingo.arduino.Arduino requires PyMata installed'
-            raise SystemExit(msg)
+            raise ImportError(msg)
 
         super(ArduinoFirmata, self).__init__()
         self.port = port
         self.PyMata = PyMata(self.port)
 
         detected_digital_pins = len(self.PyMata._command_handler.digital_response_table)
-        detected_analog_pins =  len(self.PyMata._command_handler.analog_response_table)
+        detected_analog_pins = len(self.PyMata._command_handler.analog_response_table)
 
         self._add_pins(
             [DigitalPin(self, location)
@@ -57,7 +56,7 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         )
 
     def cleanup(self):
-        #self.PyMata.close() has sys.exit(0)
+        # self.PyMata.close() has sys.exit(0)
         if hasattr(self, 'PyMata'):
             try:
                 self.PyMata.transport.close()
@@ -83,8 +82,8 @@ class ArduinoFirmata(Board, AnalogInputCapable):
 
     def _set_pin_state(self, pin, state):
         self.PyMata.digital_write(
-                pin.location,
-                PIN_STATES[state]
+            pin.location,
+            PIN_STATES[state]
         )
 
     def _set_analog_mode(self, pin, mode):
@@ -98,4 +97,3 @@ class ArduinoFirmata(Board, AnalogInputCapable):
     def _get_pin_value(self, pin):
         pin_id = int(pin.location[1:])
         return self.PyMata.analog_read(pin_id)
-

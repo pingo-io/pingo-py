@@ -16,4 +16,5 @@ led.mode = pingo.OUT
 
 while True:
     led.toggle()
-    time.sleep(.1)
+    print(led.state)
+    time.sleep(.5)
