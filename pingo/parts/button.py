@@ -1,14 +1,17 @@
 import time
 import threading
 
-class Switch(threading.Thread):
-    """ Button like component with two stable states """
+
+class Switch(object):
+    """Button like component with two stable states"""
+
     def __init__(self, pin):
-        super(Switch, self).__init__()
-        self.setDaemon(True)
+        """
+        :param pin: A instance of DigitalPin
+        """
         self.pin = pin
         self.pin.mode = 'IN'
-        self._flag = threading.Event()
+        self.polling_task = None
         self._up_callback = lambda: None
         self._down_callback = lambda: None
 
@@ -23,19 +26,40 @@ class Switch(threading.Thread):
         self._down_callback = callback_wrapper
 
     def stop(self):
-        self._flag.clear()
-        self.join()
+        if self.polling_task is not None:
+            if self.polling_task.active:
+                self.polling_task.terminate()
+                self.polling_task = None
+
+    def start(self):
+        if self.polling_task is not None:
+            if self.polling_task.active:
+                self.stop()
+        self.polling_task = PollingTask(self)
+        threading.Thread(target=self.polling_task.run).start()
+
+
+class PollingTask(object):
+    def __init__(self, switch):
+        """
+        :param switch: Switch instance to poll
+        """
+        self.switch = switch
+        self.active = False
+
+    def terminate(self):
+        self.active = False
 
     def run(self):
-        self._flag.set()
-        last_state = self.pin.state
-        while self._flag.is_set():
-            current_state = self.pin.state
+        self.active = True
+        last_state = self.switch.pin.state
+        while self.active:
+            current_state = self.switch.pin.state
             if current_state != last_state:
                 if current_state == 'HIGH':
                     last_state = current_state
-                    self._up_callback()
+                    self.switch._up_callback()
                 elif current_state == 'LOW':
                     last_state = current_state
-                    self._down_callback()
+                    self.switch._down_callback()
             time.sleep(0.05)
