@@ -10,23 +10,37 @@ class GhostBoard(
     def __init__(self, filepath=None):
         super(GhostBoard, self).__init__()
 
+        # Arduino ATmega168/328 pin mapping
         pins = set([
-            pingo.GroundPin(self, 1),
-            pingo.VccPin(self, 2, 5.0),
-            pingo.DigitalPin(self, 3),
+            pingo.DigitalPin(self, 0),
+            pingo.DigitalPin(self, 1),
+            pingo.DigitalPin(self, 2),
+            pingo.PwmPin(self, 3),
             pingo.DigitalPin(self, 4),
-            pingo.DigitalPin(self, 5),
-            pingo.DigitalPin(self, 6),
+
+            pingo.VccPin(self, 'VCC', 5.0),
+            pingo.GroundPin(self, 'GND'),
+            pingo.PwmPin(self, 5),
+            pingo.PwmPin(self, 6),
             pingo.DigitalPin(self, 7),
+
             pingo.DigitalPin(self, 8),
-            pingo.DigitalPin(self, 9),
-            pingo.DigitalPin(self, 10),
-            pingo.DigitalPin(self, 11),
+            pingo.AnalogPin(self, 'A5', 10),
+            pingo.AnalogPin(self, 'A4', 10),
+            pingo.AnalogPin(self, 'A3', 10),
+            pingo.AnalogPin(self, 'A2', 10),
+
+            pingo.AnalogPin(self, 'A1', 10),
+            pingo.AnalogPin(self, 'A0', 10),
+            pingo.GroundPin(self, 'GND'),
+            pingo.VccPin(self, 'AREF', 5.0),
+            pingo.VccPin(self, 'AVCC', 5.0),
+
             pingo.DigitalPin(self, 12),
             pingo.DigitalPin(self, 13),
-            pingo.DigitalPin(self, 14),
-            pingo.GroundPin(self, 15),
-            pingo.VccPin(self, 16, 3.3),
+            pingo.PwmPin(self, 11),
+            pingo.PwmPin(self, 10),
+            pingo.PwmPin(self, 9),
         ])
 
         self._add_pins(pins)

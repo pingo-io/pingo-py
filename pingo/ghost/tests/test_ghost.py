@@ -10,10 +10,10 @@ class GhostBoardTest(unittest.TestCase):
         self.board = pingo.ghost.GhostBoard()
 
         # Level1 Parameters
-        self.vdd_pin_number = 2
+        self.vdd_pin_number = 'VCC'
         self.digital_output_pin_number = 13
         self.digital_input_pin_number = 8
-        self.total_pins = 16
+        self.total_pins = 24
 
         # Level1 Parameters
         self.analog_input_pin_number = 'A4'
