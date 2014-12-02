@@ -2,6 +2,8 @@ import unittest
 
 import pingo
 from pingo.test import level0
+# from pingo.test import level1
+from pingo.test import level2
 
 
 class GhostBoardTest(unittest.TestCase):
@@ -19,6 +21,9 @@ class GhostBoardTest(unittest.TestCase):
         self.analog_input_pin_number = 'A4'
         self.expected_analog_input = 1004
         self.expected_analog_ratio = 0.98
+
+        # Level2 Parameters
+        self.pwm_pin_number = 3
 
     def tearDown(self):
         self.board.cleanup()
@@ -39,6 +44,13 @@ class GhostBoardExceptions(GhostBoardTest, level0.BoardExceptions):
 # class GhostAnalogExceptions(GhostBoardTest, level1.AnalogExceptions):
 #    pass
 
+
+class GhostPwm(GhostBoardTest, level2.PwmBasics):
+    pass
+
+
+class GhostPwmExceptions(GhostBoardTest, level2.PwmExceptions):
+    pass
 
 if __name__ == '__main__':
     unittest.main()

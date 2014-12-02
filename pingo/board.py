@@ -264,6 +264,9 @@ class DigitalPin(Pin):
     @property
     def state(self):
         """[property] Get/set pin state to ``pingo.HIGH`` or ``pingo.LOW``"""
+        if not self.mode in [IN, OUT]:
+            raise WrongPinMode()
+
         if self.mode == IN:
             self._state = self.board._get_pin_state(self)
 
