@@ -25,7 +25,7 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 Basic usage
 -----------
 
-To use ``pingo``, the first step is to instatiate a concrete `Board`. Each Pingo driver is a concrete board, for example, ``pingo.rpi.RaspberryPi`` and ``pingo.arduino.ArduinoFirmata`` are two such boards.
+To use ``pingo``, the first step is to instantiate a concrete `Board`. Each Pingo driver is a concrete board, for example, ``pingo.rpi.RaspberryPi`` and ``pingo.arduino.ArduinoFirmata`` are two such boards.
 
 Pingo can automatically detect the board in most common cases. If it is running on a supported board, ``pingo.detect.MyBoard()`` returns an proper board instance. If Pingo is running on an unsupported machine (eg. a PC running GNU/Linux), it will try to find a remote Arduino using the Firmata protocol via USB and -- if succesfull -- will return a ``pingo.arduino.ArduinoFirmata`` instance.
 
