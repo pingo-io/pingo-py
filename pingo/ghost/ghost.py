@@ -45,14 +45,14 @@ class GhostBoard(
 
         self._add_pins(pins)
 
-        self.pin_states = pingo.util.StrKeyDict()
+        self._pin_states = pingo.util.StrKeyDict()
         # All pins start on LOW
         # FIXME: use "LOW" instead of 0
         for location, pin in self.pins.iteritems():
-            self.pin_states[location] = 0 if hasattr(pin, 'state') else None
+            self._pin_states[location] = 0 if hasattr(pin, 'state') else None
 
         # Pin 8 starts on HIGH
-        self.pin_states[8] = 1
+        self._pin_states[8] = 1
 
     def cleanup(self):
         print('GhostBoard: cleaning up.')
@@ -69,17 +69,17 @@ class GhostBoard(
     def _set_pin_state(self, pin, state):
         print('GhostBoard: %r state -> %s' % (pin, state))
         _state = 1 if state == pingo.HIGH else 0
-        self.pin_states[pin.location] = _state
+        self._pin_states[pin.location] = _state
 
     def _get_pin_state(self, pin):
-        state = self.pin_states[pin.location]
+        state = self._pin_states[pin.location]
         return pingo.HIGH if state else pingo.LOW
 
     def _get_pin_value(self, pin):
-        return self.pin_states[pin.location]
+        return self._pin_states[pin.location]
 
     def _get_pwm_duty_cycle(self, pin):
-        return self.pin_states[pin.location]
+        return self._pin_states[pin.location]
 
     def _set_pwm_duty_cycle(self, pin, value):
-        self.pin_states[pin.location] = value
+        self._pin_states[pin.location] = value
