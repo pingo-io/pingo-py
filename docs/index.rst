@@ -1,24 +1,74 @@
-.. Pingo documentation master file, created by
-   sphinx-quickstart on Fri Apr 18 02:00:54 2014.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Introduction
+============
 
-Pingo package documentation
-=================================
+Pingo provides a uniform API to program devices like the Raspberry Pi, BeagleBone Black, pcDuino etc. just like the Python DBAPI provides an uniform API for database programming in Python.
+
+The API is object-oriented but easy to use: a board is an instance of a ``Board`` subclass. Every board has a dictionary called ``pins`` which lists all GPIO pins on the board. Each pin is an instance of a ``Pin`` subclass with attributes that you can inspect to learn about its capabilities.
+
+The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project started (the words *pingo* and *garoa* are related in Portuguese). To our English-speaking friends we like to say that it means **"pin, go!"** -- the main purpose of this package.
+
+.. _Pingo: https://garoa.net.br/wiki/Pingo
+.. _Garoa Hacker Clube: https://garoa.net.br/wiki/Garoa_Hacker_Clube:About
+
+------------
+Installation
+------------
+
+There are two ways of installing Pingo:
+
+1. from Python PyPI
+2. from Github (recommended)
+
+Installing from PyPI
+--------------------------
+
+To install Pingo from PyPI (Python Package Index), first, make sure you have ``pip`` installed in your machine. On Linux machines, this usually means you have the `python-pip` package installed. You can check if you have ``pip`` in your machine by typing the following text on a shell prompt::
+
+    $ pip --version
+    pip 1.5.4 from /usr/lib/python2.7/dist-packages (python 2.7) 
+ 
+If the output is similar from the one above, you can install Pingo by simple typing ``pip install pingo`` as root on you terminal. That's it!
+
+
+Installing from Github
+----------------------------
+
+Since Pingo is currently in alpha state and under heavy develpment, installing Pingo from Github may be a good idea. Besides that, it will be easy for you to contribute to the project, if you wish. See the Contributing section on the left menu.
+
+To install Pingo from Github, you must have Git installed. Presuming you already have that, just type::
+
+    $ git clone https://github.com/garoa/pingo.git
+
+After that, get into the pingo directory and setup Python to use your brand new directory as a library::
+
+    $ python setup.py develop
+
+Done! You are ready to program using Pingo!
+
+
+.. _basic-usage:
+
+.. include:: ../README.rst
+    :start-after: _basic-usage:
+
+
+-------------------
+More documentation
+-------------------
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-   intro
    API
    contributing
 
 Indices and tables
-==================
+--------------------
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
 
