@@ -16,6 +16,7 @@ AND the VDD pin must be connected to the digital_input_pin_number
 
 
 class BoardBasics(object):
+
     def test_list_pins(self):
         vdd_pin = self.board.pins[self.vdd_pin_number]
         assert isinstance(vdd_pin, pingo.VccPin)
@@ -61,6 +62,27 @@ class BoardBasics(object):
         output = pin.state
 
         assert output == pingo.HIGH
+
+    def test_toggle(self):
+        pin = self.board.pins[self.digital_input_pin_number]
+        pin.mode = pingo.OUT
+        pin.high()
+        pin.toggle()
+
+        assert pin.state == pingo.LOW
+
+    def test_digital_pins(self):
+        digital_pins = self.board.digital_pins
+        # TODO:
+        # assert len(digital_pins) == self.len_digital_pins
+        assert len(digital_pins) > 0
+
+    def test_select(self):
+        selected_pins = self.board.select_pins([
+            self.digital_input_pin_number,
+            self.digital_output_pin_number
+        ])
+        assert len(selected_pins) == 2
 
 
 class BoardExceptions(object):
