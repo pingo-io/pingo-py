@@ -1,3 +1,15 @@
+"""
+A simplified PONG clone developed in a couple of hours at the
+Intel IoT Roadshow in São Paulo, Brazil, by Ricardo Banffy and
+Luciano Ramalho.
+
+The hardware setup is a Galileo Gen 2 connected to an Arduino,
+each with a potentiometer in pin A0 (we used Garoa Dojo shields).
+The script runs on the Galileo, and the display is a terminal
+on any computer connected to the Galileo.
+"""
+
+
 # flake8: noqa
 
 import curses
