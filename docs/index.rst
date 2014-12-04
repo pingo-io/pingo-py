@@ -10,6 +10,11 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 .. _Pingo: https://garoa.net.br/wiki/Pingo
 .. _Garoa Hacker Clube: https://garoa.net.br/wiki/Garoa_Hacker_Clube:About
 
+.. _basic-usage:
+
+.. include:: ../README.rst
+    :start-after: _basic-usage:
+
 ------------
 Installation
 ------------
@@ -44,12 +49,6 @@ After that, get into the pingo directory and setup Python to use your brand new 
     $ python setup.py develop
 
 Done! You are ready to program using Pingo!
-
-
-.. _basic-usage:
-
-.. include:: ../README.rst
-    :start-after: _basic-usage:
 
 
 -------------------
