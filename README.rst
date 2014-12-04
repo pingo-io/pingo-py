@@ -25,11 +25,11 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 Basic usage
 -----------
 
-To use ``pingo``, the first step is to instantiate a concrete `Board`. Each Pingo driver is a concrete board, for example, ``pingo.rpi.RaspberryPi`` and ``pingo.arduino.ArduinoFirmata`` are two such boards.
+To use ``pingo``, the first step is to instantiate a ``Board``. Each Pingo driver is a concrete board subclass, for example, ``pingo.rpi.RaspberryPi`` and ``pingo.arduino.ArduinoFirmata`` are two such classes.
 
-Pingo can automatically detect the board in most common cases. If it is running on a supported board, ``pingo.detect.MyBoard()`` returns an proper board instance. If Pingo is running on an unsupported machine (eg. a PC running GNU/Linux), it will try to find a remote Arduino using the Firmata protocol via USB and -- if succesfull -- will return a ``pingo.arduino.ArduinoFirmata`` instance.
+Pingo can automatically detect the board in most common cases. If the script is running on a supported board, ``pingo.detect.MyBoard()`` returns an suitable board instance. If Pingo is running on an unsupported machine (eg. a notebook), it will try to find a connected Arduino using the Firmata protocol via USB and -- if successful -- will return a ``pingo.arduino.ArduinoFirmata`` instance.
 
-Once you have a board instance, its possible to access its pins through the ``board.pins`` dict.
+Once you have a board instance, it's possible to access its pins through the ``board.pins`` dictionary:
 
 .. code-block:: python
 
@@ -52,7 +52,7 @@ Once you have a board instance, its possible to access its pins through the ``bo
 Drivers
 -------
 
-``pingo.udoo.udoo`` ``pingo.arduino.yun`` are examples of drivers, and the respective ``Udoo`` and ``YunBridge`` are extends the ``pingo.board.Board`` interface class.
+``pingo.pcduini.PcDuino`` ``pingo.galileo.Galileo2`` are examples of drivers, and the respective ``PcDuino`` and ``Galileo2`` are subclasses of the ``pingo.board.Board`` abstract class that defines the common API for all boards.
 
 The following table lists the drivers currently planned or under development.
 
