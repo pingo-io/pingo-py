@@ -7,7 +7,7 @@ The API is object-oriented but easy to use: each board is an instance of a ``Boa
 
 A single script can easily control more than board at the same time. For example, a program running on the pcDuino can control the pcDuino itself and two Arduinos connected to the pcDuino via USB using the Firmata protocol. 
 
-The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project started (in Portuguese, "pingo" is drop and "garoa" is drizzle). To our English-speaking friends we like to say **"Pingo means: 'pin, go'!"** -- this sums up nicely the purpose of this package.
+The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project started (in Portuguese, "pingo" is drop and "garoa" is drizzle). To our English-speaking friends we like to say **Pingo means: "pin, go!"** -- this nicely sums up the purpose of this package.
 
 .. _Pingo: https://garoa.net.br/wiki/Pingo
 .. _Garoa Hacker Clube: https://garoa.net.br/wiki/Garoa_Hacker_Clube:About
