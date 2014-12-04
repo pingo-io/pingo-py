@@ -1,11 +1,13 @@
 Introduction
 ============
 
-Pingo provides a uniform API to program devices like the Raspberry Pi, BeagleBone Black, pcDuino etc. just like the Python DBAPI provides an uniform API for database programming in Python.
+Pingo provides a uniform API to program devices like the Raspberry Pi, pcDuino, Intel Galileo etc. just like the Python DBAPI provides an uniform API for database programming in Python.
 
-The API is object-oriented but easy to use: a board is an instance of a ``Board`` subclass. Every board has a dictionary called ``pins`` which lists all GPIO pins on the board. Each pin is an instance of a ``Pin`` subclass with attributes that you can inspect to learn about its capabilities.
+The API is object-oriented but easy to use: each board is an instance of a ``Board`` subclass. Every board has a dictionary called ``pins`` which lists all GPIO pins on the board. Each pin is an instance of a ``Pin`` subclass with attributes that you can inspect to learn about its capabilities.
 
-The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project started (the words *pingo* and *garoa* are related in Portuguese). To our English-speaking friends we like to say that it means **"pin, go!"** -- the main purpose of this package.
+A single script can easily control more than board at the same time. For example, a program running on the pcDuino can control the pcDuino itself and two Arduinos connected to the pcDuino via USB using the Firmata protocol. 
+
+The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project started (in Portuguese, "pingo" is drop and "garoa" is drizzle). To our English-speaking friends we like to say **"Pingo means: 'pin, go'!"** -- this sums up nicely the purpose of this package.
 
 .. _Pingo: https://garoa.net.br/wiki/Pingo
 .. _Garoa Hacker Clube: https://garoa.net.br/wiki/Garoa_Hacker_Clube:About
