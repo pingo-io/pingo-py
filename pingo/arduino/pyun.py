@@ -78,6 +78,10 @@ class YunBridge(object):
         # Pin A5 reads analog 185
         return int(res.split()[-1])
 
+    def analogWrite(self, pin, value):
+        res = self.get('analog', pin, value)
+        return int(res.split()[-1])
+
     def delay(self, ms):
         seconds = float(ms) / 1000
         time.sleep(seconds)
@@ -116,16 +120,16 @@ class ArduinoYun(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
         )
 
     def _set_pin_mode(self, pin, mode):
-        if mode in [pingo.OUT, pingo.ANALOG]:
-            self.yun.pinMode('input')
+        if mode == pingo.IN:
+            self.yun.pinMode(pin.location, 'input')
         else:
-            self.yum.pinMode('output')
+            self.yun.pinMode(pin.location, 'output')
 
     def _set_analog_mode(self, pin, mode):
-        self.set_pin_mode(pin, mode)
+        self.yun.pinMode(int(pin.location[-1]), 'input')
 
     def _set_pwm_mode(self, pin, mode):
-        self.set_pin_mode(pin, mode)
+        self._set_pin_mode(pin, mode)
 
     def _set_pin_state(self, pin, state):
         self.yun.digitalWrite(pin.location, self.PIN_STATES[state])
@@ -135,7 +139,7 @@ class ArduinoYun(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
         return pingo.HIGH if value == 1 else pingo.LOW
 
     def _get_pin_value(self, pin):
-        return self.yun.digitalRead(pin.location)
+        return self.yun.analogRead(int(pin.location[-1]))
 
     def _get_pwm_duty_cycle(self, pin):
         if hasattr(pin, '_duty_cycle'):
