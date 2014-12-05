@@ -178,11 +178,11 @@ class PwmOutputCapable(object):
         """Abstract method to be implemented by each ``Board`` subclass."""
 
     @abstractmethod
-    def _get_pwm_duty_cycle(self, pin):
+    def _set_pwm_frequency(self, pin, value):
         """Abstract method to be implemented by each ``Board`` subclass.
 
-        The ``«PwmPin».value(…)`` method calls this method because
-        the procedure to read the PWM signal changes from board to board.
+        The ``«PwmPin».frequency(…)`` method calls this method because
+        the procedure to set the PWM's frequency changes from board to board.
         """
 
     @abstractmethod
@@ -190,7 +190,7 @@ class PwmOutputCapable(object):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«PwmPin».value(…)`` method calls this method because
-        the procedure to write a PWM signal changes from board to board.
+        the procedure to set PWM's duty cycle changes from board to board.
         """
 
 
@@ -300,11 +300,18 @@ class PwmPin(DigitalPin):
 
     suported_modes = [IN, OUT, PWM]
 
+    def __init__(self, board, location, gpio_id=None, frequency=None):
+        DigitalPin.__init__(self, board, location, gpio_id)
+        self._frequency = frequency
+        self._duty_cycle = None
+
     @property
     def value(self):
         if self.mode != PWM:
             raise WrongPinMode()
-        return self.board._get_pwm_duty_cycle(self)
+        if hasattr(pin, '_duty_cycle'):
+            return self._duty_cycle
+        return None
 
     @value.setter
     def value(self, value):
@@ -313,6 +320,7 @@ class PwmPin(DigitalPin):
         if not 0.0 <= value <= 100.0:
             raise ArgumentOutOfRange()
         self.board._set_pwm_duty_cycle(self, value)
+        self._duty_cycle = value
 
 
 class AnalogPin(Pin):
