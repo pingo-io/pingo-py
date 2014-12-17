@@ -60,7 +60,7 @@ The following table lists the drivers currently planned or under development.
 Board                 Type     Module/Package      Status   Notes
 ===================== ======== =================== ======== ==================================================
 Arduino Firmata       remote   ``arduino.firmata`` level 1  requires `firmata protocol`_ on any Arduino board
-Arduino Yún           on-board                     level 2  requires `Bridge sketch`_ on the Arduino Yún
+Arduino Yún           on-board ``arduino.yun``     level 2  requires `Bridge sketch`_ on the Arduino Yún
 BeagleBone Black      on-board ``bbb``             experim.
 Intel Galileo Gen 2   on-board ``galileo``         level 2  requires Intel IoT Dev Kit `mraa`_ library
 LinkSprite pcDuino    on-board ``pcduino``         level 1
