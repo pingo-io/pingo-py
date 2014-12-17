@@ -1,6 +1,7 @@
 
 """
-Arduino
+Firmata protocol client for Pingo
+Works on Arduino
 """
 
 import platform
