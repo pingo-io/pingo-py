@@ -83,3 +83,6 @@ class GhostBoard(
 
     def _set_pwm_duty_cycle(self, pin, value):
         self._pin_states[pin.location] = value
+
+    def _set_pwm_frequency(self, pin, value):
+        raise NotImplementedError

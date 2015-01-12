@@ -193,6 +193,15 @@ class PwmOutputCapable(object):
         the procedure to set PWM's duty cycle changes from board to board.
         """
 
+    def _get_pwm_duty_cycle(self, pin):
+        """
+        This method should be overwritten if the ``Board`` subclass
+        has this feature.
+        """
+        if hasattr(pin, '_duty_cycle'):
+            return pin._duty_cycle
+        return 0.0
+
 
 class Pin(object):
     """Abstract class defining common interface for all pins."""
@@ -309,9 +318,7 @@ class PwmPin(DigitalPin):
     def value(self):
         if self.mode != PWM:
             raise WrongPinMode()
-        if hasattr(pin, '_duty_cycle'):
-            return self._duty_cycle
-        return None
+        return self.board._get_pwm_duty_cycle(self)
 
     @value.setter
     def value(self, value):
