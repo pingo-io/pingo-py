@@ -85,4 +85,4 @@ class GhostBoard(
         self._pin_states[pin.location] = value
 
     def _set_pwm_frequency(self, pin, value):
-        raise NotImplementedError
+        pass

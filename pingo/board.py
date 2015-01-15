@@ -202,6 +202,15 @@ class PwmOutputCapable(object):
             return pin._duty_cycle
         return 0.0
 
+    def _get_pwm_frequency(self, pin):
+        """
+        This method should be overwritten if the ``Board`` subclass
+        has this feature.
+        """
+        if hasattr(pin, '_frequency'):
+            return pin._frequency
+        return 0.0
+
 
 class Pin(object):
     """Abstract class defining common interface for all pins."""
@@ -314,6 +323,9 @@ class PwmPin(DigitalPin):
         self._frequency = frequency
         self._duty_cycle = None
 
+    # TUDO:
+    # Write a decorator to test mode == 'MODE'
+
     @property
     def value(self):
         if self.mode != PWM:
@@ -328,6 +340,21 @@ class PwmPin(DigitalPin):
             raise ArgumentOutOfRange()
         self.board._set_pwm_duty_cycle(self, value)
         self._duty_cycle = value
+
+    @property
+    def frequency(self):
+        if self.mode != PWM:
+            raise WrongPinMode()
+        return self.board._get_pwm_frequency(self)
+
+    @frequency.setter
+    def frequency(self, new_frequency):
+        if self.mode != PWM:
+            raise WrongPinMode()
+        if new_frequency <= 0.0:
+            raise ArgumentOutOfRange()
+        self.board._set_pwm_frequency(self, new_frequency)
+        self._frequency = new_frequency
 
 
 class AnalogPin(Pin):
