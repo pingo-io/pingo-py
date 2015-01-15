@@ -154,7 +154,6 @@ class AnalogInputCapable(object):
         the procedure to read pin analog signal changes from board to board.
         """
 
-    # FIX: Should we drop it?
     @abstractmethod
     def _set_analog_mode(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.

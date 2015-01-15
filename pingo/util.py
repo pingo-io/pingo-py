@@ -79,3 +79,14 @@ class StrKeyDict(UserDict.UserDict):
                 self[key] = value
         if kwds:
             self.update(kwds)
+
+
+# Decorator
+# def mode_restricted(mode):
+#     def restriction_decorator(method):
+#         def method_wrapper(self, *args, **kwargs):
+#             if self.mode != mode:
+#                 raise WrongPinMode()
+#             return method(self, *args, **kwargs)
+#         return method_wrapper
+#     return mode_restricted
