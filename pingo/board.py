@@ -154,7 +154,6 @@ class AnalogInputCapable(object):
         the procedure to read pin analog signal changes from board to board.
         """
 
-    # FIX: Should we drop it?
     @abstractmethod
     def _set_analog_mode(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.
@@ -178,11 +177,11 @@ class PwmOutputCapable(object):
         """Abstract method to be implemented by each ``Board`` subclass."""
 
     @abstractmethod
-    def _get_pwm_duty_cycle(self, pin):
+    def _set_pwm_frequency(self, pin, value):
         """Abstract method to be implemented by each ``Board`` subclass.
 
-        The ``«PwmPin».value(…)`` method calls this method because
-        the procedure to read the PWM signal changes from board to board.
+        The ``«PwmPin».frequency(…)`` method calls this method because
+        the procedure to set the PWM's frequency changes from board to board.
         """
 
     @abstractmethod
@@ -190,8 +189,26 @@ class PwmOutputCapable(object):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«PwmPin».value(…)`` method calls this method because
-        the procedure to write a PWM signal changes from board to board.
+        the procedure to set PWM's duty cycle changes from board to board.
         """
+
+    def _get_pwm_duty_cycle(self, pin):
+        """
+        This method should be overwritten if the ``Board`` subclass
+        has this feature.
+        """
+        if hasattr(pin, '_duty_cycle'):
+            return pin._duty_cycle
+        return 0.0
+
+    def _get_pwm_frequency(self, pin):
+        """
+        This method should be overwritten if the ``Board`` subclass
+        has this feature.
+        """
+        if hasattr(pin, '_frequency'):
+            return pin._frequency
+        return 0.0
 
 
 class Pin(object):
@@ -300,6 +317,14 @@ class PwmPin(DigitalPin):
 
     suported_modes = [IN, OUT, PWM]
 
+    def __init__(self, board, location, gpio_id=None, frequency=None):
+        DigitalPin.__init__(self, board, location, gpio_id)
+        self._frequency = frequency
+        self._duty_cycle = None
+
+    # TUDO:
+    # Write a decorator to test mode == 'MODE'
+
     @property
     def value(self):
         if self.mode != PWM:
@@ -313,6 +338,22 @@ class PwmPin(DigitalPin):
         if not 0.0 <= value <= 100.0:
             raise ArgumentOutOfRange()
         self.board._set_pwm_duty_cycle(self, value)
+        self._duty_cycle = value
+
+    @property
+    def frequency(self):
+        if self.mode != PWM:
+            raise WrongPinMode()
+        return self.board._get_pwm_frequency(self)
+
+    @frequency.setter
+    def frequency(self, new_frequency):
+        if self.mode != PWM:
+            raise WrongPinMode()
+        if new_frequency <= 0.0:
+            raise ArgumentOutOfRange()
+        self.board._set_pwm_frequency(self, new_frequency)
+        self._frequency = new_frequency
 
 
 class AnalogPin(Pin):
