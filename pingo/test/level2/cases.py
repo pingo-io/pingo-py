@@ -19,7 +19,6 @@ class PwmBasics(object):
 
         assert 0.49 <= _duty_cycle <= 0.51
 
-
     def test_frequency(self):
         pin = self.board.pins[self.pwm_pin_number]
         pin.mode = pingo.PWM
