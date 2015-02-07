@@ -18,6 +18,12 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 .. _Pingo: https://garoa.net.br/wiki/Pingo
 .. _Garoa Hacker Clube: https://garoa.net.br/wiki/Garoa_Hacker_Clube:About
 
+-----
+Media
+-----
+##### Watch it on Youtube: https://www.youtube.com/watch?v=pAOooxPL_tQ
+
+[![Intel IoT RoadShow São Paulo 2014](https://img.youtube.com/vi/pAOooxPL_tQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=pAOooxPL_tQ)
 
 .. _basic-usage:
 
