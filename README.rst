@@ -21,13 +21,15 @@ The name `Pingo`_ is a tribute to `Garoa Hacker Clube`_, where the project start
 -----
 Media
 -----
+
 Watch it on Youtube: https://www.youtube.com/watch?v=pAOooxPL_tQ
 
 .. image:: https://img.youtube.com/vi/pAOooxPL_tQ/maxresdefault.jpg
     :alt: Intel IoT RoadShow São Paulo 2014
     :target: https://www.youtube.com/watch?v=pAOooxPL_tQ
     :align: center
-    Intel IoT RoadShow São Paulo 2014
+
+Intel IoT RoadShow São Paulo 2014
 
 .. _basic-usage:
 
