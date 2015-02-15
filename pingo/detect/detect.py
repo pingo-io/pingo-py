@@ -63,6 +63,9 @@ def MyBoard():
         # FIXME: detect Galileo gen1. and Edison
         return pingo.galileo.Galileo2()
 
+    elif machine == 'i686':
+        return pingo.edison.Edison()
+
     elif machine == 'armv6l':
         # FIXME: Regex does not work.
         # with open('/proc/cpuinfo', 'r') as fp:
