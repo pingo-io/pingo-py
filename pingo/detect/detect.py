@@ -60,7 +60,7 @@ def MyBoard():
 
     elif machine == 'i586':
         # TODO: assume it's a Galileo2
-        # FIXME: detect Galileo gen1. and Edison
+        # FIXME: detect Galileo gen1.
         return pingo.galileo.Galileo2()
 
     elif machine == 'i686':
