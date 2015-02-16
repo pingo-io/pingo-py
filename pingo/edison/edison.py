@@ -1,4 +1,4 @@
-iimport pingo
+import pingo
 
 mraa = None
 
@@ -11,9 +11,9 @@ class Edison(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
             import mraa as mraa
         except ImportError:
             raise ImportError(
-                'pingo.galileo.Galileo2 requires mraa installed')
+                'pingo.edison.Edison requires mraa installed')
 
-        super(Galileo2, self).__init__()
+        super(Edison, self).__init__()
 
         self.PIN_MODES = {
             pingo.IN: mraa.DIR_IN,
