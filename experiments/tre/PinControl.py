@@ -74,7 +74,8 @@ while True:
     if mode.lower().startswith('out'):
         print "out" >> "$GPIO_DIR/gpio$n/direction"
         print "Pin $num sets as OUTPUT"
-
+# XXX work stopped here... the rest is still bash...        
+        
     elif [[ ("$mode" == "in") || ("$mode" == "INPUT") ]]; then
         print "in" >> "$GPIO_DIR/gpio$n/direction"
         print "Pin $num sets as INPUT"
