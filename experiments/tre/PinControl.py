@@ -1,121 +1,121 @@
-#!/bin/bash
+#!/bin/env python
 
-# DESCRIPTION : This sketch is written in bash and it allows to control Sitara's gpios
-# To make executable the script digit in terminal this command : $ chmod +x PinControl.sh
-# To execute the script use : $ ./PinControl.sh
-# then follow the instuctions that appear in the terminal
+# DESCRIPTION : This sketch is written in Python and allows you to control Sitara's gpios
+# To make the script executable type this command in terminal: $ chmod +x PinControl.py
+# To execute the script use : $ sudo ./PinControl.py
+# then follow the instructions that appear in the terminal
 
-num=0
-GPIO_DIR="/sys/class/gpio"
+import sys
 
-while true; do
-  echo
-  echo "INSTRUCTIONS :"
-  echo "Digit 'start' to control an Arduino Tre's pin"
-  echo "Digit 'exit' to quit the script"
-  echo -n "> "
-  
-  # read the command you digit in input
-  read cmd   
-  if [ "$cmd" == "exit" ]; then  # if you digit "exit" the script quits
-    echo "End of the script"
-    exit
+num = 0
+GPIO_DIR = "/sys/class/gpio"
 
-  elif [ "$cmd" == "start" ]; then   # digit start to start the script and control a gpio
-    
-    echo
-    echo "Digit the pin number"
-    echo -n "> "
+gpio_map = {
+  104: 32,
+  105: 33,
+  106: 34,
+  107: 35,
+  108: 36,
+  109: 37,
+  110: 38,
+  111: 39,
+  112: 64,
+  113: 68,
+  114: 67,
+  115: 66,
+  116: 26,
+  117: 114,
+  118: 115,
+  119: 116,
+  120: 62,
+  121: 63,
+  122: 44,
+  123: 45,
+  124: 46,
+  125: 47,
+  126: 19,
+  127: 20,
+}
 
-    read num    # num is the gpio number instead n is the gpio's number in filesystem
-    if [[ "$num" -gt "103" && "$num" -lt "128" ]]; then
-        echo "Digital pin is : PIN $num"
-                                         
-        if   [ $num = 104 ]; then n=32  
-        elif [ $num = 105 ]; then n=33
-        elif [ $num = 106 ]; then n=34
-        elif [ $num = 107 ]; then n=35
-        elif [ $num = 108 ]; then n=36
-        elif [ $num = 109 ]; then n=37
-        elif [ $num = 110 ]; then n=38
-        elif [ $num = 111 ]; then n=39
-        elif [ $num = 112 ]; then n=64
-        elif [ $num = 113 ]; then n=68
-        elif [ $num = 114 ]; then n=67
-        elif [ $num = 115 ]; then n=66
-        elif [ $num = 116 ]; then n=26
-        elif [ $num = 117 ]; then n=114
-        elif [ $num = 118 ]; then n=115
-        elif [ $num = 119 ]; then n=116
-        elif [ $num = 120 ]; then n=62
-        elif [ $num = 121 ]; then n=63
-        elif [ $num = 122 ]; then n=44
-        elif [ $num = 123 ]; then n=45
-        elif [ $num = 124 ]; then n=46
-        elif [ $num = 125 ]; then n=47
-        elif [ $num = 126 ]; then n=19
-        elif [ $num = 127 ]; then n=20
-        
-        fi
-    
-    else echo "Pin's number is wrong"
-         echo "Arduino Tre has 28 digital pin." 
-         echo "A pin number must be a number between 100 and 127"
-         echo "End of the script"
-         exit 2
-    fi
+while True:
+  print
+  print "INSTRUCTIONS:"
+  print "type 'start' to control an Arduino Tre's pin"
+  print "type 'exit' to quit the script"
 
-    echo
-    echo "Choise the pin's mode (INPUT or OUTPUT) :"
-    echo -n "> "
-    
+  # read the command you type in input
+  cmd = raw_input('> ')
+  if cmd.lower() == "exit":  # if you type "exit" the script quits
+    print "End of the script"
+    sys.exit(1)
+
+  elif cmd.lower() == "start":  # type start to start the script and control a gpio
+
+    print "type the pin number"
+    # num is the gpio number instead n is the gpio's number in filesystem
+    num = raw_input('> ')
+    try:
+      num = int(num)
+    except ValueError:
+      num = 0
+    if num in gpio_map:
+        print "digital pin is : PIN", num
+    else:
+      print "Pin's number is wrong"
+      print "Arduino Tre has 28 digital pin."
+      print "A pin number must be a number between 104 and 127"
+      print "End of the script"
+      sys.exit(2)
+
+    print "Choose the pin's mode (INPUT or OUTPUT):"
+    mode = raw_input('> ')
+
     # set the mode of gpio
-    read mode 
-    if [[ ("$mode" == "out") || ("$mode" == "OUTPUT") ]]; then
-        echo "out" >> "$GPIO_DIR/gpio$n/direction"
-        echo "Pin $num sets as OUTPUT"
+    if mode.lower().startswith('out'):
+        print "out" >> "$GPIO_DIR/gpio$n/direction"
+        print "Pin $num sets as OUTPUT"
 
     elif [[ ("$mode" == "in") || ("$mode" == "INPUT") ]]; then
-        echo "in" >> "$GPIO_DIR/gpio$n/direction"
-        echo "Pin $num sets as INPUT"
+        print "in" >> "$GPIO_DIR/gpio$n/direction"
+        print "Pin $num sets as INPUT"
 
         value=$(cat $GPIO_DIR/gpio$n/value)
-        echo "Value of pin $num : $value"
+        print "Value of pin $num : $value"
         exit
 
-    else echo "Pin's mode is wrong"
-         echo "Pin's mode can be INPUT (in) or OUTPUT (in)"
-         echo "End of the script"
+    else print "Pin's mode is wrong"
+         print "Pin's mode can be INPUT (in) or OUTPUT (out)"
+         print "End of the script"
          exit 2
     fi
 
-    echo
-    echo "Digit the pin's state (HIGH or LOW)"
-    echo -n "> "
-    
+    print
+    print "type the pin's state (HIGH or LOW)"
+    print -n "> "
+
     # set the state of a gpio
     read state
     if [[ ($state = 1) || ("$state" == "HIGH") ]]; then
         if [[ ("$mode" == "in") || ("$mode" == "INPUT") ]]; then
-            echo "It's impossible to set on HIGH a pin declared as INPUT"
-            echo "End of the script"
+            print "It's impossible to set on HIGH a pin declared as INPUT"
+            print "End of the script"
             exit
-        else 
-            echo "1" >> "$GPIO_DIR/gpio$n/value"
-            echo "Pin $num sets on HIGH"
+        else
+            print "1" >> "$GPIO_DIR/gpio$n/value"
+            print "Pin $num sets on HIGH"
         fi
 
     elif [[ ($state = 0) || ("$state" == "LOW") ]]; then
-        echo "0" >> "$GPIO_DIR/gpio$n/value"
-        echo "Pin $num sets on LOW"
+        print "0" >> "$GPIO_DIR/gpio$n/value"
+        print "Pin $num sets on LOW"
 
-    else echo "Pin's state is wrong"
-         echo "Pin's state can be HIGH (1) or LOW (0)"
+    else print "Pin's state is wrong"
+         print "Pin's state can be HIGH (1) or LOW (0)"
          exit 2
     fi
 
-  else echo
-       echo "Command is wrong. End of the script"
+  else print
+       print "Command is wrong. End of the script"
        exit 2
   fi
 
