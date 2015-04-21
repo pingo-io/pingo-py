@@ -5,8 +5,6 @@
 Object interface for MCP3008 A/D converter using bit-banged SPI
 """
 
-__author__ = 'Luciano Ramalho'
-
 import time
 import atexit
 import RPi.GPIO as GPIO

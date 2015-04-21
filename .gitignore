@@ -1,6 +1,7 @@
 .cache
 *.py[cod]
 htmlcov/
+.env*
 
 # C extensions
 *.so
