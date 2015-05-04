@@ -1,13 +1,13 @@
 Pingo means "pin, go!"
 ======================
 
-.. image:: https://secure.travis-ci.org/garoa/pingo.png?branch=master
+.. image:: https://secure.travis-ci.org/pingo-io/pingo-py.png?branch=master
     :alt: Travis CI badge
-    :target: http://travis-ci.org/garoa/pingo
+    :target: http://travis-ci.org/pingo-io/pingo-py
 
-.. image:: https://coveralls.io/repos/garoa/pingo/badge.png?branch=master
+.. image:: https://coveralls.io/repos/pingo-io/pingo-py/badge.png?branch=master
     :alt: Coveralls badge
-    :target: https://coveralls.io/r/garoa/pingo
+    :target: https://coveralls.io/r/pingo-io/pingo-py
 
 Pingo provides a uniform API to program devices like the Raspberry Pi, BeagleBone Black, pcDuino etc. just like the Python DBAPI provides an uniform API for database programming in Python.
 
@@ -85,7 +85,7 @@ SECO UDOO             on-board ``udoo``            level 0
 .. _RPi.GPIO: https://pypi.python.org/pypi/RPi.GPIO
 .. _mraa: https://github.com/intel-iot-devkit/mraa
 
-We are also interested in supporting: Banana Pi, Cubietech Cubieboard, SolidRun HummingBoard, TI MSP430 (via `firmata protocol`_ ). 
+We are also interested in supporting: Banana Pi, Cubietech Cubieboard, SolidRun HummingBoard, TI MSP430 (via `firmata protocol`_ ).
 
 In a addition, Pingo implements ``ghost``, a mock software-only board for testing the API.
 
