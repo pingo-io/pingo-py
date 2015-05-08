@@ -39,7 +39,7 @@ metadata = {
     "version": version,
     "author": "Pingo Team @ Garoa Hacker Clube",
     "author_email": "luciano at sign ramalho within the dot org tld",
-    "url": "http://github.com/garoa/pingo",
+    "url": "http://github.com/pingo-io/pingo-py",
     "description": "Generic API to control boards with programmable IO pins.",
     "license": "MIT",
     "include_package_data": True,
