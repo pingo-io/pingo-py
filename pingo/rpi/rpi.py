@@ -138,3 +138,6 @@ class RaspberryPiBPlus(RaspberryPi):
     }
 
     GROUNDS_LIST = [6, 9, 14, 20, 25, 30, 34, 39]
+
+class RaspberryPi2B(RaspberryPiBPlus):
+	"""TODO: for now, this works"""
