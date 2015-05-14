@@ -5,8 +5,7 @@ import time
 class LCD16x2(object):
     
     def __init__(self, port, baudrate=9600):
-        self.serial = serial.Serial('/dev/ttyAMA0', 9600)
-        time.sleep(.5)  # wait for display to boot up
+        self.serial = serial.Serial(port, baudrate)
         
     def clear(self):
         self.move_cursor(0, 0)
