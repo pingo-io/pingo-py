@@ -1,3 +1,3 @@
 from .led import Led  # noqa
 from .button import Switch  # noqa
-import serial
+import serial  # noqa
