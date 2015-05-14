@@ -1,5 +1,3 @@
-import serial as py_serial
-
 SPECIAL_CMD = b'\x7C'
 MOVE_CMD = b'\xFE'
 
@@ -7,6 +5,7 @@ MOVE_CMD = b'\xFE'
 class LCD16x2(object):
 
     def __init__(self, port, baudrate=9600):
+        import serial as py_serial
         self.uart = py_serial.Serial(port, baudrate)
 
     def clear(self):
