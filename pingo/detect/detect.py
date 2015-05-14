@@ -101,4 +101,8 @@ def MyBoard():
                 print('Using Udoo...')
                 return pingo.udoo.Udoo()
 
+            if hardware == 'BCM2709':
+                print('Using RaspberryPi 2 Model B...')
+                return pingo.rpi.RaspberryPi2B()
+
     raise DetectionFailed()
