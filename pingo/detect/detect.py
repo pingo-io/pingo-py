@@ -97,9 +97,9 @@ def MyBoard():
             if 'SECO i.Mx6 UDOO Board' in hardware:
                 print('Using Udoo...')
                 return pingo.udoo.Udoo()
-                
+
             if hardware == 'BCM2709':
-				print('Using RaspberryPi 2 Model B...')
-				return pingo.rpi.RaspberryPi2B()
-				
+                print('Using RaspberryPi 2 Model B...')
+                return pingo.rpi.RaspberryPi2B()
+
     raise DetectionFailed()
