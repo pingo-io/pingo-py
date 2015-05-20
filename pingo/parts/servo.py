@@ -1,5 +1,5 @@
 import pingo
-from pingo.boared import ArgumentOutOfRange
+from pingo.board import ArgumentOutOfRange
 
 
 class Servo(object):
