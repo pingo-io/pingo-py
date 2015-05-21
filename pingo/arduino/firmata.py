@@ -25,6 +25,8 @@ PIN_MODES = {
     pingo.OUT: 1,
 }
 
+VERBOSE = False
+
 
 def get_arduino():
     serial_port = detect._find_arduino_dev(platform.system())
@@ -44,7 +46,7 @@ class ArduinoFirmata(Board, AnalogInputCapable):
 
         super(ArduinoFirmata, self).__init__()
         self.port = port
-        self.PyMata = PyMata(self.port)
+        self.PyMata = PyMata(self.port, verbose=VERBOSE)
 
         detected_digital_pins = len(self.PyMata._command_handler.digital_response_table)
         detected_analog_pins = len(self.PyMata._command_handler.analog_response_table)
