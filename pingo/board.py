@@ -267,11 +267,11 @@ class Pin(object):
 
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
-	
-	The ``repr`` of a digital pin looks like ``<DigitalPin gpio21@40>``
-	where ``21`` is the logical pin identifier and ``40`` is the
-	physical location of the pin in the connector.
-	
+
+    The ``repr`` of a digital pin looks like ``<DigitalPin gpio21@40>``
+    where ``21`` is the logical pin identifier and ``40`` is the
+    physical location of the pin in the connector.
+
     Implementers of board drivers do not need to subclass this class
     because pins delegate all board-dependent behavior to the board.
     """
