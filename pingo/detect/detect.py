@@ -103,3 +103,6 @@ def MyBoard():
                 return pingo.rpi.RaspberryPi2B()
 
     raise DetectionFailed()
+
+# TODO: deprecate "MyBoard" name
+get_board = MyBoard

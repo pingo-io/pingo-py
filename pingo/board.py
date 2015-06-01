@@ -112,8 +112,11 @@ class Board(object):
             ``pins``: an iterable of ``Pin`` instances
         """
         self.pins = StrKeyDict()
+        self.gpio = {}
         for pin in pins:
             self.pins[pin.location] = pin
+            if hasattr(pin, 'gpio_id'):
+                self.gpio[pin.gpio_id] = pin
 
     @abstractmethod
     def _set_pin_mode(self, pin, mode):
