@@ -1,5 +1,6 @@
 from detect import MyBoard
-from detect import get_board
+from detect import get_board  # noqa
+
 
 def has_module(module_name):
     try:
