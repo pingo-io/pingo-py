@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import atexit
-
+from operator import attrgetter
 from abc import ABCMeta, abstractmethod
 
 from .util import StrKeyDict
@@ -87,7 +87,7 @@ class Board(object):
     def digital_pins(self):
         """[property] Get list of digital pins"""
 
-        return self.filter_pins(DigitalPin)
+        return sorted(self.filter_pins(DigitalPin), key=attrgetter('location'))
 
     def cleanup(self):
         """Releases pins for use by other applications.
@@ -270,6 +270,10 @@ class Pin(object):
 
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
+
+    The ``repr`` of a digital pin looks like ``<DigitalPin gpio21@40>``
+    where ``21`` is the logical pin identifier and ``40`` is the
+    physical location of the pin in the connector.
 
     Implementers of board drivers do not need to subclass this class
     because pins delegate all board-dependent behavior to the board.
