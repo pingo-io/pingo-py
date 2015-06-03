@@ -317,7 +317,17 @@ class DigitalPin(Pin):
     hi = high  # shortcut for interactive use
 
     def toggle(self):
+        """Change state of the pin."""
         self.state = HIGH if self.state == LOW else LOW
+
+    def pulse(self):
+        """Generate a pulse in state of the pin."""
+        if self.state == LOW:
+            self.state = HIGH
+            self.state = LOW
+        else:
+            self.state = LOW
+            self.state = HIGH
 
 
 class PwmPin(DigitalPin):
