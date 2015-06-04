@@ -50,7 +50,7 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
                  for location, gpio_id in self.PWM_PIN_MAP.items()]
 
         self._add_pins(pins)
-        self.rpi_gpio = {}
+        self._rpi_pwm = {}
 
     def cleanup(self):
         for pin in self.pins.values():
@@ -58,12 +58,12 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
                 GPIO.cleanup(int(pin.gpio_id))
                 pin.enabled = False
 
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         # Cleans previous PWM mode
         if pin.mode == pingo.PWM:
-            if int(pin.location) in self.rpi_gpio:
-                self.rpi_gpio[int(pin.location)].stop()
-                del self.rpi_gpio[int(pin.location)]
+            if int(pin.location) in self._rpi_pwm:
+                self._rpi_pwm[int(pin.location)].stop()
+                del self._rpi_pwm[int(pin.location)]
         # Sets up new modes
         if mode == pingo.IN:
             GPIO.setup(int(pin.gpio_id), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -74,7 +74,7 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
         if pin.mode != pingo.PWM:
             GPIO.setup(int(pin.gpio_id), GPIO.OUT)
             pwm_ctrl = GPIO.PWM(int(pin.gpio_id), 60.)  # TODO set frequency
-            self.rpi_gpio[int(pin.location)] = pwm_ctrl
+            self._rpi_pwm[int(pin.location)] = pwm_ctrl
             pwm_ctrl.start(0.0)  # TODO set DutyCycle
 
     def _set_pin_state(self, pin, state):
@@ -85,10 +85,10 @@ class RaspberryPi(pingo.Board, pingo.PwmOutputCapable):
         return pingo.HIGH if GPIO.input(int(pin.gpio_id)) else pingo.LOW
 
     def _set_pwm_duty_cycle(self, pin, value):
-        self.rpi_gpio[int(pin.location)].ChangeDutyCycle(value)
+        self._rpi_pwm[int(pin.location)].ChangeDutyCycle(value)
 
     def _set_pwm_frequency(self, pin, value):
-        self.rpi_gpio[int(pin.location)].ChangeFrequency(value)
+        self._rpi_pwm[int(pin.location)].ChangeFrequency(value)
 
 
 class RaspberryPiBPlus(RaspberryPi):

@@ -9,7 +9,7 @@ class BeagleBoneBlack(Board):
     def cleanup(self):
         pass
 
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         pass
 
     def _set_pin_state(self, pin, state):

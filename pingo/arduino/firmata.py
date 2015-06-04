@@ -70,7 +70,7 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         cls_name = self.__class__.__name__
         return '<{cls_name} {self.port!r}>'.format(**locals())
 
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         self.PyMata.set_pin_mode(
             pin.location,
             PIN_MODES[mode],

@@ -60,7 +60,7 @@ if __name__ == '__main__':
     ball_pos, ball_velocity = init_ball()
 
     # Start communicating with the local and remote sensors
-    galileo = pingo.detect.MyBoard()
+    galileo = pingo.detect.get_board()
     arduino = pingo.arduino.get_arduino()
 
     pot_galileo = galileo.pins['A0']

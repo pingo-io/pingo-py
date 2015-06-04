@@ -43,7 +43,7 @@ def _find_arduino_dev(system):
     return False
 
 
-def MyBoard():
+def get_board():
     machine = platform.machine()
     system = platform.system()
 
@@ -104,5 +104,5 @@ def MyBoard():
 
     raise DetectionFailed()
 
-# TODO: deprecate "MyBoard" name
-get_board = MyBoard
+# TODO: deprecate legacy "MyBoard" factory name
+MyBoard = get_board

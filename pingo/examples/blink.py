@@ -10,7 +10,7 @@ This script assumes:
 import time
 import pingo
 
-board = pingo.detect.MyBoard()
+board = pingo.detect.get_board()
 led = board.pins[13]
 led.mode = pingo.OUT
 

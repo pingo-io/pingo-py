@@ -16,7 +16,7 @@ import pingo
 POT_LOCATION = 'A0'
 PIN_LOCATIONS = range(6, 14)
 
-board = pingo.detect.MyBoard()
+board = pingo.detect.get_board()
 pot = pingo.pins[POT_LOCATION]
 leds = (pingo.pins[loc] for loc in PIN_LOCATIONS if loc != 9)
 

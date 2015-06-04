@@ -2,7 +2,7 @@ from time import sleep
 
 import pingo
 
-gg = pingo.detect.MyBoard()
+gg = pingo.detect.get_board()
 
 pins = gg.select_pins(range(8, 14) + [7])
 

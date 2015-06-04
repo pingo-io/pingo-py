@@ -1,5 +1,4 @@
-from detect import MyBoard
-from detect import get_board  # noqa
+from detect import get_board
 
 
 def has_module(module_name):
@@ -11,5 +10,5 @@ def has_module(module_name):
 
 
 def check_board(pingo_board):
-    current = MyBoard()
+    current = get_board()
     return isinstance(current, pingo_board)

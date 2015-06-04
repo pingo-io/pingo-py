@@ -14,7 +14,7 @@ This script assumes:
 import time
 import pingo
 
-board = pingo.detect.MyBoard()
+board = pingo.detect.get_board()
 print('board: %s' % board)
 pot = board.pins['A0']
 pot.mode = pingo.ANALOG
