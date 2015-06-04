@@ -13,7 +13,7 @@ class RaspberryTest(unittest.TestCase):
         self.board = pingo.rpi.RaspberryPi()
         self.vdd_pin_number = 2
         self.digital_output_pin_number = 13
-        self.digital_input_pin_number = 7
+        self.digital_input_pin_number = 26
         self.total_pins = 26
 
     def tearDown(self):
