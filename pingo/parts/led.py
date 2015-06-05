@@ -72,6 +72,8 @@ PURE_COLORS = [
 
 class RGBLed(object):
 
+    pure_colors_map = dict(PURE_COLORS)
+
     def __init__(self, red_pin, green_pin, blue_pin,
                  lit_state=pingo.LOW):
         self._leds = [Led(red_pin, lit_state), Led(green_pin, lit_state),
@@ -79,13 +81,18 @@ class RGBLed(object):
         for led in self._leds:
             led.off()
 
-    def cycle(self, delay=.15):
-        for color, states in PURE_COLORS:
+    def set_color(self, color):
+        if color in RGBLed.pure_colors_map:
+            states = RGBLed.pure_colors_map[color]
             for led, state in zip(self._leds, states):
                 if state:
                     led.on()
                 else:
                     led.off()
+
+    def cycle(self, delay=.15):
+        for color, _ in PURE_COLORS:
+            self.set_color(color)
             time.sleep(delay)
 
 
