@@ -1,5 +1,6 @@
 import pingo
 
+
 class GrovePi(pingo.Board):
 
     def __init__(self):
