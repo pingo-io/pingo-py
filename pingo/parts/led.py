@@ -60,6 +60,31 @@ class Led(object):
             self.blink_task.terminate()
             self.blink_task = None
 
+PURE_COLORS = [
+    ('RED',    [1, 0, 0]),
+    ('YELLOW', [1, 1, 0]),
+    ('GREEN',  [0, 1, 0]),
+    ('CYAN',   [0, 1, 1]),
+    ('BLUE',   [0, 0, 1]),
+    ('PURPLE', [1, 0, 1]),
+]
+
+
+class RGBLed(object):
+
+    def __init__(self, red_pin, green_pin, blue_pin,
+                 lit_state=pingo.LOW):
+        self._leds = [Led(red_pin, lit_state), Led(green_pin, lit_state),
+                      Led(blue_pin, lit_state)]
+        for led in self._leds:
+            led.off()
+
+    def cycle(self, delay=.2):
+        for led in self._leds:
+            led.on()
+            time.sleep(delay)
+            led.off()
+
 
 class BlinkTask(object):
 
