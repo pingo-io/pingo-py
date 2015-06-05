@@ -79,11 +79,14 @@ class RGBLed(object):
         for led in self._leds:
             led.off()
 
-    def cycle(self, delay=.2):
-        for led in self._leds:
-            led.on()
+    def cycle(self, delay=.15):
+        for color, states in PURE_COLORS:
+            for led, state in zip(self._leds, states):
+                if state:
+                    led.on()
+                else:
+                    led.off()
             time.sleep(delay)
-            led.off()
 
 
 class BlinkTask(object):
