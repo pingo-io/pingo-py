@@ -36,6 +36,13 @@ class Led(object):
     def lit(self):
         return self.pin.state == self.lit_state
 
+    @lit.setter
+    def lit(self, new_state):
+        if new_state:
+            self.on()
+        else:
+            self.off()
+
     @property
     def blinking(self):
         return self.blink_task is not None and self.blink_task.active
@@ -60,13 +67,16 @@ class Led(object):
             self.blink_task.terminate()
             self.blink_task = None
 
+
 PURE_COLORS = [
-    ('RED',    [1, 0, 0]),
+    ('RED', [1, 0, 0]),
     ('YELLOW', [1, 1, 0]),
-    ('GREEN',  [0, 1, 0]),
-    ('CYAN',   [0, 1, 1]),
-    ('BLUE',   [0, 0, 1]),
+    ('GREEN', [0, 1, 0]),
+    ('CYAN', [0, 1, 1]),
+    ('BLUE', [0, 0, 1]),
     ('PURPLE', [1, 0, 1]),
+    ('WHITE', [1, 1, 1]),
+    ('BLACK', [0, 0, 0]),
 ]
 
 
@@ -78,21 +88,28 @@ class RGBLed(object):
                  lit_state=pingo.LOW):
         self._leds = [Led(red_pin, lit_state), Led(green_pin, lit_state),
                       Led(blue_pin, lit_state)]
-        for led in self._leds:
-            led.off()
 
-    def set_color(self, color):
-        if color in RGBLed.pure_colors_map:
-            states = RGBLed.pure_colors_map[color]
+        self.color = 'BLACK'
+
+    @property
+    def color(self):
+        return self._color
+
+    @color.setter
+    def color(self, new_color):
+        new_color = new_color.upper()
+        if new_color in RGBLed.pure_colors_map:
+            self._color = new_color
+            states = RGBLed.pure_colors_map[new_color]
             for led, state in zip(self._leds, states):
-                if state:
-                    led.on()
-                else:
-                    led.off()
+                led.lit = state
+        else:
+            raise ValueError('Unknown color %s', new_color)
 
     def cycle(self, delay=.15):
-        for color, _ in PURE_COLORS:
-            self.set_color(color)
+        colors = PURE_COLORS[:6]  # exclude white and black
+        for color, _ in colors:
+            self.color = color
             time.sleep(delay)
 
 
@@ -147,8 +164,8 @@ DIGIT_MAP = {
     13: '0111101',
     14: '1001111',
     15: '1000111',
-    'G': '1011110',  # to spell GArOA
-    'r': '0000101',  # to spell GArOA
+    'G': '1011110',  # to spell GAr0A
+    'r': '0000101',  # to spell GAr0A
 }
 
 
@@ -170,10 +187,7 @@ class SevenSegments(object):
 
     def _configure(self, pattern):
         for segment, state in zip(self._leds, pattern):
-            if state == '1':
-                segment.on()
-            else:
-                segment.off()
+            segment.lit = state == '1'
 
     @property
     def digit(self):
