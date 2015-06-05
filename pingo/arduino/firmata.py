@@ -7,7 +7,8 @@ Works on Arduino
 import platform
 
 import pingo
-from pingo.board import Board, AnalogInputCapable, DigitalPin, AnalogPin
+from pingo.board import Board, DigitalPin, AnalogPin
+from pingo.board import AnalogInputCapable, PwmOutputCapable
 from pingo.detect import detect
 
 PIN_STATES = {
@@ -35,7 +36,7 @@ def get_arduino():
     return ArduinoFirmata(serial_port)
 
 
-class ArduinoFirmata(Board, AnalogInputCapable):
+class ArduinoFirmata(Board, PwmOutputCapable):
 
     def __init__(self, port=None):
         try:
@@ -100,3 +101,19 @@ class ArduinoFirmata(Board, AnalogInputCapable):
     def _get_pin_value(self, pin):
         pin_id = int(pin.location[1:])
         return self.firmata_client.analog_read(pin_id)
+
+    def _set_pwm_mode(self, pin):
+        pin_id = int(pin.location)
+        self.PyMata.set_pin_mode(
+            pin_id,
+            self.PyMata.PWM,
+            self.PyMata.DIGITAL
+        )
+
+    def _set_pwm_frequency(self, pin, value):
+        raise NotImplementedError
+
+    def _set_pwm_duty_cycle(self, pin, value):
+        firmata_value = int(value * 255)
+        return self.PyMata.analog_write(pin_id, firmata_value)
+
