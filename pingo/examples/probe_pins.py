@@ -10,7 +10,7 @@ import pingo
 
 
 def probe(first, last):
-    board = pingo.detect.MyBoard()
+    board = pingo.detect.get_board()
     print('Found: %r' % board)
 
     pins = board.digital_pins[first:last + 1]

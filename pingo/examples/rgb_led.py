@@ -2,7 +2,7 @@ import time
 
 import pingo
 
-board = pingo.detect.MyBoard()
+board = pingo.detect.get_board()
 
 rgb = [board.pins[i] for i in (11, 13, 15)]
 

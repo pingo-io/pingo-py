@@ -10,7 +10,7 @@ from pprint import pprint
 import pingo
 import time
 
-board = pingo.detect.MyBoard()
+board = pingo.detect.get_board()
 
 pot = board.pins['A0']
 pot.mode = pingo.ANALOG

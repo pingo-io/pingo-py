@@ -46,10 +46,10 @@ class ArduinoFirmata(Board, AnalogInputCapable):
 
         super(ArduinoFirmata, self).__init__()
         self.port = port
-        self.PyMata = PyMata(self.port, verbose=VERBOSE)
+        self.firmata_client = PyMata(self.port, verbose=VERBOSE)
 
-        detected_digital_pins = len(self.PyMata._command_handler.digital_response_table)
-        detected_analog_pins = len(self.PyMata._command_handler.analog_response_table)
+        detected_digital_pins = len(self.firmata_client._command_handler.digital_response_table)
+        detected_analog_pins = len(self.firmata_client._command_handler.analog_response_table)
 
         self._add_pins(
             [DigitalPin(self, location)
@@ -59,10 +59,10 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         )
 
     def cleanup(self):
-        # self.PyMata.close() has sys.exit(0)
+        # self.firmata_client.close() has sys.exit(0)
         if hasattr(self, 'PyMata'):
             try:
-                self.PyMata.transport.close()
+                self.firmata_client.transport.close()
             except AttributeError:
                 pass
 
@@ -70,33 +70,33 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         cls_name = self.__class__.__name__
         return '<{cls_name} {self.port!r}>'.format(**locals())
 
-    def _set_pin_mode(self, pin, mode):
-        self.PyMata.set_pin_mode(
+    def _set_digital_mode(self, pin, mode):
+        self.firmata_client.set_pin_mode(
             pin.location,
             PIN_MODES[mode],
-            self.PyMata.DIGITAL
+            self.firmata_client.DIGITAL
         )
 
     def _get_pin_state(self, pin):
-        _state = self.PyMata.digital_read(pin.location)
-        if _state == self.PyMata.HIGH:
+        _state = self.firmata_client.digital_read(pin.location)
+        if _state == self.firmata_client.HIGH:
             return pingo.HIGH
         return pingo.LOW
 
     def _set_pin_state(self, pin, state):
-        self.PyMata.digital_write(
+        self.firmata_client.digital_write(
             pin.location,
             PIN_STATES[state]
         )
 
     def _set_analog_mode(self, pin, mode):
         pin_id = int(pin.location[1:])
-        self.PyMata.set_pin_mode(
+        self.firmata_client.set_pin_mode(
             pin_id,
-            self.PyMata.INPUT,
-            self.PyMata.ANALOG
+            self.firmata_client.INPUT,
+            self.firmata_client.ANALOG
         )
 
     def _get_pin_value(self, pin):
         pin_id = int(pin.location[1:])
-        return self.PyMata.analog_read(pin_id)
+        return self.firmata_client.analog_read(pin_id)

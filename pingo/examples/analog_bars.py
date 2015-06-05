@@ -1,7 +1,7 @@
 import pingo
 import time
 
-board = pingo.detect.MyBoard()
+board = pingo.detect.get_board()
 # board = pingo.arduino.get_arduino()
 
 pot = board.pins['A0']

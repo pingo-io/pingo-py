@@ -1,7 +1,7 @@
 import pingo
 import time
 
-board = pingo.detect.MyBoard()
+board = pingo.detect.get_board()
 
 a_led = pingo.parts.Led(board.pins[13])
 a_led.blink(3)

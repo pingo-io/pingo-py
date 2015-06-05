@@ -21,7 +21,7 @@ class PcDuino(Board, AnalogInputCapable):
             [AnalogPin(self, 'A%s' % location, resolution=bits)
                 for location, bits in enumerate(self.ANALOG_PIN_RESOLUTIONS)])
 
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         err_msg = '%r not in %r' % (mode, self.DIGITAL_PIN_MODES)
         assert mode in self.DIGITAL_PIN_MODES, err_msg
         sys_string = self.DIGITAL_PINS_PATH + 'mode/gpio%s' % pin.location
