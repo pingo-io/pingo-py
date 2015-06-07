@@ -1,12 +1,14 @@
 import pingo
 
+grovepi = None
+
 
 class GrovePi(pingo.Board):
 
     def __init__(self):
-
+        global grovepi
         try:
-            import grovepi
+        import grovepi as grovepi
         except ImportError:
             raise ImportError('pingo.rpi.GrovePi requires grovepi installed')
 
@@ -36,17 +38,17 @@ class GrovePi(pingo.Board):
                 for location in '0123']
         )
 
-        def _set_digital_mode(self, pin, mode):
-            grovepi.pinMode(pin, self.PIN_MODES[mode])
+    def _set_digital_mode(self, pin, mode):
+        grovepi.pinMode(pin.location, self.PIN_MODES[mode])
 
-        def _set_pin_state(self, pin, state):
-            grovepi.digitalWrite(pin, self.PIN_STATES)
+    def _set_pin_state(self, pin, state):
+        grovepi.digitalWrite(pin.location, self.PIN_STATES)
 
-        def _get_pin_state(self, pin):
-            return pingo.LOW if grovepi.digitalRead(pin) == 0 else pingo.HIGH
+    def _get_pin_state(self, pin):
+        return pingo.LOW if grovepi.digitalRead(pin.location) == 0 else pingo.HIGH
 
-        def _get_pin_value(self, pin):
-            return (grovepi.analogRead(pin) / 1023)
+    def _get_pin_value(self, pin):
+        return (grovepi.analogRead(pin.location) / 1023)
 
-        def _set_analog_mode(self, pin):
-            grovepi.pinMode(pin, 'INPUT')
+    def _set_analog_mode(self, pin):
+        grovepi.pinMode(pin.location, 'INPUT')
