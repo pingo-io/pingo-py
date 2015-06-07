@@ -3,12 +3,12 @@ import pingo
 grovepi = None
 
 
-class GrovePi(pingo.Board):
+class GrovePi(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
 
     def __init__(self):
         global grovepi
         try:
-        import grovepi as grovepi
+            import grovepi as grovepi
         except ImportError:
             raise ImportError('pingo.rpi.GrovePi requires grovepi installed')
 
@@ -25,7 +25,7 @@ class GrovePi(pingo.Board):
         }
 
         pwm_pins = [3, 5, 6]
-        digital_pins = ['serial_d0', 'serial_d1', 2, 4, 7, 8, 9]
+        digital_pins = [0, 1, 2, 4, 7, 8, 9]
 
         self._add_pins(
             [pingo.PwmPin(self, location)
@@ -52,3 +52,12 @@ class GrovePi(pingo.Board):
 
     def _set_analog_mode(self, pin):
         grovepi.pinMode(pin.location, 'INPUT')
+
+    def _set_pwm_mode(self, pin):
+        grovepi.pinMode(pin.location, 'OUTPUT')
+
+    def _set_pwm_frequency(self, pin, value):
+        raise NotImplementedError
+
+    def _set_pwm_duty_cycle(self, pin, value):
+        grovepi.analogWrite(pin.location, int(value*1023))
