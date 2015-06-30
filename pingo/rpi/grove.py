@@ -14,6 +14,9 @@ class GrovePi(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
 
         super(GrovePi, self).__init__()
 
+        # location: gpio_id
+        self.ANALOG_PINS = {'A0':14, 'A1':15, 'A2':16, 'A3':17}
+
         self.PIN_MODES = {
             pingo.IN: 'INPUT',
             pingo.OUT: 'OUTPUT'
@@ -34,30 +37,30 @@ class GrovePi(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
             [pingo.DigitalPin(self, location)
                 for location in digital_pins] +
 
-            [pingo.AnalogPin(self, 'A' + location, 12)
-                for location in '0123']
+            [pingo.AnalogPin(self, location, 10, gpio_id )
+                for location, gpio_id in self.ANALOG_PINS.items()]
         )
 
     def _set_digital_mode(self, pin, mode):
         grovepi.pinMode(pin.location, self.PIN_MODES[mode])
 
     def _set_pin_state(self, pin, state):
-        grovepi.digitalWrite(pin.location, self.PIN_STATES)
+        grovepi.digitalWrite(pin.location, self.PIN_STATES[state])
 
     def _get_pin_state(self, pin):
         return pingo.LOW if grovepi.digitalRead(pin.location) == 0 else pingo.HIGH
 
     def _get_pin_value(self, pin):
-        return (grovepi.analogRead(pin.location) / 1023)
+        return (grovepi.analogRead(self.ANALOG_PINS[pin.location])/10.23)
 
-    def _set_analog_mode(self, pin):
-        grovepi.pinMode(pin.location, 'INPUT')
+    def _set_analog_mode(self, pin, mode):
+        grovepi.pinMode(self.ANALOG_PINS[pin.location], 'INPUT')
 
-    def _set_pwm_mode(self, pin):
+    def _set_pwm_mode(self, pin, mode):
         grovepi.pinMode(pin.location, 'OUTPUT')
 
     def _set_pwm_frequency(self, pin, value):
         raise NotImplementedError
 
     def _set_pwm_duty_cycle(self, pin, value):
-        grovepi.analogWrite(pin.location, int(value*1023))
+        grovepi.analogWrite(pin.location, int(value*2.55))
