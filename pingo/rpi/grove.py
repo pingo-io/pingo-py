@@ -15,7 +15,7 @@ class GrovePi(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
         super(GrovePi, self).__init__()
 
         # location: gpio_id
-        self.ANALOG_PINS = {'A0':14, 'A1':15, 'A2':16, 'A3':17}
+        self.ANALOG_PINS = {'A0': 14, 'A1': 15, 'A2': 16, 'A3': 17}
 
         self.PIN_MODES = {
             pingo.IN: 'INPUT',
@@ -37,7 +37,7 @@ class GrovePi(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
             [pingo.DigitalPin(self, location)
                 for location in digital_pins] +
 
-            [pingo.AnalogPin(self, location, 10, gpio_id )
+            [pingo.AnalogPin(self, location, 10, gpio_id)
                 for location, gpio_id in self.ANALOG_PINS.items()]
         )
 
