@@ -8,7 +8,7 @@ class GrovePi(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
     def __init__(self):
         global grovepi
         try:
-            import grovepi as grovepi
+            import grovepi as grovepi  # noqa
         except ImportError:
             raise ImportError('pingo.rpi.GrovePi requires grovepi installed')
 
