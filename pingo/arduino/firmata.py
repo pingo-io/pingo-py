@@ -4,12 +4,14 @@ Firmata protocol client for Pingo
 Works on Arduino
 """
 
+import time
 import platform
 
 import pingo
-from pingo.board import Board, DigitalPin, AnalogPin
+from pingo.board import Board, DigitalPin, AnalogPin, PwmPin
 from pingo.board import AnalogInputCapable, PwmOutputCapable
 from pingo.detect import detect
+from util_firmata import pin_list_to_board_dict
 
 PIN_STATES = {
     False: 0,
@@ -49,14 +51,18 @@ class ArduinoFirmata(Board, PwmOutputCapable):
         self.port = port
         self.firmata_client = PyMata(self.port, verbose=VERBOSE)
 
-        detected_digital_pins = len(self.firmata_client._command_handler.digital_response_table)
-        detected_analog_pins = len(self.firmata_client._command_handler.analog_response_table)
+        self.firmata_client.capability_query()
+        time.sleep(10) # TODO: Find a small and safe value
+        capability_query_results = self.firmata_client.get_capability_query_results()
+        capability_dict = pin_list_to_board_dict(capability_query_results)
 
         self._add_pins(
             [DigitalPin(self, location)
-                for location in range(detected_digital_pins)] +
+                for location in capability_dict['digital']] +
+            [PwmPin(self, location)
+                for location in capability_dict['pwm']] +
             [AnalogPin(self, 'A%s' % location, resolution=10)
-                for location in range(detected_analog_pins)]
+                for location in capability_dict['analog']]
         )
 
     def cleanup(self):
