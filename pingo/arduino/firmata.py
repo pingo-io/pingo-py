@@ -13,6 +13,8 @@ from pingo.board import AnalogInputCapable, PwmOutputCapable
 from pingo.detect import detect
 from util_firmata import pin_list_to_board_dict
 
+PyMata = None
+
 PIN_STATES = {
     False: 0,
     True: 1,
@@ -38,11 +40,11 @@ def get_arduino():
     return ArduinoFirmata(serial_port)
 
 
-class ArduinoFirmata(Board, PwmOutputCapable):
+class ArduinoFirmata(Board, AnalogInputCapable, PwmOutputCapable):
 
     def __init__(self, port=None):
         try:
-            from PyMata.pymata import PyMata
+            from PyMata.pymata import PyMata as PyMata # noqa
         except ImportError:
             msg = 'pingo.arduino.Arduino requires PyMata installed'
             raise ImportError(msg)
@@ -84,6 +86,22 @@ class ArduinoFirmata(Board, PwmOutputCapable):
             self.firmata_client.DIGITAL
         )
 
+    def _set_analog_mode(self, pin, mode):
+        pin_id = int(pin.location[1:])
+        self.firmata_client.set_pin_mode(
+            pin_id,
+            self.firmata_client.INPUT,
+            self.firmata_client.ANALOG
+        )
+
+    def _set_pwm_mode(self, pin, mode):
+        pin_id = int(pin.location)
+        self.firmata_client.set_pin_mode(
+            pin_id,
+            self.firmata_client.PWM,
+            self.firmata_client.DIGITAL
+        )
+
     def _get_pin_state(self, pin):
         _state = self.firmata_client.digital_read(pin.location)
         if _state == self.firmata_client.HIGH:
@@ -96,30 +114,14 @@ class ArduinoFirmata(Board, PwmOutputCapable):
             PIN_STATES[state]
         )
 
-    def _set_analog_mode(self, pin, mode):
-        pin_id = int(pin.location[1:])
-        self.firmata_client.set_pin_mode(
-            pin_id,
-            self.firmata_client.INPUT,
-            self.firmata_client.ANALOG
-        )
-
     def _get_pin_value(self, pin):
         pin_id = int(pin.location[1:])
         return self.firmata_client.analog_read(pin_id)
 
-    def _set_pwm_mode(self, pin):
+    def _set_pwm_duty_cycle(self, pin, value):
         pin_id = int(pin.location)
-        self.PyMata.set_pin_mode(
-            pin_id,
-            self.PyMata.PWM,
-            self.PyMata.DIGITAL
-        )
+        firmata_value = int(value * 255)
+        return self.firmata_client.analog_write(pin_id, firmata_value)
 
     def _set_pwm_frequency(self, pin, value):
         raise NotImplementedError
-
-    def _set_pwm_duty_cycle(self, pin, value):
-        firmata_value = int(value * 255)
-        return self.PyMata.analog_write(pin_id, firmata_value)
-
