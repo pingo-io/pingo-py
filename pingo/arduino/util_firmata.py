@@ -3,6 +3,7 @@ Copied from:
 https://github.com/tino/pyFirmata/blob/master/pyfirmata/util.py
 """
 
+
 def pin_list_to_board_dict(capability_query_response):
     """
     Capability Response codes:
@@ -23,7 +24,7 @@ def pin_list_to_board_dict(capability_query_response):
         'disabled': [],
     }
 
-    # split pins of list:
+    # i split pins of list:
     pin_list = [[]]
     for b in capability_query_response:
         if b == 127:
@@ -54,7 +55,6 @@ def pin_list_to_board_dict(capability_query_response):
                 if pin[j:j + 2] == [4, 14]:
                     board_dict['servo'] += [i]
 
-                # Desable I2C
                 if pin[j:j + 2] == [6, 1]:
                     board_dict['i2c'] += [i]
 
@@ -65,8 +65,8 @@ def pin_list_to_board_dict(capability_query_response):
     board_dict['analog'] = [n for n, _ in enumerate(board_dict['analog'])]
 
     # Digital pin problems:
-    #- (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
-    #+ (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
+    # - (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15)
+    # + (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13)
 
     board_dict['digital'] = [n for n, _ in enumerate(diff)]
     # Based on lib Arduino 0017

@@ -44,7 +44,7 @@ class ArduinoFirmata(Board, AnalogInputCapable, PwmOutputCapable):
 
     def __init__(self, port=None):
         try:
-            from PyMata.pymata import PyMata as PyMata # noqa
+            from PyMata.pymata import PyMata as PyMata  # noqa
         except ImportError:
             msg = 'pingo.arduino.Arduino requires PyMata installed'
             raise ImportError(msg)
@@ -54,7 +54,7 @@ class ArduinoFirmata(Board, AnalogInputCapable, PwmOutputCapable):
         self.firmata_client = PyMata(self.port, verbose=VERBOSE)
 
         self.firmata_client.capability_query()
-        time.sleep(10) # TODO: Find a small and safe value
+        time.sleep(10)  # TODO: Find a small and safe value
         capability_query_results = self.firmata_client.get_capability_query_results()
         capability_dict = pin_list_to_board_dict(capability_query_results)
 
