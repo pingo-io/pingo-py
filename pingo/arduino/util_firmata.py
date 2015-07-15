@@ -32,7 +32,7 @@ def pin_list_to_board_dict(capability_query_response):
         else:
             pin_list[-1].append(b)
 
-    pin_list.pop() # removes the empty [] on end
+    pin_list.pop()  # removes the empty [] on end
 
     # Finds the capability of each pin
     for i, pin in enumerate(pin_list):
