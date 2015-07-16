@@ -4,11 +4,16 @@ Firmata protocol client for Pingo
 Works on Arduino
 """
 
+import time
 import platform
 
 import pingo
-from pingo.board import Board, AnalogInputCapable, DigitalPin, AnalogPin
+from pingo.board import Board, DigitalPin, AnalogPin, PwmPin
+from pingo.board import AnalogInputCapable, PwmOutputCapable
 from pingo.detect import detect
+from util_firmata import pin_list_to_board_dict
+
+PyMata = None
 
 PIN_STATES = {
     False: 0,
@@ -35,11 +40,11 @@ def get_arduino():
     return ArduinoFirmata(serial_port)
 
 
-class ArduinoFirmata(Board, AnalogInputCapable):
+class ArduinoFirmata(Board, AnalogInputCapable, PwmOutputCapable):
 
     def __init__(self, port=None):
         try:
-            from PyMata.pymata import PyMata
+            from PyMata.pymata import PyMata as PyMata  # noqa
         except ImportError:
             msg = 'pingo.arduino.Arduino requires PyMata installed'
             raise ImportError(msg)
@@ -48,14 +53,18 @@ class ArduinoFirmata(Board, AnalogInputCapable):
         self.port = port
         self.firmata_client = PyMata(self.port, verbose=VERBOSE)
 
-        detected_digital_pins = len(self.firmata_client._command_handler.digital_response_table)
-        detected_analog_pins = len(self.firmata_client._command_handler.analog_response_table)
+        self.firmata_client.capability_query()
+        time.sleep(10)  # TODO: Find a small and safe value
+        capability_query_results = self.firmata_client.get_capability_query_results()
+        capability_dict = pin_list_to_board_dict(capability_query_results)
 
         self._add_pins(
             [DigitalPin(self, location)
-                for location in range(detected_digital_pins)] +
+                for location in capability_dict['digital']] +
+            [PwmPin(self, location)
+                for location in capability_dict['pwm']] +
             [AnalogPin(self, 'A%s' % location, resolution=10)
-                for location in range(detected_analog_pins)]
+                for location in capability_dict['analog']]
         )
 
     def cleanup(self):
@@ -77,6 +86,22 @@ class ArduinoFirmata(Board, AnalogInputCapable):
             self.firmata_client.DIGITAL
         )
 
+    def _set_analog_mode(self, pin, mode):
+        pin_id = int(pin.location[1:])
+        self.firmata_client.set_pin_mode(
+            pin_id,
+            self.firmata_client.INPUT,
+            self.firmata_client.ANALOG
+        )
+
+    def _set_pwm_mode(self, pin, mode):
+        pin_id = int(pin.location)
+        self.firmata_client.set_pin_mode(
+            pin_id,
+            self.firmata_client.PWM,
+            self.firmata_client.DIGITAL
+        )
+
     def _get_pin_state(self, pin):
         _state = self.firmata_client.digital_read(pin.location)
         if _state == self.firmata_client.HIGH:
@@ -89,14 +114,14 @@ class ArduinoFirmata(Board, AnalogInputCapable):
             PIN_STATES[state]
         )
 
-    def _set_analog_mode(self, pin, mode):
-        pin_id = int(pin.location[1:])
-        self.firmata_client.set_pin_mode(
-            pin_id,
-            self.firmata_client.INPUT,
-            self.firmata_client.ANALOG
-        )
-
     def _get_pin_value(self, pin):
         pin_id = int(pin.location[1:])
         return self.firmata_client.analog_read(pin_id)
+
+    def _set_pwm_duty_cycle(self, pin, value):
+        pin_id = int(pin.location)
+        firmata_value = int(value * 255)
+        return self.firmata_client.analog_write(pin_id, firmata_value)
+
+    def _set_pwm_frequency(self, pin, value):
+        raise NotImplementedError
