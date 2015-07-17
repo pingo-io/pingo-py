@@ -61,10 +61,10 @@ def MyBoard():
     elif machine == 'i586':
         # TODO: assume it's a Galileo2
         # FIXME: detect Galileo gen1.
-        return pingo.galileo.Galileo2()
+        return pingo.intel.Galileo2()
 
     elif machine == 'i686':
-        return pingo.edison.Edison()
+        return pingo.intel.Edison()
 
     elif machine == 'armv6l':
         # FIXME: Regex does not work.

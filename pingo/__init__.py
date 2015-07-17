@@ -21,8 +21,7 @@ import parts  # noqa
 # boards
 import rpi  # noqa
 import ghost  # noqa
-import galileo  # noqa
-import edison  # noqa
+import intel  # noqa
 import udoo  # noqa
 import pcduino  # noqa
 import arduino  # noqa
