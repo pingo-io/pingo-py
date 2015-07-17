@@ -5,13 +5,13 @@ from pingo.test import level0
 from pingo.test import level1
 from pingo.detect import check_board
 
-running_on_galileo = check_board(pingo.galileo.Galileo2)
+running_on_galileo = check_board(pingo.intel.Galileo2)
 
 
 class GalileoTest(unittest.TestCase):
 
     def setUp(self):
-        self.board = pingo.galileo.Galileo2()
+        self.board = pingo.intel.Galileo2()
         # Level0 Parameters
         self.digital_output_pin_number = 6
         self.digital_input_pin_number = 3
