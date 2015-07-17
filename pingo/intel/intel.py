@@ -76,9 +76,8 @@ class BaseMraa(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
 
 
 class Galileo2(BaseMraa):
-
     _import_error_msg = 'pingo.intel.Galileo2 requires mraa installed'
 
-class Edison(BaseMraa):
 
+class Edison(BaseMraa):
     _import_error_msg = 'pingo.intel.Edison requires mraa installed'
