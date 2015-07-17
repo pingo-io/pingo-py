@@ -6,7 +6,7 @@ It shows 1 if its closed, or 0 if its open.
 import pingo
 import time
 
-board = pingo.detect.MyBoard()
+board = pingo.detect.get_board()
 
 display_pins = [board.pins[i] for i in range(8, 14) + [7]]
 seg_display = pingo.parts.led.SevenSegments(*display_pins)

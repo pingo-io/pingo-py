@@ -43,7 +43,7 @@ def _find_arduino_dev(system):
     return False
 
 
-def MyBoard():
+def get_board():
     machine = platform.machine()
     system = platform.system()
 
@@ -106,3 +106,6 @@ def MyBoard():
                 return pingo.rpi.RaspberryPi2B()
 
     raise DetectionFailed()
+
+# TODO: deprecate legacy "MyBoard" factory name
+MyBoard = get_board

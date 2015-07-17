@@ -57,14 +57,14 @@ class GhostBoard(
     def cleanup(self):
         print('GhostBoard: cleaning up.')
 
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         print('GhostBoard: %r mode -> %s' % (pin, mode))
 
     def _set_analog_mode(self, pin, mode):
-        self._set_pin_mode(pin, mode)
+        self._set_digital_mode(pin, mode)
 
     def _set_pwm_mode(self, pin, mode):
-        self._set_pin_mode(pin, mode)
+        self._set_digital_mode(pin, mode)
 
     def _set_pin_state(self, pin, state):
         print('GhostBoard: %r state -> %s' % (pin, state))

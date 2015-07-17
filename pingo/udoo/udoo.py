@@ -61,7 +61,7 @@ class Udoo(Board):
         return os.path.join(
             self._base_pin_path(gpio_id), DIGITAL_PIN_STATE_FILENAME)
 
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         assert mode in DIGITAL_PIN_MODES, '%r not in %r' % (
             mode, DIGITAL_PIN_MODES)
         with open(self._pin_mode_filename(pin.gpio_id), "wb") as fp:

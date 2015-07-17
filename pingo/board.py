@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import atexit
-
+from operator import attrgetter
 from abc import ABCMeta, abstractmethod
 
 from .util import StrKeyDict
@@ -46,7 +46,7 @@ class Board(object):
     * Call ``super(«BoardSubclass», self).__init__()`` and
       ``self._add_pins(«pins»)`` in their ``__init__`` method.
 
-    * Implement ``_set_pin_mode()`` and ``_set_pin_state()``.
+    * Implement ``_set_digital_mode()`` and ``_set_pin_state()``.
 
     * Override ``cleanup()``, if the board needs it.
 
@@ -57,7 +57,7 @@ class Board(object):
         """Registers ``self.cleanup`` for calling at script exit.
 
         This ``__init__`` method should be called by the ``__init__``
-        of all ``Board`` subclasses using ``super(MyBoard, self).__init__()``.
+        of all ``Board`` subclasses using ``super(BoardSubclass, self).__init__()``.
         The ``__init__`` of board subclasses should also call
         ``self._add_pins(pins)`` with an iterable of ``Pin`` instances.
         """
@@ -87,7 +87,7 @@ class Board(object):
     def digital_pins(self):
         """[property] Get list of digital pins"""
 
-        return self.filter_pins(DigitalPin)
+        return sorted(self.filter_pins(DigitalPin), key=attrgetter('location'))
 
     def cleanup(self):
         """Releases pins for use by other applications.
@@ -112,11 +112,14 @@ class Board(object):
             ``pins``: an iterable of ``Pin`` instances
         """
         self.pins = StrKeyDict()
+        self.gpio = StrKeyDict()
         for pin in pins:
             self.pins[pin.location] = pin
+            if hasattr(pin, 'gpio_id'):
+                self.gpio[pin.gpio_id] = pin
 
     @abstractmethod
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         """Abstract method to be implemented by each ``Board`` subclass.
 
         The ``«pin».mode(…)`` property calls this method because
@@ -256,7 +259,7 @@ class Pin(object):
             raise ModeNotSuported()
 
         if value in [IN, OUT]:
-            self.board._set_pin_mode(self, value)
+            self.board._set_digital_mode(self, value)
         elif value == ANALOG:
             self.board._set_analog_mode(self, value)
         elif value == PWM:
@@ -267,6 +270,10 @@ class Pin(object):
 
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
+
+    The ``repr`` of a digital pin looks like ``<DigitalPin gpio21@40>``
+    where ``21`` is the logical pin identifier and ``40`` is the
+    physical location of the pin in the connector.
 
     Implementers of board drivers do not need to subclass this class
     because pins delegate all board-dependent behavior to the board.
@@ -310,7 +317,17 @@ class DigitalPin(Pin):
     hi = high  # shortcut for interactive use
 
     def toggle(self):
+        """Change state of the pin."""
         self.state = HIGH if self.state == LOW else LOW
+
+    def pulse(self):
+        """Generate a pulse in state of the pin."""
+        if self.state == LOW:
+            self.state = HIGH
+            self.state = LOW
+        else:
+            self.state = LOW
+            self.state = HIGH
 
 
 class PwmPin(DigitalPin):

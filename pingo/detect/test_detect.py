@@ -8,7 +8,7 @@ import detect
 class DetectBasics(unittest.TestCase):
 
     def test_board(self):
-        board = pingo.detect.MyBoard()
+        board = pingo.detect.get_board()
         assert isinstance(board, pingo.Board)
 
     @unittest.skipIf(not platform.system() == 'Linux', 'Not Linux')

@@ -119,7 +119,7 @@ class ArduinoYun(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
                 for location in '012345']
         )
 
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         if mode == pingo.IN:
             self.yun.pinMode(pin.location, 'input')
         else:
@@ -129,7 +129,7 @@ class ArduinoYun(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
         self.yun.pinMode(int(pin.location[-1]), 'input')
 
     def _set_pwm_mode(self, pin, mode):
-        self._set_pin_mode(pin, mode)
+        self._set_digital_mode(pin, mode)
 
     def _set_pin_state(self, pin, state):
         self.yun.digitalWrite(pin.location, self.PIN_STATES[state])

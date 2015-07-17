@@ -5,7 +5,7 @@ from pingo import OUT, detect, parts
 
 INTERVAL = 0.3
 
-ard = detect.MyBoard()
+ard = detect.get_board()
 
 display_pins = [ard.pins[i] for i in range(8, 14) + [7]]
 

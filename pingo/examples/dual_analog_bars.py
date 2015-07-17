@@ -1,7 +1,7 @@
 import pingo
 import time
 
-galileo = pingo.detect.MyBoard()
+galileo = pingo.detect.get_board()
 arduino = pingo.arduino.get_arduino()
 
 pot_galileo = galileo.pins['A0']

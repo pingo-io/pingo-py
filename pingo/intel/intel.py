@@ -42,7 +42,7 @@ class BaseMraa(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
 
         self.mraa_pins, self.mraa_analogs, self.mraa_pwms = {}, {}, {}
 
-    def _set_pin_mode(self, pin, mode):
+    def _set_digital_mode(self, pin, mode):
         if pin.mode == pingo.PWM:
             self.mraa_pwms[pin.location].enable(False)
         self.mraa_pins[pin.location] = mraa.Gpio(pin.location)
