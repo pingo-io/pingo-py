@@ -74,7 +74,8 @@ Board                 Type     Module/Package      Status   Notes
 Arduino Firmata       remote   ``arduino.firmata`` level 1  requires `firmata protocol`_ on any Arduino board
 Arduino Yún           on-board ``arduino.yun``     level 2  requires `Bridge sketch`_ on the Arduino Yún
 BeagleBone Black      on-board ``bbb``             experim.
-Intel Galileo Gen 2   on-board ``galileo``         level 2  requires Intel IoT Dev Kit `mraa`_ library
+Intel Galileo Gen 2   on-board ``intel.galileo``   level 2  requires Intel IoT Dev Kit `mraa`_ library
+Intel Edison          on-board ``intel.edison``    level 1  requires Intel IoT Dev Kit `mraa`_ library
 LinkSprite pcDuino    on-board ``pcduino``         level 1
 RaspberryPi           on-board ``rpi``             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
 SECO UDOO             on-board ``udoo``            level 0

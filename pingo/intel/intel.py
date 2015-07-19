@@ -3,15 +3,16 @@ import pingo
 mraa = None
 
 
-class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
+class BaseMraa(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
+
+    _import_error_msg = 'pingo.intel.BaseMraa requires mraa installed'
 
     def __init__(self):
         global mraa
         try:
             import mraa as mraa
         except ImportError:
-            raise ImportError(
-                'pingo.galileo.Galileo2 requires mraa installed')
+            raise ImportError(self._import_error_msg)
 
         super(Galileo2, self).__init__()
 
@@ -72,3 +73,11 @@ class Galileo2(pingo.Board, pingo.AnalogInputCapable, pingo.PwmOutputCapable):
 
     def _set_pwm_frequency(self, pin, value):
         raise NotImplementedError
+
+
+class Galileo2(BaseMraa):
+    _import_error_msg = 'pingo.intel.Galileo2 requires mraa installed'
+
+
+class Edison(BaseMraa):
+    _import_error_msg = 'pingo.intel.Edison requires mraa installed'

@@ -47,8 +47,8 @@ def get_board():
     machine = platform.machine()
     system = platform.system()
 
-    if machine == 'x86_64':
-        if system in ['Linux', 'Darwin']:
+    if machine == 'x86_64' or 'x86':
+        if system in ['Linux', 'Darwin', 'Windows']:
             # TODO: Try to find 'Arduino' inside dmesg output
             device = _find_arduino_dev(system)
             if device:
@@ -60,8 +60,11 @@ def get_board():
 
     elif machine == 'i586':
         # TODO: assume it's a Galileo2
-        # FIXME: detect Galileo gen1. and Edison
-        return pingo.galileo.Galileo2()
+        # FIXME: detect Galileo gen1.
+        return pingo.intel.Galileo2()
+
+    elif machine == 'i686':
+        return pingo.intel.Edison()
 
     elif machine == 'armv6l':
         # FIXME: Regex does not work.
