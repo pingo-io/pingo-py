@@ -47,7 +47,7 @@ def get_board():
     machine = platform.machine()
     system = platform.system()
 
-    if machine in ['x86', 'x86_64']:
+    if machine in ['x86', 'x86_64', 'AMD64']:
         if system in ['Linux', 'Darwin', 'Windows']:
             # TODO: Try to find 'Arduino' inside dmesg output
             device = _find_arduino_dev(system)
