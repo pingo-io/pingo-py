@@ -39,7 +39,7 @@ Basic usage
 
 To use ``pingo``, the first step is to instantiate a ``Board``. Each Pingo driver is a concrete board subclass, for example, ``pingo.rpi.RaspberryPi`` and ``pingo.arduino.ArduinoFirmata`` are two such classes.
 
-Pingo can automatically detect the board in most common cases. If the script is running on a supported board, ``pingo.detect.MyBoard()`` returns an suitable board instance. If Pingo is running on an unsupported machine (eg. a notebook), it will try to find a connected Arduino using the Firmata protocol via USB and -- if successful -- will return a ``pingo.arduino.ArduinoFirmata`` instance.
+Pingo can automatically detect the board in most common cases. If the script is running on a supported board, ``pingo.detect.get_board()`` returns an suitable board instance. If Pingo is running on an unsupported machine (eg. a notebook), it will try to find a connected Arduino using the Firmata protocol via USB and -- if successful -- will return a ``pingo.arduino.ArduinoFirmata`` instance.
 
 Once you have a board instance, it's possible to access its pins through the ``board.pins`` dictionary:
 
@@ -48,7 +48,7 @@ Once you have a board instance, it's possible to access its pins through the ``b
     import pingo
     from time import sleep
 
-    board = pingo.detect.MyBoard()
+    board = pingo.detect.get_board()
     led_pin = board.pins[13]
     led_pin.mode = pingo.OUT
 
@@ -71,11 +71,11 @@ The following table lists the drivers currently planned or under development.
 ===================== ======== =================== ======== ==================================================
 Board                 Type     Module/Package      Status   Notes
 ===================== ======== =================== ======== ==================================================
-Arduino Firmata       remote   ``arduino.firmata`` level 1  requires `firmata protocol`_ on any Arduino board
+Arduino Firmata       remote   ``arduino.firmata`` level 2  requires `firmata protocol`_ on any Arduino board
 Arduino Yún           on-board ``arduino.yun``     level 2  requires `Bridge sketch`_ on the Arduino Yún
 BeagleBone Black      on-board ``bbb``             experim.
 Intel Galileo Gen 2   on-board ``intel.galileo``   level 2  requires Intel IoT Dev Kit `mraa`_ library
-Intel Edison          on-board ``intel.edison``    level 1  requires Intel IoT Dev Kit `mraa`_ library
+Intel Edison          on-board ``intel.edison``    level 2  requires Intel IoT Dev Kit `mraa`_ library
 LinkSprite pcDuino    on-board ``pcduino``         level 1
 RaspberryPi           on-board ``rpi``             level 0  requires `RPi.GPIO`_ on the Raspberry Pi
 SECO UDOO             on-board ``udoo``            level 0
@@ -121,4 +121,4 @@ experiments
     Some Python experiments have been done with the board. See the ``experiments/`` directory for code that may be helpful to start a new driver for a board.
 
 none
-    Nothing has been done. Great opportunity for you to contribute with experiments and/or start a new driver.
+    Nothing has been done yet. Great opportunity for you to contribute with experiments and/or start a new driver.

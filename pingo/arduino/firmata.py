@@ -1,7 +1,7 @@
 
 """
 Firmata protocol client for Pingo
-Works on Arduino
+Works on Arduino with the StandardFirmata sketch uploaded
 """
 
 import time

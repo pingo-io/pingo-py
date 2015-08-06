@@ -9,7 +9,8 @@ from .util import StrKeyDict
 HIGH = 'HIGH'
 LOW = 'LOW'
 
-# TODO: 4 states implementation: IN, OUT, ANALOG, PWM
+# TODO: More implementations: IN, OUT, ANALOG, PWM,
+# ... IC2, SERIAL, SERVO, INTERRUPTION
 IN = 'IN'
 OUT = 'OUT'
 ANALOG = 'ANALOG'
@@ -21,7 +22,7 @@ class WrongPinMode(Exception):
 
 
 class ModeNotSuported(Exception):
-    value = 'Mode not suported by Pin or Board.'
+    value = 'Mode not supported by Pin or Board.'
 
 
 class ArgumentOutOfRange(Exception):
@@ -144,7 +145,8 @@ class AnalogInputCapable(object):
     """Mixin interface for boards that support AnalogInputPin
 
     Concrete ``AnalogInputCapable`` subclasses should implement
-    ``_get_pin_value`` to read the values of analog pins.
+    ``_get_pin_value``, and `_set_analog_mode`` to read the values
+    of analog pins.
     """
 
     __metaclass__ = ABCMeta
@@ -177,7 +179,11 @@ class PwmOutputCapable(object):
 
     @abstractmethod
     def _set_pwm_mode(self, pin):
-        """Abstract method to be implemented by each ``Board`` subclass."""
+        """Abstract method to be implemented by each ``Board`` subclass.
+
+        The ``«pin».mode(…)`` property calls this method because
+        the procedure to set pin mode changes from board to board.
+        """
 
     @abstractmethod
     def _set_pwm_frequency(self, pin, value):
@@ -185,6 +191,10 @@ class PwmOutputCapable(object):
 
         The ``«PwmPin».frequency(…)`` method calls this method because
         the procedure to set the PWM's frequency changes from board to board.
+
+        This method should always be overwritten!
+        If its is not possible to set PWM's frequency, a ``NotImplementedError``
+        exception should be raised.
         """
 
     @abstractmethod
@@ -215,10 +225,17 @@ class PwmOutputCapable(object):
 
 
 class Pin(object):
-    """Abstract class defining common interface for all pins."""
+    """Abstract class defining common interface for all pins.
+
+    Attributes:
+        ``supported_modes``
+            Modes supported. Each ``Pin`` subclass supports different set
+            of ``modes``. ``supported_modes`` is used by the ``Pin.mode``
+            property. Each subclass should over overwrite this attribute.
+    """
     __metaclass__ = ABCMeta
 
-    suported_modes = []
+    supported_modes = []
 
     def __init__(self, board, location, gpio_id=None):
         """Initialize ``Pin`` instance with
@@ -255,7 +272,7 @@ class Pin(object):
 
     @mode.setter
     def mode(self, value):
-        if value not in self.suported_modes:
+        if value not in self.supported_modes:
             raise ModeNotSuported()
 
         if value in [IN, OUT]:
@@ -279,7 +296,7 @@ class DigitalPin(Pin):
     because pins delegate all board-dependent behavior to the board.
     """
 
-    suported_modes = [IN, OUT]
+    supported_modes = [IN, OUT]
 
     def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
@@ -332,7 +349,7 @@ class DigitalPin(Pin):
 
 class PwmPin(DigitalPin):
 
-    suported_modes = [IN, OUT, PWM]
+    supported_modes = [IN, OUT, PWM]
 
     def __init__(self, board, location, gpio_id=None, frequency=None):
         DigitalPin.__init__(self, board, location, gpio_id)
@@ -382,7 +399,7 @@ class AnalogPin(Pin):
     This pin type supports read operations only.
     """
 
-    suported_modes = [IN, ANALOG]
+    supported_modes = [IN, ANALOG]
 
     def __init__(self, board, location, resolution, gpio_id=None):
         """
