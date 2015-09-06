@@ -7,13 +7,13 @@ class BeagleBoneBlack(pingo.Board):
     # TODO: use labels as in the docs (https://github.com/adafruit/adafruit-beaglebone-io-python)
 
     PINS = {
-        'P8_3':  38,
-        'P8_4':  39,
-        'P8_5':  34,
-        'P8_6':  35,
-        'P8_7':  66,
-        'P8_8':  67,
-        'P8_9':  69,
+        'P8_3': 38,
+        'P8_4': 39,
+        'P8_5': 34,
+        'P8_6': 35,
+        'P8_7': 66,
+        'P8_8': 67,
+        'P8_9': 69,
         'P8_10': 68,
         'P8_11': 45,
         'P8_12': 44,
@@ -75,13 +75,13 @@ class BeagleBoneBlack(pingo.Board):
     }
 
     VCC_PINS = {
-            'P9_3': 3.3,
-            'P9_4': 3.3,
-            'P9_5': 5,
-            'P9_6': 5,
-            'P9_7': 5,
-            'P9_8': 5,
-            'P9_32': 5  # VDD_ADC
+        'P9_3': 3.3,
+        'P9_4': 3.3,
+        'P9_5': 5,
+        'P9_6': 5,
+        'P9_7': 5,
+        'P9_8': 5,
+        'P9_32': 5  # VDD_ADC
     }
 
     GND_PINS = ['P8_1', 'P8_2', 'P9_1', 'P9_2', 'P9_34', 'P9_43', 'P9_44',
@@ -121,11 +121,11 @@ class BeagleBoneBlack(pingo.Board):
         }
 
         gpio_pins = [pingo.DigitalPin(self, location, gpio_id)
-                         for location, gpio_id in self.PINS.items()]
+                     for location, gpio_id in self.PINS.items()]
         ground_pins = [pingo.GroundPin(self, location)
-                           for location in self.GND_PINS]
+                       for location in self.GND_PINS]
         vcc_pins = [pingo.VccPin(self, location, voltage)
-                        for location, voltage in self.VCC_PINS.items()]
+                    for location, voltage in self.VCC_PINS.items()]
 
         self._add_pins(gpio_pins + ground_pins + vcc_pins)
 
