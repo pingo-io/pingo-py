@@ -99,12 +99,12 @@ class BeagleBoneBlack(pingo.Board):
 
     # TODO: PWR_BUT, SYS_RESET, I2C2_SCL, I2C2_SDA
 
-    _import_error_msg = 'pingo.bbb.BeagleBoneBlack requires AdafruitBBIO installed'
+    _import_error_msg = 'pingo.bbb.BeagleBoneBlack requires Adafruit_BBIO installed'
 
     def __init__(self):
         global GPIO
         try:
-            import AdafruitBBIO.GPIO as GPIO
+            import Adafruit_BBIO.GPIO as GPIO
         except ImportError:
             raise ImportError(self._import_error_msg)
 
@@ -120,12 +120,12 @@ class BeagleBoneBlack(pingo.Board):
             pingo.LOW: GPIO.LOW,
         }
 
-        gpio_pins = [pingo.Pin(self, location, gpio_id)
-                         for location, gpio_id in self.PINS]
+        gpio_pins = [pingo.DigitalPin(self, location, gpio_id)
+                         for location, gpio_id in self.PINS.items()]
         ground_pins = [pingo.GroundPin(self, location)
                            for location in self.GND_PINS]
         vcc_pins = [pingo.VccPin(self, location, voltage)
-                        for location, voltage in self.VCC_PINS]
+                        for location, voltage in self.VCC_PINS.items()]
 
         self._add_pins(gpio_pins + ground_pins + vcc_pins)
 
@@ -133,7 +133,7 @@ class BeagleBoneBlack(pingo.Board):
         pass
 
     def _set_digital_mode(self, pin, mode):
-        GPIO.setup(pin.location, self.PIN_MODE[mode])
+        GPIO.setup(pin.location, self.PIN_MODES[mode])
 
     def _set_pin_state(self, pin, state):
         GPIO.output(pin.location, self.PIN_STATES[state])
