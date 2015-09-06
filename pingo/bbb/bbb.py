@@ -4,6 +4,8 @@ GPIO = None
 
 
 class BeagleBoneBlack(pingo.Board):
+    # TODO: use labels as in the docs (https://github.com/adafruit/adafruit-beaglebone-io-python)
+
     PINS = {
         'P8_3':  38,
         'P8_4':  39,
@@ -72,7 +74,15 @@ class BeagleBoneBlack(pingo.Board):
         'P9_42': 7,
     }
 
-    VCC_PINS = ['P9_3', 'P9_4', 'P9_5', 'P9_6', 'P9_7', 'P9_8', 'P9_32']
+    VCC_PINS = {
+            'P9_3': 3.3,
+            'P9_4': 3.3,
+            'P9_5': 5,
+            'P9_6': 5,
+            'P9_7': 5,
+            'P9_8': 5,
+            'P9_32': 5  # VDD_ADC
+    }
 
     GND_PINS = ['P8_1', 'P8_2', 'P9_1', 'P9_2', 'P9_34', 'P9_43', 'P9_44',
                 'P9_45', 'P9_46']
@@ -89,14 +99,44 @@ class BeagleBoneBlack(pingo.Board):
 
     # TODO: PWR_BUT, SYS_RESET, I2C2_SCL, I2C2_SDA
 
+    _import_error_msg = 'pingo.bbb.BeagleBoneBlack requires AdafruitBBIO installed'
+
     def __init__(self):
+        global GPIO
+        try:
+            import AdafruitBBIO.GPIO as GPIO
+        except ImportError:
+            raise ImportError(self._import_error_msg)
+
         super(BeagleBoneBlack, self).__init__()
+
+        self.PIN_MODES = {
+            pingo.IN: GPIO.IN,
+            pingo.OUT: GPIO.OUT,
+        }
+
+        self.PIN_STATES = {
+            pingo.HIGH: GPIO.HIGH,
+            pingo.LOW: GPIO.LOW,
+        }
+
+        gpio_pins = [pingo.Pin(self, location, gpio_id)
+                         for location, gpio_id in self.PINS]
+        ground_pins = [pingo.GroundPin(self, location)
+                           for location in self.GND_PINS]
+        vcc_pins = [pingo.VccPin(self, location, voltage)
+                        for location, voltage in self.VCC_PINS]
+
+        self._add_pins(gpio_pins + ground_pins + vcc_pins)
 
     def cleanup(self):
         pass
 
     def _set_digital_mode(self, pin, mode):
-        pass
+        GPIO.setup(pin.location, self.PIN_MODE[mode])
 
     def _set_pin_state(self, pin, state):
-        pass
+        GPIO.output(pin.location, self.PIN_STATES[state])
+
+    def _get_pin_state(self, pin):
+        return pingo.HIGH if GPIO.input(pin.location) else pingo.LOW
