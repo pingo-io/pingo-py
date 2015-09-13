@@ -14,12 +14,15 @@ Hardware:
 
 
 import time
-import pingo 
+import pingo
 
 import Adafruit_CharLCD.Adafruit_CharLCD as LCD
 
 
-def startup(): 
+lcd, buzzer, pause, pause_status, reset, countdown, COUNTDOWN = (None,) * 7
+
+
+def startup():
     global lcd, buzzer, pause, pause_status, reset, countdown, COUNTDOWN
 
     # LCD pins
@@ -33,7 +36,7 @@ def startup():
     lcd_rows = 2
 
     lcd = LCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_columns,
-                 lcd_rows, lcd_backlight)
+              lcd_rows, lcd_backlight)
 
     board = pingo.detect.get_board()
 
@@ -58,7 +61,7 @@ def beep(interval=0.06, times=4):
         time.sleep(interval)
         buzzer.lo()
         time.sleep(interval)
-        
+
 
 def seconds_to_minutes(seconds):
     minutes = str(countdown / 60).zfill(2)
