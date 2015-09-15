@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Resource, Api
 from pingo.board import AnalogInputCapable
 import pingo
+import sys
 
 
 app = Flask(__name__)
@@ -63,11 +64,13 @@ api.add_resource(Main, '/')
 api.add_resource(AnalogPins, '/analog')
 api.add_resource(DigitalPins, '/digital')
 api.add_resource(Input, '/<string:input_type>/<string:pin>')
-api.add_resource(AnalogOutput,
-                 '/<string:output_type>/analog/<string:pin>/<float:signal>')
-api.add_resource(DigitalOutput,
-                 '/<string:output_type>/digital/<string:pin>/<int:signal>')
+api.add_resource(AnalogOutput, '/analog/<string:pin>/<float:signal>')
+api.add_resource(DigitalOutput, '/digital/<string:pin>/<int:signal>')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    try:
+        kwargs = {'host': sys.argv[1]}
+    except:
+        kwargs = {}
+    app.run(debug=True, **kwargs)
