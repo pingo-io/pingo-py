@@ -30,7 +30,7 @@ def mode(mode, pin):
 def analog_pins():
     # TODO: find a better way to check if the pin is analog
     pins = {key: value for key, value in board.pins
-                if issubclass(type(board), AnalogPin)}
+            if issubclass(type(board), AnalogPin)}
     return {'pins': str(pins)}
 
 
