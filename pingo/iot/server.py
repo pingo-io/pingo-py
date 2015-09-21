@@ -1,76 +1,78 @@
-from flask import Flask
-from flask_restful import Resource, Api
-from pingo.board import AnalogInputCapable
+from bottle import Bottle
+from pingo.board import AnalogPin
+import json
 import pingo
 import sys
 
 
-app = Flask(__name__)
-api = Api(app)
-
+app = Bottle(__name__)
 board = pingo.detect.get_board()
 
 
-class Main(Resource):
-    def get(self):
-        return {
-            'board': repr(board),
-            'pins': str(board.pins)
-        }
+@app.route('/')
+def main():
+    pins = {key: repr(value) for key, value in board.pins}
+    return {
+        'board': repr(board),
+        'pins': json.dumps(pins)
+    }
 
 
-class DigitalPins(Resource):
-    def get(self, input_type):
-        pins = board.pins()
-        return {'pins': str(pins)}
+@app.route('/mode/<mode>/<pin>')
+def mode(mode, pin):
+    assert mode in ('input', 'output')
+    mode = pingo.IN if 'input' else pingo.OUT
+    pin = board.pins[pin]
+    pin.mode = mode
 
 
-class AnalogPins(Resource):
-    def get(self, input_type):
-        if issubclass(type(board), AnalogInputCapable):
-            pins = str(board.digital_pins)
-        else:
-            pins = []
-        return {'pins': str(pins)}
+@app.route('/analog')
+def analog_pins():
+    # TODO: find a better way to check if the pin is analog
+    pins = {key: value for key, value in board.pins
+                if issubclass(type(board), AnalogPin)}
+    return {'pins': str(pins)}
 
 
-class Input(Resource):
-    def get(self, input_type, pin):
-        pin = board.pins[pin]
-        pin.mode = pingo.IN
-        return {'input': pin.state}
+@app.route('/analog/<pin>')
+def analog_input(pin):
+    pin = board.pins[pin]
+    pin.mode = pingo.IN
+    return {'input': pin.state}
 
 
-class AnalogOutput(Resource):
-    def get(self, output_type, pin, signal):
-        pin = board.pins[pin]
-        pin.mode = pingo.OUT
-        pin.value = signal
-        return {'output': signal}
+@app.route('/analog/<pin>/<float:signal>')
+def analog_output(pin, signal):
+    pin = board.pins[pin]
+    pin.mode = pingo.OUT
+    pin.value = signal
+    return {'output': signal}
 
 
-class DigitalOutput(Resource):
-    def get(self, output_type, pin, signal):
-        pin = board.pins[pin]
-        pin.mode = pingo.OUT
-        if signal:
-            pin.high()
-        else:
-            pin.low()
-        return {'output': signal}
+@app.route('/digital')
+def digital_pins():
+    pins = board.pins()
+    return {'pins': str(pins)}
 
 
-api.add_resource(Main, '/')
-api.add_resource(AnalogPins, '/analog')
-api.add_resource(DigitalPins, '/digital')
-api.add_resource(Input, '/<string:input_type>/<string:pin>')
-api.add_resource(AnalogOutput, '/analog/<string:pin>/<float:signal>')
-api.add_resource(DigitalOutput, '/digital/<string:pin>/<int:signal>')
+@app.route('/digital/<pin>')
+def digital_input(pin):
+    pin = board.pins[pin]
+    pin.mode = pingo.IN
+    return {'input': pin.state}
+
+
+@app.route('/digtal/<pin>/<int:signal>')
+def digital_output(pin, signal):
+    pin = board.pins[pin]
+    pin.mode = pingo.OUT
+    pin.high() if signal else pin.low()
+    return {'output': signal}
 
 
 if __name__ == '__main__':
     try:
         kwargs = {'host': sys.argv[1]}
-    except:
+    except IndexError:
         kwargs = {}
     app.run(debug=True, **kwargs)
