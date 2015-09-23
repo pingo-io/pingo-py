@@ -45,8 +45,7 @@ class HTTPBoard(pingo.Board):
 
     def _set_pin_state(self, pin, state):
         url = self.server
-        # TODO: add is_analog method to Pin
-        if issubclass(type(pin), pingo.board.AnalogPin):
+        if pin.is_analog:
             url += '/analog'
         else:
             url += '/digital'
@@ -58,7 +57,7 @@ class HTTPBoard(pingo.Board):
 
     def _get_pin_state(self, pin):
         url = self.server
-        if issubclass(type(pin), pingo.board.AnalogPin):
+        if pin.is_analog:
             url += '/analog'
         else:
             url += '/digital'

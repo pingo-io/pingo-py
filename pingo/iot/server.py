@@ -1,5 +1,4 @@
 from bottle import Bottle
-from pingo.board import AnalogPin
 import json
 import pingo
 import sys
@@ -28,9 +27,8 @@ def mode(mode, pin):
 
 @app.route('/analog')
 def analog_pins():
-    # TODO: find a better way to check if the pin is analog
-    pins = {key: value for key, value in board.pins
-            if issubclass(type(board), AnalogPin)}
+    pins = {location: pin for location, pin in board.pins
+            if pin.is_analog}
     return {'pins': str(pins)}
 
 
