@@ -20,10 +20,10 @@ hi TABs ctermbg=Red ctermfg=LightRed guibg=Red guifg=LightRed term=italic
 hi TrSp ctermbg=DarkGray ctermfg=Red guibg=DarkGray guifg=Red term=italic
 call matchadd("TABs", "\t")      " All TABs but the trailing ones
 call matchadd("TrSp", "\\s\\+$") " Trailing TABs and spaces
+autocmd BufWritePre * :%s/\s\+$//e " Removes trailing spaces when save buffer
 
 " Paste mouse selected text with Shift+Insert
 if has('gui_running')
   map <S-Insert> <MiddleMouse>
   map! <S-Insert> <MiddleMouse>
 endif
-
