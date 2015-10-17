@@ -39,7 +39,7 @@ def analog_input(pin):
     return {'input': pin.state}
 
 
-@app.route('/analog/<pin>/<float:signal>')
+@app.route('/analog/<pin>/<signal:float>')
 def analog_output(pin, signal):
     pin = board.pins[pin]
     pin.mode = pingo.OUT
@@ -60,7 +60,7 @@ def digital_input(pin):
     return {'input': pin.state}
 
 
-@app.route('/digtal/<pin>/<int:signal>')
+@app.route('/digtal/<pin>/<signal:float>')
 def digital_output(pin, signal):
     pin = board.pins[pin]
     pin.mode = pingo.OUT
