@@ -39,29 +39,29 @@ class HTTPBoard(pingo.Board):
         self._add_pins(ground_pins + vcc_pins + gpio_pins + pwm_pins)
 
     def _set_digital_mode(self, pin, mode):
-        url = self.server + '/mode'
         mode = 'input' if pingo.IN else 'output'
-        urlopen(url + '/' + mode + '/' + str(pin.location))
+        url = '{server}mode/{mode}/{pin}'.format(server=self.server,
+                                                  mode=mode, pin=pin.location)
+        urlopen(url)
 
     def _set_pin_state(self, pin, state):
-        url = self.server
-        if pin.is_analog:
-            url += '/analog'
-        else:
-            url += '/digital'
-        response = urlopen(url + '/' + str(pin.location) + '/' + str(state))
+        mode = 'analog' if pin.is_analog else 'digital'
+        state = 1 if state == pingo.HIGH else 0
+        url = '{server}{mode}/{pin}/{state}'.format(server=self.server, mode=mode,
+                                                     pin=str(pin.location),
+                                                     state=str(state))
+        print(url)
+        response = urlopen(url)
         if response.code != 200:
-            message = u'Pin {} could not be set to {}: HTTPBoard response: {}'
+            message = u'Pin {} could not be set to {}. HTTPBoard response: {}'
             message.format(repr(pin), state, response.code)
             raise Exception(message)
 
     def _get_pin_state(self, pin):
-        url = self.server
-        if pin.is_analog:
-            url += '/analog'
-        else:
-            url += '/digital'
-        response = urlopen(url + '/' + str(pin.location))
+        mode = 'analog' if pin.is_analog else 'digital'
+        url = '{server}{mode}/{pin}'.format(server=self.server, mode=mode,
+                                             pin=pin.location)
+        response = urlopen(url)
         if response.code != 200:
             message = u'Pin {} could not be read: HTTPBoard response: {}'
             message.format(repr(pin), response.code)
