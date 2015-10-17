@@ -41,15 +41,15 @@ class HTTPBoard(pingo.Board):
     def _set_digital_mode(self, pin, mode):
         mode = 'input' if pingo.IN else 'output'
         url = '{server}mode/{mode}/{pin}'.format(server=self.server,
-                                                  mode=mode, pin=pin.location)
+                                                 mode=mode, pin=pin.location)
         urlopen(url)
 
     def _set_pin_state(self, pin, state):
         mode = 'analog' if pin.is_analog else 'digital'
         state = 1 if state == pingo.HIGH else 0
         url = '{server}{mode}/{pin}/{state}'.format(server=self.server, mode=mode,
-                                                     pin=str(pin.location),
-                                                     state=str(state))
+                                                    pin=str(pin.location),
+                                                    state=str(state))
         print(url)
         response = urlopen(url)
         if response.code != 200:
@@ -60,7 +60,7 @@ class HTTPBoard(pingo.Board):
     def _get_pin_state(self, pin):
         mode = 'analog' if pin.is_analog else 'digital'
         url = '{server}{mode}/{pin}'.format(server=self.server, mode=mode,
-                                             pin=pin.location)
+                                            pin=pin.location)
         response = urlopen(url)
         if response.code != 200:
             message = u'Pin {} could not be read: HTTPBoard response: {}'
