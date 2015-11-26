@@ -267,6 +267,10 @@ class Pin(object):
 
         self._mode = value
 
+    @property
+    def is_analog(self):
+        return issubclass(type(self), AnalogPin)
+
 
 class DigitalPin(Pin):
     """Defines common interface for all digital pins.
