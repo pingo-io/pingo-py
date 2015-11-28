@@ -123,6 +123,7 @@ class BlinkTask(object):
         :param off_delay: delay while LED is off
         """
         self.led = led
+        self.led_pin_state_initial = self.led.pin.state
         self.active = True
         self.forever = times == 0
         self.times_remaining = times
@@ -143,7 +144,7 @@ class BlinkTask(object):
             else:
                 time.sleep(self.off_delay)
         else:
-            self.led.off()
+            self.led.pin.state = self.led_pin_state_initial
             self.active = False
 
 
