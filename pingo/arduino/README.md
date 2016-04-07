@@ -1,6 +1,19 @@
 # Troubleshooting
 
-## Arduino IDE
+## Board Auto Discovery Failed!, Shutting Down
+If anyone is facing some error like this:
+```
+Please wait while Arduino is being detected. This can take up to 30 seconds ...
+Board Auto Discovery Failed!, Shutting Down
+```
+
+Please, upload the StandardFirmata.ino sketch.
+It can be found on Arduino >> Examples >> Firmata >> StandardFirmata
+* https://github.com/firmata/arduino/blob/master/examples/StandardFirmata/StandardFirmata.ino
+* https://www.arduino.cc/en/Reference/Firmata
+
+
+## Arduino IDE errors
 If anyone is facing some error like this:
 ```
 $ arduino
