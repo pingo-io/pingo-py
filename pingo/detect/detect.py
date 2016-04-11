@@ -54,9 +54,7 @@ def get_board():
             if device:
                 return pingo.arduino.ArduinoFirmata(device)
 
-        print('Using GhostBoard...')
-        # TODO decide which board return
-        return pingo.ghost.GhostBoard()
+        raise DetectionFailed()
 
     elif machine == 'i586':
         # TODO: assume it's a Galileo2
