@@ -1,2 +1,0 @@
-RPi.GPIO==0.5.4
-audiolazy==0.05

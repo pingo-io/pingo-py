@@ -2,11 +2,25 @@
 Name (Github user)
 -------------------
 
+Alexandre Souza (alexandre)
 Danilo J. S. Bellini (danilobellini)
 Estevão U. P. Vieira
+Kang Yang (linksprite)
+Kemel Zaidan (kemelzaidan)
 Leonardo Rochael (leorochael)
 Lucas S. Simões
 Luciano Ramalho (ramalho)
-Thiago M. Sanches
-Paulo R. O. Castro (brk00)
 Lucas Vido (Vido)
+Łukasz Nowak
+Paulo R. O. Castro (brk00)
+Thiago M. Sanches
+Valder Gallo (valdergallo)
+Humberto Rocha (humrochagf)
+Diego Guimaraes (diegoguimaraes)
+Héctor Velarde (hvelarde)
+Theo A. Monteiro (theoamonteiro)
+Davi Garcia (davivcgarcia)
+Ricardo Bánffy (rbanffy)
+Afonso Coutinho (afonso)
+Ricardo Martinelli (rimolive)
+Gabriel Almeida de Souza (gfth4x07)

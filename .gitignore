@@ -1,4 +1,7 @@
+.cache
 *.py[cod]
+htmlcov/
+.env*
 
 # C extensions
 *.so
@@ -9,7 +12,6 @@
 dist
 build
 eggs
-parts
 bin
 var
 sdist
@@ -40,3 +42,15 @@ nosetests.xml
 *___jb_old___
 .idea/
 *.sw[po]
+*.geany
+*.sublime-*
+
+# Sphinx
+_build/
+
+# OSX
+.DS_Store
+
+# Pingo generated files
+pin_states.json
+test_output
