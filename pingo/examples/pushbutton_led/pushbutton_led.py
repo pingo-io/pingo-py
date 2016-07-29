@@ -14,13 +14,14 @@ try:
     print("Loading board...")
     board = pingo.detect.get_board()
     print("Its ok...")
-    led_pin = board.pins[13]
-    led_pin.mode = pingo.OUT
-    button_pin = board.pins[2]
-    button_pin.mode = pingo.IN
 except Exception as e:
     print("Error on get_board: {}".format(e))
     sys.exit(1)
+
+led_pin = board.pins[13]
+led_pin.mode = pingo.OUT
+button_pin = board.pins[5]
+button_pin.mode = pingo.IN
 
 while True:
     if button_pin.state == pingo.HIGH:
