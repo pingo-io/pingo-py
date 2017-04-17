@@ -1,3 +1,5 @@
+import pingo
+
 import time
 import threading
 
@@ -10,7 +12,7 @@ class Switch(object):
         :param pin: A instance of DigitalPin
         """
         self.pin = pin
-        self.pin.mode = 'IN'
+        self.pin.mode = pingo.IN
         self.polling_task = None
         self._up_callback = lambda: None
         self._down_callback = lambda: None
@@ -56,10 +58,10 @@ class PollingTask(object):
         while self.active:
             current_state = self.switch.pin.state
             if current_state != last_state:
-                if current_state == 'HIGH':
+                if current_state == pingo.HIGH:
                     last_state = current_state
                     self.switch._up_callback()
-                elif current_state == 'LOW':
+                elif current_state == pingo.LOW:
                     last_state = current_state
                     self.switch._down_callback()
             time.sleep(0.05)
