@@ -5,14 +5,15 @@ Using PWM on pin #6 to dim a LED
 
 from pprint import pprint
 import pingo
+from pingo import Mode
 import time
 
-board = pingo.detect.get_board()
-print board
 
+board = pingo.detect.get_board()
+print(board)
 
 led = board.pins[6]
-led.mode = pingo.PWM
+led.mode = Mode.PWM
 
 pprint(board.pins, indent=4, width=1)
 

@@ -9,9 +9,10 @@ import platform
 
 import pingo
 from pingo.board import Board, DigitalPin, AnalogPin, PwmPin
+from pingo.board import State, Mode
 from pingo.board import AnalogInputCapable, PwmOutputCapable
 from pingo.detect import detect
-from util_firmata import pin_list_to_board_dict
+from .util_firmata import pin_list_to_board_dict
 
 PyMata = None
 
@@ -20,14 +21,14 @@ PIN_STATES = {
     True: 1,
     0: 0,
     1: 1,
-    pingo.LOW: 0,
-    pingo.HIGH: 1,
+    State.LOW: 0,
+    State.HIGH: 1,
 }
 
 # TODO: PyMata suports Input, Output, PWM, Servo, Encoder and Tone
 PIN_MODES = {
-    pingo.IN: 0,
-    pingo.OUT: 1,
+    Mode.IN: 0,
+    Mode.OUT: 1,
 }
 
 VERBOSE = False

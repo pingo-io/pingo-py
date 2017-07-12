@@ -13,5 +13,5 @@ while any([a_led.blinking, b_led.blinking]):
     a_state = '*A*' if a_led.lit else ' a '
     b_state = '*B*' if b_led.lit else ' b '
 
-    print time.strftime('%H:%M:%S'), a_state, b_state
+    print("%s %s %s" % (time.strftime('%H:%M:%S'), a_state, b_state))
     time.sleep(.1)

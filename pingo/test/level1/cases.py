@@ -1,4 +1,5 @@
 import pingo
+from pingo.board import Mode
 
 '''
 In order to use this set of cases, it is necessary to set
@@ -18,7 +19,7 @@ class AnalogReadBasics(object):
 
     def test_200ohmRead(self):
         pin = self.board.pins[self.analog_input_pin_number]
-        pin.mode = pingo.ANALOG
+        pin.mode = Mode.ANALOG
         _input = pin.value
         # print "Value Read: ", _input
 
@@ -26,7 +27,7 @@ class AnalogReadBasics(object):
 
     def test_pin_ratio(self):
         pin = self.board.pins[self.analog_input_pin_number]
-        pin.mode = pingo.ANALOG
+        pin.mode = Mode.ANALOG
         bits_resolution = (2 ** pin.bits) - 1
         _input = pin.ratio(0, bits_resolution, 0.0, 1.0)
         # print "Value Read: ", _input
@@ -40,4 +41,4 @@ class AnalogExceptions(object):
     def test_wrong_output_mode(self):
         pin = self.board.pins[self.analog_input_pin_number]
         with self.assertRaises(pingo.ModeNotSuported):
-            pin.mode = pingo.OUT
+            pin.mode = Mode.OUT

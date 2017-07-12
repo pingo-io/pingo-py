@@ -1,7 +1,7 @@
 """ Seven segment display demo using the Garoa Dojo Shield """
 
 from time import sleep
-from pingo import OUT, detect, parts
+from pingo import Mode, detect, parts
 
 INTERVAL = 0.3
 
@@ -10,7 +10,7 @@ ard = detect.get_board()
 display_pins = [ard.pins[i] for i in range(8, 14) + [7]]
 
 for pin in display_pins:
-    pin.mode = OUT
+    pin.mode = Mode.OUT
 
 seg_display = parts.led.SevenSegments(*display_pins)
 

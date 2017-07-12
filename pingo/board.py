@@ -5,15 +5,11 @@ from operator import attrgetter
 from abc import ABCMeta, abstractmethod
 
 from .util import StrKeyDict
+from enum import Enum
 
-HIGH = 'HIGH'
-LOW = 'LOW'
+State = Enum('State', 'LOW HIGH')
 
-# TODO: 4 states implementation: IN, OUT, ANALOG, PWM
-IN = 'IN'
-OUT = 'OUT'
-ANALOG = 'ANALOG'
-PWM = 'PWM'
+Mode = Enum('Mode', 'IN OUT ANALOG PWM')
 
 
 class WrongPinMode(Exception):
@@ -249,8 +245,8 @@ class Pin(object):
 
     @property
     def mode(self):
-        """[property] Get/set pin mode to ``pingo.IN``, ``pingo.OUT``
-         ``pingo.ANALOG`` or ``pingo.PWM``"""
+        """[property] Get/set pin mode to ``Mode.IN``, ``Mode.OUT``
+         ``Mode.ANALOG`` or ``Mode.PWM``"""
         return self._mode
 
     @mode.setter
@@ -258,11 +254,11 @@ class Pin(object):
         if value not in self.suported_modes:
             raise ModeNotSuported()
 
-        if value in [IN, OUT]:
+        if value in [Mode.IN, Mode.OUT]:
             self.board._set_digital_mode(self, value)
-        elif value == ANALOG:
+        elif value == Mode.ANALOG:
             self.board._set_analog_mode(self, value)
-        elif value == PWM:
+        elif value == Mode.PWM:
             self.board._set_pwm_mode(self, value)
 
         self._mode = value
@@ -283,7 +279,7 @@ class DigitalPin(Pin):
     because pins delegate all board-dependent behavior to the board.
     """
 
-    suported_modes = [IN, OUT]
+    suported_modes = [Mode.IN, Mode.OUT]
 
     def __init__(self, board, location, gpio_id=None):
         Pin.__init__(self, board, location, gpio_id)
@@ -291,52 +287,52 @@ class DigitalPin(Pin):
 
     @property
     def state(self):
-        """[property] Get/set pin state to ``pingo.HIGH`` or ``pingo.LOW``"""
-        if self.mode not in [IN, OUT]:
+        """[property] Get/set pin state to ``State.HIGH`` or ``State.LOW``"""
+        if self.mode not in [Mode.IN, Mode.OUT]:
             raise WrongPinMode()
 
-        if self.mode == IN:
+        if self.mode == Mode.IN:
             self._state = self.board._get_pin_state(self)
 
         return self._state
 
     @state.setter
     def state(self, value):
-        if self.mode != OUT:
+        if self.mode != Mode.OUT:
             raise WrongPinMode()
 
         self.board._set_pin_state(self, value)
         self._state = value
 
     def low(self):
-        """Set voltage of pin to ``pingo.LOW`` (GND)."""
-        self.state = LOW
+        """Set voltage of pin to ``State.LOW`` (GND)."""
+        self.state = State.LOW
 
     lo = low  # shortcut for interactive use
 
     def high(self):
         """Set state of the pin to ``pingo.HIGH`` (Vcc)."""
-        self.state = HIGH
+        self.state = State.HIGH
 
     hi = high  # shortcut for interactive use
 
     def toggle(self):
         """Change state of the pin."""
-        self.state = HIGH if self.state == LOW else LOW
+        self.state = State.HIGH if self.state == State.LOW else State.LOW
 
     def pulse(self):
         """Generate a pulse in state of the pin."""
-        if self.state == LOW:
-            self.state = HIGH
-            self.state = LOW
+        if self.state == State.LOW:
+            self.state = State.HIGH
+            self.state = State.LOW
         else:
-            self.state = LOW
-            self.state = HIGH
+            self.state = State.LOW
+            self.state = State.HIGH
 
 
 class PwmPin(DigitalPin):
 
-    suported_modes = [IN, OUT, PWM]
+    suported_modes = [Mode.IN, Mode.OUT, Mode.PWM]
 
     def __init__(self, board, location, gpio_id=None, frequency=None):
         DigitalPin.__init__(self, board, location, gpio_id)
@@ -348,13 +344,13 @@ class PwmPin(DigitalPin):
 
     @property
     def value(self):
-        if self.mode != PWM:
+        if self.mode != Mode.PWM:
             raise WrongPinMode()
         return self.board._get_pwm_duty_cycle(self)
 
     @value.setter
     def value(self, value):
-        if self.mode != PWM:
+        if self.mode != Mode.PWM:
             raise WrongPinMode()
         if not 0.0 <= value <= 100.0:
             raise ArgumentOutOfRange()
@@ -363,13 +359,13 @@ class PwmPin(DigitalPin):
 
     @property
     def frequency(self):
-        if self.mode != PWM:
+        if self.mode != Mode.PWM:
             raise WrongPinMode()
         return self.board._get_pwm_frequency(self)
 
     @frequency.setter
     def frequency(self, new_frequency):
-        if self.mode != PWM:
+        if self.mode != Mode.PWM:
             raise WrongPinMode()
         if new_frequency <= 0.0:
             raise ArgumentOutOfRange()
@@ -386,7 +382,7 @@ class AnalogPin(Pin):
     This pin type supports read operations only.
     """
 
-    suported_modes = [IN, ANALOG]
+    suported_modes = [Mode.IN, Mode.ANALOG]
 
     def __init__(self, board, location, resolution, gpio_id=None):
         """

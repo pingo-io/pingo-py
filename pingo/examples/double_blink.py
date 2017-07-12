@@ -10,14 +10,15 @@ This script assumes:
 
 import time
 import pingo
+from pingo import Mode
 
 board = pingo.rpi.RaspberryPiBPlus()
 local_led = board.pins[13]
-local_led.mode = pingo.OUT
+local_led.mode = Mode.OUT
 
 ard = pingo.arduino.get_arduino()
 remote_led = ard.pins[13]
-remote_led.mode = pingo.OUT
+remote_led.mode = Mode.OUT
 
 local_led.low()  # for an common anode RGB LED
 remote_led.low()

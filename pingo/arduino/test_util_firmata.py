@@ -1,6 +1,6 @@
 import unittest
 
-from util_firmata import pin_list_to_board_dict
+from .util_firmata import pin_list_to_board_dict
 
 
 class FirmataCapabilityDetect(unittest.TestCase):
@@ -43,12 +43,8 @@ class FirmataCapabilityDetect(unittest.TestCase):
             0x7F,  # END_SYSEX (Pin delimiter)
         ]
 
-        data_arduino = list(
-            # [0x6C]  # CAPABILITY_RESPONSE
-            unavailible_pin
-            + digital_pin
-            + analog_pin
-        )
+        data_arduino = list(unavailible_pin + digital_pin + analog_pin)
+        # [0x6C]  # CAPABILITY_RESPONSE
 
         pinmap = pin_list_to_board_dict(data_arduino)
         for key in test_layout.keys():

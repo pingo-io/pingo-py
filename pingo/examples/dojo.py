@@ -13,15 +13,16 @@ This script assumes:
 
 import time
 import pingo
+from pingo import Mode
 
 board = pingo.detect.get_board()
 print('board: %s' % board)
 pot = board.pins['A0']
-pot.mode = pingo.ANALOG
+pot.mode = Mode.ANALOG
 leds = board.digital_pins[6:14]
 
 for led in leds:
-    led.mode = pingo.OUT
+    led.mode = Mode.OUT
     led.low()
 
 while True:
@@ -30,5 +31,5 @@ while True:
             continue
         led.high()
         time.sleep(pot.ratio())
-        print pot.ratio()
+        print(pot.ratio())
         led.low()

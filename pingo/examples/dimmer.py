@@ -8,20 +8,21 @@ and lights a PWM Led on 6 (or the dicimal point)
 
 from pprint import pprint
 import pingo
+from pingo import Mode
 import time
 
 board = pingo.detect.get_board()
 
 pot = board.pins['A0']
-pot.mode = pingo.ANALOG
+pot.mode = Mode.ANALOG
 
 led = board.pins[6]
-led.mode = pingo.PWM
+led.mode = Mode.PWM
 
 display_pins = [board.pins[i] for i in range(8, 14) + [7]]
 seg_display = pingo.parts.led.SevenSegments(*display_pins)
 for pin in display_pins:
-    pin.mode = pingo.OUT
+    pin.mode = Mode.OUT
 
 
 def bar(pin):

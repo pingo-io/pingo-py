@@ -9,10 +9,11 @@ This script assumes:
 
 import time
 import pingo
+from pingo import Mode
 
 board = pingo.detect.get_board()
 led = board.pins[13]
-led.mode = pingo.OUT
+led.mode = Mode.OUT
 
 while True:
     led.toggle()

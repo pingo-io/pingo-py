@@ -1,4 +1,5 @@
 import pingo
+from pingo import Mode
 from time import sleep
 
 rpi = pingo.rpi.RaspberryPi()
@@ -9,7 +10,7 @@ led_sequence = [13, 11, 7, 15, 26, 24, 21, 15]
 pins = [rpi.pins[loc] for loc in led_sequence]
 
 for pin in pins:
-    pin.mode = pingo.OUT
+    pin.mode = Mode.OUT
     pin.low()
 
 prev_pin = pins[-1]

@@ -46,11 +46,12 @@ Once you have a board instance, it's possible to access its pins through the ``b
 .. code-block:: python
 
     import pingo
+    from pingo import State, Mode
     from time import sleep
 
     board = pingo.detect.get_board()
     led_pin = board.pins[13]
-    led_pin.mode = pingo.OUT
+    led_pin.mode = Mode.OUT
 
     while True:
         led_pin.hi()

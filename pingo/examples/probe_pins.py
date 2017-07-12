@@ -7,6 +7,7 @@ a circuit such as a 7-segment display.
 import sys
 
 import pingo
+from pingo import Mode
 
 
 def probe(first, last):
@@ -16,7 +17,7 @@ def probe(first, last):
     pins = board.digital_pins[first:last + 1]
 
     for pin in pins:
-        pin.mode = pingo.OUT
+        pin.mode = Mode.OUT
 
     for pin in pins:
         pin.hi()

@@ -2,12 +2,13 @@ import time
 import unittest
 
 from pingo.parts import Switch
+from pingo.board import State, Mode
 
 
 class FakeDigitalPin(object):
     def __init__(self):
-        self.mode = 'IN'
-        self.state = 'LOW'
+        self.mode = Mode.IN
+        self.state = State.LOW
 
 
 class TestSwitch(unittest.TestCase):
@@ -23,11 +24,11 @@ class TestSwitch(unittest.TestCase):
 
         self.my_switch.start()
         time.sleep(.1)
-        self.pin.state = 'HIGH'
+        self.pin.state = State.HIGH
         time.sleep(.1)
-        self.pin.state = 'LOW'
+        self.pin.state = State.LOW
         time.sleep(.1)
-        self.pin.state = 'HIGH'
+        self.pin.state = State.HIGH
         time.sleep(.1)
         self.my_switch.stop()
 
@@ -45,11 +46,11 @@ class TestSwitch(unittest.TestCase):
 
         self.my_switch.start()
         time.sleep(.1)
-        self.pin.state = 'HIGH'
+        self.pin.state = State.HIGH
         time.sleep(.1)
-        self.pin.state = 'LOW'
+        self.pin.state = State.LOW
         time.sleep(.1)
-        self.pin.state = 'HIGH'
+        self.pin.state = State.HIGH
         time.sleep(.1)
 
         self.my_switch.stop()

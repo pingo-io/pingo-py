@@ -1,1 +1,1 @@
-from ghost import GhostBoard  # noqa
+from .ghost import GhostBoard  # noqa

@@ -1,4 +1,4 @@
-import pingo
+from pingo import State, Mode
 
 import time
 import threading
@@ -7,27 +7,27 @@ import threading
 class Led(object):
     """A single LED"""
 
-    def __init__(self, pin, lit_state=pingo.HIGH):
-        """Set lit_state to pingo.LOW to turn on led by bringing
+    def __init__(self, pin, lit_state=State.HIGH):
+        """Set lit_state to State.LOW to turn on led by bringing
            cathode to low state.
 
-        :param lit_state: use pingo.HI for anode control, pingo.LOW
+        :param lit_state: use State.HIGH for anode control, State.LOW
                           for cathode control
         """
 
-        pin.mode = pingo.OUT
+        pin.mode = Mode.OUT
         self.pin = pin
         self.lit_state = lit_state
         self.blink_task = None
 
     def on(self):
-        if self.lit_state == pingo.HIGH:
+        if self.lit_state == State.HIGH:
             self.pin.high()
         else:
             self.pin.low()
 
     def off(self):
-        if self.lit_state == pingo.HIGH:
+        if self.lit_state == State.HIGH:
             self.pin.low()
         else:
             self.pin.high()
@@ -85,7 +85,7 @@ class RGBLed(object):
     pure_colors_map = dict(PURE_COLORS)
 
     def __init__(self, red_pin, green_pin, blue_pin,
-                 lit_state=pingo.LOW):
+                 lit_state=State.LOW):
         self._leds = [Led(red_pin, lit_state), Led(green_pin, lit_state),
                       Led(blue_pin, lit_state)]
 
@@ -174,7 +174,7 @@ class SevenSegments(object):
 
     def __init__(self, pin_a, pin_b, pin_c, pin_d,
                  pin_e, pin_f, pin_g, pin_dp=None,
-                 lit_state=pingo.HIGH):
+                 lit_state=State.HIGH):
         self._leds = [Led(pin_a, lit_state), Led(pin_b, lit_state),
                       Led(pin_c, lit_state), Led(pin_d, lit_state),
                       Led(pin_e, lit_state), Led(pin_f, lit_state),

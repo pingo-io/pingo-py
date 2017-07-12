@@ -27,7 +27,7 @@ class PyTest(TestCommand):
 
 
 install_requires = [
-    '',
+    'enum34',
 ]
 
 tests_require = [

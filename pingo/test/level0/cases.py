@@ -2,6 +2,7 @@ import time
 import unittest
 
 import pingo
+from pingo.board import Mode, State
 
 '''
 In order to use this set of cases, it is necessary to set
@@ -28,7 +29,7 @@ class BoardBasics(object):
 
     def test_led(self):
         pin = self.board.pins[self.digital_output_pin_number]
-        pin.mode = pingo.OUT
+        pin.mode = Mode.OUT
         pin.high()
 
     def test_filter(self):
@@ -41,12 +42,12 @@ class BoardBasics(object):
     @unittest.skip("Not automatic enough.")
     def test_button(self):
         pin = self.board.pins[self.digital_input_pin_number]
-        pin.mode = pingo.IN
-        output = pingo.LOW
+        pin.mode = Mode.IN
+        output = State.LOW
         t0 = time.time()
         delay = 5
 
-        while output == pingo.LOW:
+        while output == State.LOW:
             output = pin.state
             if time.time() - t0 > delay:
                 break
@@ -58,18 +59,18 @@ class BoardBasics(object):
     def test_jumpwire(self):
         ''' Wire this DigitalPin directly into VDD '''
         pin = self.board.pins[self.digital_input_pin_number]
-        pin.mode = pingo.IN
+        pin.mode = Mode.IN
         output = pin.state
 
-        assert output == pingo.HIGH
+        assert output == State.HIGH
 
     def test_toggle(self):
         pin = self.board.pins[self.digital_input_pin_number]
-        pin.mode = pingo.OUT
+        pin.mode = Mode.OUT
         pin.high()
         pin.toggle()
 
-        assert pin.state == pingo.LOW
+        assert pin.state == State.LOW
 
     def test_digital_pins(self):
         digital_pins = self.board.digital_pins
@@ -94,13 +95,13 @@ class BoardExceptions(object):
 
     def test_wrong_pin_mode_in(self):
         pin = self.board.pins[self.digital_input_pin_number]
-        pin.mode = pingo.IN
+        pin.mode = Mode.IN
 
         with self.assertRaises(pingo.WrongPinMode):
             pin.high()
 
         with self.assertRaises(pingo.WrongPinMode):
-            pin.state = pingo.HIGH
+            pin.state = State.HIGH
 
 #    def test_wrong_pin_mode_out(self):
 #        pin = self.board.pins[digital_output_pin_number]

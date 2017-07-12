@@ -1,5 +1,6 @@
-from pingo.board import Board, DigitalPin, AnalogPin, IN, OUT, HIGH, LOW
+from pingo.board import Board, DigitalPin, AnalogPin
 from pingo.board import AnalogInputCapable
+from pingo.board import State, Mode
 
 
 class PcDuino(Board, AnalogInputCapable):
@@ -9,8 +10,8 @@ class PcDuino(Board, AnalogInputCapable):
     DIGITAL_PINS_PATH = '/sys/devices/virtual/misc/gpio/'
     ADC_PATH = '/proc/'
 
-    DIGITAL_PIN_MODES = {IN: '0', OUT: '1'}
-    DIGITAL_PIN_STATES = {HIGH: '1', LOW: '0'}
+    DIGITAL_PIN_MODES = {Mode.IN: '0', Mode.OUT: '1'}
+    DIGITAL_PIN_STATES = {State.HIGH: '1', State.LOW: '0'}
     LEN_DIGITAL_PINS = 14
     ANALOG_PIN_RESOLUTIONS = [6, 6, 12, 12, 12, 12]
 
@@ -40,7 +41,7 @@ class PcDuino(Board, AnalogInputCapable):
         sys_string = self.DIGITAL_PINS_PATH + 'pin/gpio%s' % pin.location
         with open(sys_string, 'r') as fp:
             state = fp.read().strip()
-            return HIGH if state == '1' else LOW
+            return State.HIGH if state == '1' else State.LOW
 
     def _get_pin_value(self, pin):
         sys_string = self.ADC_PATH + 'adc%s' % pin.location[1:]  # eg. A5

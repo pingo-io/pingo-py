@@ -12,6 +12,7 @@ This script assumes:
 
 from time import sleep
 import pingo
+from pingo import Mode
 
 POT_LOCATION = 'A0'
 PIN_LOCATIONS = range(6, 14)
@@ -21,7 +22,7 @@ pot = pingo.pins[POT_LOCATION]
 leds = (pingo.pins[loc] for loc in PIN_LOCATIONS if loc != 9)
 
 for led in leds:
-    led.mode = pingo.OUT
+    led.mode = Mode.OUT
 
 while True:
     for led in leds:

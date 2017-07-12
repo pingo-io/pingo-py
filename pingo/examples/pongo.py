@@ -14,6 +14,7 @@ on any computer connected to the Galileo.
 
 import curses
 import pingo
+from pingo import Mode
 import time
 import random
 
@@ -64,10 +65,10 @@ if __name__ == '__main__':
     arduino = pingo.arduino.get_arduino()
 
     pot_galileo = galileo.pins['A0']
-    pot_galileo.mode = pingo.ANALOG
+    pot_galileo.mode = Mode.ANALOG
 
     pot_arduino = arduino.pins['A0']
-    pot_arduino.mode = pingo.ANALOG
+    pot_arduino.mode = Mode.ANALOG
 
     # Read the initial values of the paddles
     paddle_1_pos = int(pot_arduino.ratio(to_min=MIN_Y, to_max=MAX_Y-PADDLE_SIZE))

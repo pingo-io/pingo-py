@@ -2,7 +2,6 @@ import unittest
 import platform
 
 import pingo
-import detect
 
 
 class DetectBasics(unittest.TestCase):
@@ -13,7 +12,7 @@ class DetectBasics(unittest.TestCase):
 
     @unittest.skipIf(not platform.system() == 'Linux', 'Not Linux')
     def test_read_cpu_info(self):
-        info = detect._read_cpu_info()
+        info = pingo.detect.detect._read_cpu_info()
         assert isinstance(info, dict)
 
 if __name__ == '__main__':

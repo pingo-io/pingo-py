@@ -1,4 +1,5 @@
 import pingo
+from pingo import Mode
 import time
 
 rpi = pingo.rpi.RaspberryPi()
@@ -9,7 +10,7 @@ pins = [pin for _, pin in sorted(rpi.pins.items())
         if pin.location in led_locations]
 
 for pin in pins:
-    pin.mode = pingo.OUT
+    pin.mode = Mode.OUT
 
 for pin in pins:
     pin.high()
