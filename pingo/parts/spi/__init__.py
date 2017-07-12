@@ -1,1 +1,1 @@
-from mcp3008 import Mcp3008  # noqa
+from .mcp3008 import Mcp3008  # noqa

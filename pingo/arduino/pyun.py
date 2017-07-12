@@ -47,7 +47,7 @@ class YunBridge(object):
         else:
             url = self.base_url + '%s/%d' % (command, pin)
         if self.verbose:
-            print '[YunBridge] url: ', url
+            print('[YunBridge] url: %s' % url)
         return url
 
     def get(self, command, pin, *args):

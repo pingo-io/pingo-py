@@ -1,6 +1,6 @@
 import unittest
 
-from util_firmata import pin_list_to_board_dict
+from .util_firmata import pin_list_to_board_dict
 
 
 class FirmataCapabilityDetect(unittest.TestCase):

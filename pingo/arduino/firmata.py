@@ -11,7 +11,7 @@ import pingo
 from pingo.board import Board, DigitalPin, AnalogPin, PwmPin
 from pingo.board import AnalogInputCapable, PwmOutputCapable
 from pingo.detect import detect
-from util_firmata import pin_list_to_board_dict
+from .util_firmata import pin_list_to_board_dict
 
 PyMata = None
 

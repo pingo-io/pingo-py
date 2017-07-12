@@ -2,7 +2,7 @@ import unittest
 import platform
 
 import pingo
-import detect
+import pingo.detect
 
 
 class DetectBasics(unittest.TestCase):

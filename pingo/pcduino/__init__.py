@@ -1,1 +1,1 @@
-from pcduino import PcDuino  # noqa
+from .pcduino import PcDuino  # noqa

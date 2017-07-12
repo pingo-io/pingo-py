@@ -1,5 +1,5 @@
 import pingo
-
+from pingo.compat import iteritems
 
 class GhostBoard(
     pingo.Board,
@@ -48,7 +48,7 @@ class GhostBoard(
         self._pin_states = pingo.util.StrKeyDict()
         # All pins start on LOW
         # FIXME: use "LOW" instead of 0
-        for location, pin in self.pins.iteritems():
+        for location, pin in iteritems(self.pins):
             self._pin_states[location] = 0 if hasattr(pin, 'state') else None
 
         # Pin 8 starts on HIGH

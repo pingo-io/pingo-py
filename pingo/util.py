@@ -1,8 +1,7 @@
 import collections
-import UserDict
+from .compat import (UserDict, iterkeys)
 
-
-class StrKeyDict(UserDict.UserDict):
+class StrKeyDict(UserDict):
     """StrKeyDict always converts non-string keys to `str`
 
     Tests for item retrieval using `d[key]` notation::
@@ -67,7 +66,7 @@ class StrKeyDict(UserDict.UserDict):
         self.data[self.normalize(key)] = item
 
     def __iter__(self):
-        return self.iterkeys()
+        return iterkeys(self)
 
     def update(self, iterable=None, **kwds):
         if iterable is not None:

@@ -1,4 +1,4 @@
-from detect import get_board
+from .detect import get_board
 
 
 def has_module(module_name):

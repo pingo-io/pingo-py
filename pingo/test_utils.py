@@ -1,12 +1,12 @@
 import unittest
 
-import util
+from pingo.util import StrKeyDict
 
 
 class StrKeyDictTest(unittest.TestCase):
 
     def setUp(self):
-        self.d = util.StrKeyDict(
+        self.d = StrKeyDict(
             [('2', 'two'), ('4', 'four')]
         )
 

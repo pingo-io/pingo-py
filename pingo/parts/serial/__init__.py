@@ -1,1 +1,1 @@
-from lcd import LCD16x2  # noqa
+from .lcd import LCD16x2  # noqa

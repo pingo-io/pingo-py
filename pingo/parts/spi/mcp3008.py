@@ -64,7 +64,7 @@ def test():
         res = ad_chip.read(1)
         volts = float(res) / 1023 * 3.3
         ticks = int(round(float(res) / 1023 * 40)) * '='
-        print display.format(count, res, volts, ticks)
+        print(display.format(count, res, volts, ticks))
         time.sleep(.2)
         count += 1
 

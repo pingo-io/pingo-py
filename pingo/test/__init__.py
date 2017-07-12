@@ -1,3 +1,3 @@
-import level0  # noqa
-import level1  # noqa
-import level2  # noqa
+import pingo.test.level0  # noqa
+import pingo.test.level1  # noqa
+import pingo.test.level2  # noqa
