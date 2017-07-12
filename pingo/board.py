@@ -56,8 +56,8 @@ class Board(object):
     def __init__(self):
         """Registers ``self.cleanup`` for calling at script exit.
 
-        This ``__init__`` method should be called by the ``__init__``
-        of all ``Board`` subclasses using ``super(BoardSubclass, self).__init__()``.
+        This ``__init__`` method should be called by the ``__init__`` of all
+        ``Board`` subclasses using ``super(BoardSubclass, self).__init__()``.
         The ``__init__`` of board subclasses should also call
         ``self._add_pins(pins)`` with an iterable of ``Pin`` instances.
         """
